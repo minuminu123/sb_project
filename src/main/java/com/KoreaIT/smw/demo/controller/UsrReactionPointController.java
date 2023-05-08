@@ -70,7 +70,7 @@ public class UsrReactionPointController {
 		ResultData rd = reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		if (rd.isFail()) {
-			rq.jsHitoryBack("F-2", rd.getMsg());
+			rq.jsHistoryBack("F-2", rd.getMsg());
 		}
 
 		return ResultData.from("S-3", "싫어요");

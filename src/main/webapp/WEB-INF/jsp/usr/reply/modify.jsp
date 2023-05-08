@@ -36,6 +36,7 @@
 						<form action="../reply/doModify" method="POST" onsubmit="ReplyModify__submit(this); return false;">
 								<input type="hidden" name="body">
 								<input type="hidden" name="id" value="${reply.id }" />
+								<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 								<table>
 										<colgroup>
 												<col width="200" />
