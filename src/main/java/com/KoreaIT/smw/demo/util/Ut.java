@@ -136,5 +136,14 @@ public class Ut {
 
 		return param;
 	}
+	
+	public static String getAttr(Map map, String attrName, String defaultValue) {
+
+		if (map.containsKey(attrName)) {
+			return (String) map.get(attrName);
+		}
+
+		return defaultValue;
+	}
 
 }
