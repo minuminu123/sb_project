@@ -80,4 +80,14 @@ public interface ReplyRepository {
 
 	void modifyReply(int id, String body);
 
+	
+	@Update("""
+			<script>
+				UPDATE reply
+				SET goodReactionPoint = goodReactionPoint + 1
+				WHERE id = #{relId}
+			</script>
+			""")
+	int increaseGoodReationPoint(int relId);
+
 }

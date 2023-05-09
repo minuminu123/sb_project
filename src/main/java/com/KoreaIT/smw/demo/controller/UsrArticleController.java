@@ -177,6 +177,8 @@ public class UsrArticleController {
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("actorCanCancelGoodReaction", reactionPointService.actorCanCancelGoodReaction(id, "article"));
 		model.addAttribute("actorCanCancelBadReaction", reactionPointService.actorCanCancelBadReaction(id, "article"));
+		model.addAttribute("actorCanCancelGoodReaction2", reactionPointService.actorCanCancelGoodReaction(id, "reply"));
+
 
 		return "usr/article/detail";
 	}

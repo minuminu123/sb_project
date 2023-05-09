@@ -92,4 +92,14 @@ public class ReplyService {
 		return ResultData.from("S-1", Ut.f("%d번 댓글을 수정했습니다", id));
 	}
 
+	public ResultData increaseGoodReationPoint(int relId) {
+		int affectedRow = replyRepository.increaseGoodReationPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시물은 없습니다", "affectedRow", affectedRow);
+		}
+		return ResultData.from("S-1", "좋아요 증가", "affectedRow", affectedRow);
+		
+	}
+
 }

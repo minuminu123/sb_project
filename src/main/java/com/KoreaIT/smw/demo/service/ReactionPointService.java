@@ -15,6 +15,8 @@ public class ReactionPointService {
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
+	private ReplyService replyService;
+	@Autowired
 	private Rq rq;
 	
 	public ResultData actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
@@ -41,6 +43,8 @@ public class ReactionPointService {
 		case "article":
 			articleService.increaseGoodReationPoint(relId);
 			break;
+		case "reply":
+			replyService.increaseGoodReationPoint(relId);
 		}
 
 		return ResultData.from("S-1", "좋아요 처리 됨");
