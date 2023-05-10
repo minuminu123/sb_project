@@ -102,4 +102,13 @@ public class ReplyService {
 		
 	}
 
+	public ResultData decreaseBadReactionPoint(int relId) {
+		int affectedRow = replyRepository.decreaseGoodReationPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시물은 없습니다", "affectedRow", affectedRow);
+		}
+		return ResultData.from("S-1", "좋아요 감소", "affectedRow", affectedRow);		
+	}
+
 }

@@ -155,18 +155,25 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(Model model, int id) {
-
+		// id 는 article의 id
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
 				"article", id);
 
+		ResultData actorCanMakeReactionRd2 = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
+				"reply", id);
+		
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 
 		int repliesCount = replies.size();
 
 		if(actorCanMakeReactionRd.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		}
+		
+		if(actorCanMakeReactionRd2.isSuccess()) {
+			model.addAttribute("actorCanMakeReaction2", actorCanMakeReactionRd2.isSuccess());
 		}
 		
 		model.addAttribute("repliesCount", repliesCount);
@@ -178,7 +185,6 @@ public class UsrArticleController {
 		model.addAttribute("actorCanCancelGoodReaction", reactionPointService.actorCanCancelGoodReaction(id, "article"));
 		model.addAttribute("actorCanCancelBadReaction", reactionPointService.actorCanCancelBadReaction(id, "article"));
 		model.addAttribute("actorCanCancelGoodReaction2", reactionPointService.actorCanCancelGoodReaction(id, "reply"));
-
 
 		return "usr/article/detail";
 	}

@@ -27,8 +27,10 @@ public class ReactionPointService {
 				relId);
 
 		if (sumReactionPointByMemberId != 0) {
+			System.out.println("너니?");
 			return ResultData.from("F-2", "추천 불가", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 		}
+		System.out.println("너니!");
 		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
@@ -74,6 +76,8 @@ public class ReactionPointService {
 		case "article":
 			articleService.decreaseGoodReationPoint(relId);
 			break;
+		case "reply":
+			replyService.decreaseBadReactionPoint(relId);
 		}
 
 		return ResultData.from("S-1", "좋아요 취소 처리 됨");
@@ -86,6 +90,8 @@ public class ReactionPointService {
 		case "article":
 			articleService.decreaseBadReationPoint(relId);
 			break;
+		case "reply":
+			replyService.decreaseBadReactionPoint(relId);
 		}
 
 		return ResultData.from("S-1", "싫어요 취소 처리 됨");

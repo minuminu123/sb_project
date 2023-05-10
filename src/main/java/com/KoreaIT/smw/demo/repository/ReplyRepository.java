@@ -90,4 +90,13 @@ public interface ReplyRepository {
 			""")
 	int increaseGoodReationPoint(int relId);
 
+	@Update("""
+			<script>
+				UPDATE reply
+				SET goodReactionPoint = goodReactionPoint - 1
+				WHERE id = #{relId}
+			</script>
+			""")
+	int decreaseGoodReationPoint(int relId);
+
 }

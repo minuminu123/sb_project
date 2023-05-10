@@ -79,10 +79,11 @@
 			isAjax : 'Y',
 			loginId : form.loginId.value
 		}, function(data) {
-			$('.checkDup-msg').html('<div class="mt-2">' + data.msg + '</div>')
 			if (data.success) {
+				$('.checkDup-msg').html('<div class="mt-2">' + data.msg + '</div>')
 				validLoginId = data.data1;
 			} else {
+				$('.checkDup-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>')
 				validLoginId = '';
 			}
 		}, 'json');
@@ -95,7 +96,7 @@
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="POST" action="../member/doJoin" onsubmit="submitJoinForm(this); return false;">
 			<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
-			<table class="table table-zebra w-full">
+			<table class="table table-zebra w-3/4 mt-24">
 				<colgroup>
 					<col width="200" />
 				</colgroup>

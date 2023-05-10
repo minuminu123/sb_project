@@ -189,6 +189,31 @@ relTypeCode = 'article',
 relId = 1,
 `point` = 1;
 
+## 댓글에 좋아요 데이터삽입
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'reply',
+relId = 1,
+`point` = 1;
+## 댓글에 좋아요 데이터삽입
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 1,
+`point` = 1;
+## 댓글에 좋아요 데이터삽입
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 2,
+`point` = 1;
+#---------------------
 # 게시물 테이블에 추천 관련 컬럼 추가
 ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
@@ -205,6 +230,16 @@ INNER JOIN (
 ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
+#  reply 기존 게시물의 good,bad ReactionPoint 필드의 값을 채운다
+UPDATE reply AS R
+INNER JOIN (
+    SELECT RP.relTypeCode, RP.relId,
+    SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId
+) AS RP_SUM
+ON R.id = RP_SUM.relId
+SET R.goodReactionPoint = RP_SUM.goodReactionPoint;
 
 # reply 테이블 생성
 CREATE TABLE reply (
@@ -252,6 +287,160 @@ memberId = 2,
 relTypeCode = 'article',
 relId = 2,
 `body` = '댓글 4';
+
+# 댓글 테이블에 추천 관련 컬럼 추가
+ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# 댓글 테이블에 인덱스 추가
+ALTER TABLE `SB_AM_04`.`reply` ADD KEY `relTypeCodeId` (`relTypeCode` , `relId`);
+
+
+###################################################################
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM board;
+SELECT * FROM reactionPoint;
+SELECT * FROM `reply`;
+
+SELECT * from reactionPoint
+WHERE relTypeCode = 'reply' AND 
+memberId = 3;
+
+SELECT R.*, M.nickname AS extra__writer
+				FROM reply AS R
+				LEFT JOIN `member` AS M
+				ON R.memberId = M.id
+				
+EXPLAIN SELECT R.*, M.nickname AS extra__writer
+FROM reply AS R
+LEFT JOIN `member` AS M
+ON R.memberId = M.id
+WHERE R.relTypeCode = 'article'
+AND R.relId = 1
+ORDER BY R.id DESC
+
+SELECT *
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT IF(RP.point > 0, '큼','작음')
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+# 각 게시물 별 좋아요, 싫어요의 갯수
+SELECT RP.relTypeCode, RP.relId,
+SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+
+SELECT IFNULL(SUM(RP.point),0)
+FROM reactionPoint AS RP
+WHERE RP.relTypeCode = 'article'
+AND RP.relId = 3
+AND RP.memberId = 2
+
+
+
+UPDATE article
+SET `body` = '내용4'
+WHERE id= 1;
+
+UPDATE article
+SET `body` = '내용5'
+WHERE id= 2;
+
+UPDATE article
+SET `body` = '내용6'
+WHERE id= 3;
+
+
+# 게시물 갯수 늘리기
+INSERT INTO article 
+( 
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
+SELECT COUNT(*) FROM article;
+
+DESC article;
+
+
+
+SELECT COUNT(*) AS cnt
+FROM article AS A
+WHERE 1
+AND A.boardId = 1
+
+SELECT *
+		  FROM article
+		  WHERE boardId = 1
+		  ORDER BY id DESC
+		  LIMIT 0, 10
+
+DESC `member`;
+
+SELECT LAST_INSERT_ID();
+
+SELECT  CONCAT('%' 'abc' '%');
+
+# left join
+SELECT A.*, M.nickname, RP.point
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+# 서브쿼리 버전
+SELECT A.*, 
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point, 0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point, 0)),0) AS extra__badReactionPoint
+FROM (
+	SELECT A.*, M.nickname AS extra__writerName
+	FROM article AS A
+	LEFT JOIN `member` AS M
+	ON A.memberId= M.id 
+			) AS A
+LEFT JOIN reactionPoint AS RP
+ON RP.relTypeCode = 'article'
+AND A.id = RP.relId
+GROUP BY A.id
+ORDER BY id DESC;
+
+# join 버전
+SELECT A.*,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0,RP.point,0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0,RP.point,0)),0) AS extra__badReactionPoint,
+M.nickname
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+SELECT A.*,
+SUM(RP.point) AS extra__sumReactionPoint,
+SUM(IF(RP.point > 0,RP.point,0)) AS extra__goodReactionPoint,
+SUM(IF(RP.point < 0,RP.point,0)) AS extra__badReactionPoint,
+M.nickname
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
 
 ###################################################################
 SELECT * FROM article;

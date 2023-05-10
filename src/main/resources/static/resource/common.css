@@ -84,6 +84,9 @@ main {
   fill: #2196f3;
  }
  
+ .aaa {
+ 	background-color: red;
+ }
 /*  =============================================
  */
  
@@ -104,6 +107,28 @@ main {
   transition: fill .4s ease-out;
 }
 .like-button2.active svg path {   
+  fill: #2196f3;
+ }
+ 
+ /* 댓글 좋아요 버튼 */
+ 
+  .like-button3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.like-button3.animated {
+  -webkit-animation: pop 0.9s both;
+  animation: pop 0.9s both;
+}
+.like-button3 svg {
+  opacity: 1;
+}
+.like-button3 svg path {
+  fill: #333;
+  transition: fill .4s ease-out;
+}
+.like-button3.active svg path {   
   fill: #2196f3;
  }
  
