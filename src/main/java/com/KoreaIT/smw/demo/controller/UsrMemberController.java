@@ -188,4 +188,67 @@ public class UsrMemberController {
 		return rq.jsReplace(modifyRd.getMsg(), "../member/myPage");
 	}
 
+	@RequestMapping("/usr/member/findLoginId")
+	public String showFindLoginId() {
+
+		return "usr/member/findLoginId";
+	}
+
+	@RequestMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLoginId(@RequestParam(defaultValue = "/") String afterFindLoginIdUri, String name,
+			String email) {
+
+		Member member = memberService.getMemberByNameAndEmail(name, email);
+
+		if (member == null) {
+			return Ut.jsHistoryBack("F-1", "너는 없는 사람이야");
+		}
+
+		return Ut.jsReplace("S-1", Ut.f("너의 아이디는 [ %s ] 야", member.getLoginId()), afterFindLoginIdUri);
+	}
+
+
+
+// +============================= V2 ==========================	
+//	@RequestMapping("/usr/member/doFindLoginId")
+//	@ResponseBody
+//	public String doFindLoginId(String name, String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
+//
+//		if (rq.isLogined()) {
+//			return Ut.jsHistoryBack("F-5", "이미 로그인 상태입니다");
+//		}
+//
+//		if (Ut.empty(name)) {
+//			return Ut.jsHistoryBack("F-1", "이름을 입력해주세요");
+//		}
+//		if (Ut.empty(email)) {
+//			return Ut.jsHistoryBack("F-2", "이메일을 입력해주세요");
+//		}
+//
+//		Member member = memberService.getMemberByNameAndEmail(name, email);
+//
+//		if (member == null) {
+//			return Ut.jsHistoryBack("F-4", Ut.f("해당 사용자는 존재하지 않습니다."));
+//		}
+//
+//		
+//		// 우리가 갈 수 있는 경로를 경우의 수로 표현
+//		// 인코딩
+//		// 그 외에는 처리 불가 -> 메인으로 보내자
+//
+//		return Ut.jsReplace("S-1", Ut.f("인증완료%s", member.getLoginId()), Ut.f("/usr/member/yes?name=%s&email=%s", member.getName(), member.getEmail()));
+//	}
+//	
+//	
+//	@RequestMapping("/usr/member/yes")
+//	public String yes(Model model, String name, String email) {
+//		
+//		Member member = memberService.getMemberByNameAndEmail(name, email);
+//
+//		model.addAttribute("member", member);
+//		return "usr/member/yes";
+//	}
+//
+//	
 }
