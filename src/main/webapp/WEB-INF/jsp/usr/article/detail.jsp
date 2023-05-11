@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.KoreaIT.smw.demo.vo.Reply" %>
+<%@ page import="com.KoreaIT.smw.demo.vo.ReactionPoint" %>
+
 <c:set var="pageTitle" value="ARTICLE DETAIL" />
 <%
 int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-
+int reactionPointsCount = (int) request.getAttribute("reactionPointsCount");
+int repliesCount = (int) request.getAttribute("repliesCount");
+%>
+<%
+List<ReactionPoint> reactionPoints = (List<ReactionPoint>) request.getAttribute("reactionPoints");
+List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 %>
 <%@ include file="../common/head.jspf"%>
 <hr />
@@ -14,7 +23,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	params.memberId = parseInt('${loginedMemberId}');
 	var actorCanCancelGoodReaction = ${actorCanCancelGoodReaction};
 	var actorCanCancelBadReaction = ${actorCanCancelBadReaction};
-	var actorCanCancelGoodReaction2 = ${actorCanCancelGoodReaction2};
+/* 	var actorCanCancelGoodReaction2 = ${actorCanCancelGoodReaction2};
+ */
 
 </script>
 
@@ -41,6 +51,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	})
 	
 	function checkAddRpBefore() {
+		
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
 		if (actorCanCancelGoodReaction == true) {
 			$('.btn-good').addClass('active');
@@ -51,13 +62,29 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 			return;
 		}
 	};
-
+	
+	function checkAddRpBefore2() {
+		<%-- JSP 스크립트릿을 사용하여 JavaScript 변수에 값을 할당 --%>
+		<% for (int j = 0; j < reactionPointsCount; j++) { %>
+		var reactionPointRelId = <%= reactionPoints.get(j).getRelId() %>;
+	    	<% for (int i = 0; i < repliesCount; i++) { %>
+        	var replyId = <%= replies.get(i).getId() %>;
+	    	if ((reactionPointRelId == replyId)) {
+	        	$('.btn-reply-good' + replyId).addClass('active');
+	    	}
+	    <% } %>
+	    <%}%>
+	}
 </script>
 
 <script>
 
 	$(function() {
 		checkAddRpBefore();
+		if(params.memberId) {
+			checkAddRpBefore2();
+		}
+		
 	});
 	
 	/* 댓글 좋아요 관련 */
@@ -85,6 +112,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	                    } 
 	                    else {
 	                         likeButton.addClass('active');
+	                         likeButton.addClass('animated');
+
 	                        likeCount.text(parseInt(likeCount.text()) + 1);
 	                    }
 	                } 
@@ -366,7 +395,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 			</thead>
 
 			<tbody>
-				<c:forEach var="reply" items="${replies }">
+				<c:forEach var="reply" items="${replies }" varStatus="status">
 					<tr class="hover">
 						<td>
 							<div class="badge">${reply.id}</div>
@@ -374,7 +403,6 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 						<td>${reply.getForPrintRegDateType1()}</td>
 						<td>${reply.extra__writer}</td>
 						<td>
-						
 						<button class="btn-reply-good${reply.id } like-button3" onclick="doGoodReaction2(${reply.id})">
 							<span class="replygood${reply.id }">${reply.goodReactionPoint }</span>
 								<?xml version="1.0" encoding="utf-8"?>
@@ -405,6 +433,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	</div>
 </article>
 </div>
+
+<script>
+
+</script>
 
 <script src="/resource/detail.js" defer="defer"></script>
 <%@ include file="../common/foot.jspf"%>

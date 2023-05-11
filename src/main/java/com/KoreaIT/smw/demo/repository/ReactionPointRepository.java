@@ -1,9 +1,13 @@
 package com.KoreaIT.smw.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import com.KoreaIT.smw.demo.vo.ReactionPoint;
 
 @Mapper
 public interface ReactionPointRepository {
@@ -60,4 +64,13 @@ public interface ReactionPointRepository {
 			AND memberId = #{actorId}
 			""")
 	public void deleteBadReactionPoint(int actorId, String relTypeCode, int relId);
+
+	
+	@Select("""
+			select * from reactionPoint 
+			where memberId = #{actorId}
+			and relTypeCode = #{relTypeCode}
+			and `point` > 0;
+			""")
+	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode);
 }

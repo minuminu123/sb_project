@@ -16,6 +16,7 @@ import com.KoreaIT.smw.demo.service.ReplyService;
 import com.KoreaIT.smw.demo.util.Ut;
 import com.KoreaIT.smw.demo.vo.Article;
 import com.KoreaIT.smw.demo.vo.Board;
+import com.KoreaIT.smw.demo.vo.ReactionPoint;
 import com.KoreaIT.smw.demo.vo.Reply;
 import com.KoreaIT.smw.demo.vo.ResultData;
 import com.KoreaIT.smw.demo.vo.Rq;
@@ -166,8 +167,17 @@ public class UsrArticleController {
 		
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 
+		List<ReactionPoint> reactionPoints = reactionPointService.getReactionPointsByLoginMember(rq.getLoginedMemberId(), "reply");;
+		
+		//널이면 actorCanMakeReplyGood 거
+		if(reactionPoints == null) {
+			model.addAttribute("actorCanMakeReplyGood", false);
+		}
+		int reactionPointsCount = reactionPoints.size();
+		// 있으면 reply2 사용
+		model.addAttribute("reactionPoints", reactionPoints);
+		model.addAttribute("reactionPointsCount",reactionPointsCount);
 		int repliesCount = replies.size();
-
 		if(actorCanMakeReactionRd.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
 		}
@@ -175,16 +185,15 @@ public class UsrArticleController {
 		if(actorCanMakeReactionRd2.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction2", actorCanMakeReactionRd2.isSuccess());
 		}
-		
+				
 		model.addAttribute("repliesCount", repliesCount);
 		model.addAttribute("replies", replies);
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
-		
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("actorCanCancelGoodReaction", reactionPointService.actorCanCancelGoodReaction(id, "article"));
 		model.addAttribute("actorCanCancelBadReaction", reactionPointService.actorCanCancelBadReaction(id, "article"));
-		model.addAttribute("actorCanCancelGoodReaction2", reactionPointService.actorCanCancelGoodReaction(id, "reply"));
+//		model.addAttribute("actorCanCancelGoodReaction2", reactionPointService.actorCanCancelGoodReaction2(id, "article"));
 
 		return "usr/article/detail";
 	}

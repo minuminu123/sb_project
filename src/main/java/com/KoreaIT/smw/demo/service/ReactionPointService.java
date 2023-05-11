@@ -1,9 +1,14 @@
 package com.KoreaIT.smw.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.smw.demo.repository.ReactionPointRepository;
+import com.KoreaIT.smw.demo.repository.ReplyRepository;
+import com.KoreaIT.smw.demo.vo.ReactionPoint;
+import com.KoreaIT.smw.demo.vo.Reply;
 import com.KoreaIT.smw.demo.vo.ResultData;
 import com.KoreaIT.smw.demo.vo.Rq;
 
@@ -12,6 +17,8 @@ public class ReactionPointService {
 
 	@Autowired
 	private ReactionPointRepository reactionPointRepository;
+	@Autowired
+	private ReplyRepository replyRepository;
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
@@ -96,6 +103,10 @@ public class ReactionPointService {
 
 		return ResultData.from("S-1", "싫어요 취소 처리 됨");
 	}
+	// 해당 게시글에 "article"에 로그인한 멤버의 댓글을 리스트로받고로그인한 멤버의 id와 reactionPoint 같은 거 찾아서 있으면 reply 리턴 아니면 
+	public List<Reply> actorCanCancelGoodReaction2(int relId, String relTypeCode) {
+		return replyRepository.getForPrintReplies2(rq.getLoginedMemberId(), relTypeCode, relId);
+	}
 	
 	public boolean actorCanCancelGoodReaction(int relId, String relTypeCode) {
 		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
@@ -108,7 +119,6 @@ public class ReactionPointService {
 	
 	public boolean actorCanCancelBadReaction(int relId, String relTypeCode) {
 		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
-
 		if (getPointTypeCodeByMemberId < 0) {
 			return true;
 		}
@@ -120,5 +130,13 @@ public class ReactionPointService {
 
 		return (int) getSumRP;
 	}
+
+	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode) {
+		return reactionPointRepository.getReactionPointsByLoginMember(actorId, relTypeCode);
+	}
+
+
+
+
 
 }
