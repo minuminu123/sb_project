@@ -1033,3 +1033,26 @@ section {
 	background-attachment: fixed;
 	height: 300px;
 }
+
+/* recommend jsp page */
+
+.blinking-text {
+    width: 50%;
+    background-color: wheat;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+          opacity: 1;
+          color: red;
+       }
+   50% {
+          opacity: 0;
+          color: blue;
+        }
+   100% {
+          opacity: 1;
+          color: green;
+        }
+ }
