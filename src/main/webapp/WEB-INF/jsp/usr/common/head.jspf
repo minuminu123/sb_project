@@ -82,6 +82,18 @@
 												</a>
 										</li>
 								</c:if>
+								<li class="hover:underline">
+										<a class="h-full px-3 flex items-center" href="/usr/home/APITest4">
+												<span>API</span>
+										</a>
+								</li>
+								<c:if test="${rq.admin}">
+										<li class="hover:underline">
+												<a class="h-full px-3 flex items-center" href="/adm/memberAndArticle/list">
+														<span>관리자</span>
+												</a>
+										</li>
+								</c:if>
 						</ul>
 						<div class="hamburger">
 								<div class="line"></div>

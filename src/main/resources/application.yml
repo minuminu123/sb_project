@@ -5,7 +5,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: thdalsdn999@gmail.com
-    password: jzukklekrhyvewwv
+    password: 앱비밀번호 12자리 
     properties:
       mail:
         smtp:
