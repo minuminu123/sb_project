@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'NeoDunggeunmoPro-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-family: 'PuradakGentleGothicR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -33,6 +33,12 @@ main {
 .table-box-type-1 thead th, .table-box-type-1 tbody th,
 	.table-box-type-1 td {
 	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+.table thead th, .table tbody th, .table td {
+	border: 2px solid black;
 	padding: 10px;
 	text-align: center;
 }
@@ -504,7 +510,7 @@ fieldset input:focus {
 	height: 1000px;
 }
 
-img {
+.img {
   	background-size: cover;
 	background-attachment: fixed;
 	height: 1000px;
@@ -543,7 +549,7 @@ header span {
 
 /* -----------시계2===========*/
 .clock {
-	position: fixed;
+	position: absolute;
 	display: flex;
 	width: 200px;
 	height: 200px;
@@ -1007,4 +1013,10 @@ section {
 
 .ls-box {
 	top: 200px;
+}
+
+.rec_img {
+	background-size: cover;
+	background-attachment: fixed;
+	height: 300px;
 }

@@ -172,34 +172,34 @@
     <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="7" in="SourceGraphic" in2="noise2" />
   </filter>
 </svg>
-<input class="input input-bordered w-3/6 ml-auto mr-auto text-center absolute z-20" type="text" name="title" data-aos="fade-up"
-		placeholder="내가 원하는 해수욕장 찾기" style="top: 500px;"/>
-<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg"
+<input class="input input-bordered w-3/6 ml-auto mr-auto text-center absolute z-20" type="text" name="title"
+		data-aos="fade-up" placeholder="내가 원하는 해수욕장 찾기" style="top: 500px;" />
+<img class="img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg"
 		alt="Hawaiian water crashes against the rocks">
 
-<div class="bg-main3 flex h-5">
 
-		<div class="clock">
 
-				<div class="hour">
-						<div class="hr" id="hr"></div>
-				</div>
+<div class="clock">
 
-				<div class="min">
-						<div class="mn" id="mn"></div>
-				</div>
-
-				<div class="sec">
-						<div class="sc" id="sc"></div>
-				</div>
-
+		<div class="hour">
+				<div class="hr" id="hr"></div>
 		</div>
 
+		<div class="min">
+				<div class="mn" id="mn"></div>
+		</div>
 
-
-
+		<div class="sec">
+				<div class="sc" id="sc"></div>
+		</div>
 
 </div>
+
+
+
+
+
+
 <div>
 		<div class="bg-main">
 				<div class="main-asdf">

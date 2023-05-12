@@ -114,6 +114,9 @@
 												<li class="hover:underline">
 														<a href="/usr/article/list?boardId=3&page=1">QnA</a>
 												</li>
+												<li class="hover:underline">
+														<a href="/usr/home/recommend" style="white-space: normal;">해수욕장 추천 페이지</a>
+												</li>
 										</ul>
 								</div>
 
