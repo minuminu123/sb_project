@@ -27,7 +27,7 @@ public class RecommendService {
 
         for (Element content : contents) {
         	Recommend recommend = Recommend.builder()
-        			.image("https://picsum.photos/200/300?random=1")
+//        			.image("https://picsum.photos/200/300?random=1")
 //                    .image("/resource/main-beach.jpg") // 이미지
                     .subject(content.select("a.name_link._foryou_trigger").text())		// 제목
                     .url(content.select(".dsc_area > a").attr("abs:href"))		// 링크

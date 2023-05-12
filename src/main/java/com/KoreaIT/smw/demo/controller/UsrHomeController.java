@@ -28,4 +28,9 @@ public class UsrHomeController {
 	public String showMaina() {
 		return "usr/home/ex";
 	}
+	
+	@RequestMapping("/usr/home/ex2")
+	public String showMaina2() {
+		return "usr/home/ex2";
+	}
 }

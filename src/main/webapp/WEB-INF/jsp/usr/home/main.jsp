@@ -204,7 +204,7 @@
 		<div class="bg-main">
 				<div class="main-asdf">
 						<div class="bg-asdf" data-aos="fade-left"></div>
-						<div class="main-div" data-aos="fade-right" style="">Lorem ipsum dolor sit amet, consectetur adipisicing
+						<div class="main-div" data-aos="fade-right">Lorem ipsum dolor sit amet, consectetur adipisicing
 								elit. Nostrum suscipit autem dolorum pariatur officiis ex tempora atque esse quidem ea porro voluptatibus ad
 								dignissimos ut perspiciatis delectus aut laudantium quibusdam.Lorem ipsum dolor sit amet, consectetur
 								adipisicing elit. Voluptatibus et sint aut repudiandae ea velit culpa nulla corporis facere quae eaque ullam in
@@ -245,4 +245,5 @@ sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio 
 ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor sit
 amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
 aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius.
+
 <%@ include file="../common/foot.jspf"%>

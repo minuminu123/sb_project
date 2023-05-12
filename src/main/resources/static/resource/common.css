@@ -5,6 +5,23 @@
     font-style: normal;
 }
 
+html {
+	background-image: linear-gradient(-45deg, #4571d8, #21586f, #666b7a, #2b5ea5);
+	animation: bg-anim 15s ease infinite;
+	background-size: 1000% 1000%;
+}
+
+@keyframes bg-anim {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
 html>body {
 	font-family: 'NeoDunggeunmoPro-Regular';
@@ -20,13 +37,13 @@ body>main {
 }
 
 main {
-	/*background-color: #2397ba;*/
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 1000px;
 	z-index: -10;
+
 }
 
 /* 커스텀 */
@@ -443,7 +460,6 @@ fieldset input:focus {
 
 .bg-main {
 	/* 상대경로 지정 */
-	background-image: url('bg-water.gif');
 	background-size: cover;
 	background-attachment: fixed;
 	height: 1000px;
@@ -475,31 +491,33 @@ fieldset input:focus {
 	height: 1000px;
 	width: 70%;
 	background-color: rgb(233, 202, 128);
-	opacity: .5;
+	opacity: 1;
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
 }
 
-.opa1 {
+/* .opa1 {
 	opacity: 1;
 }
-
+ */
 .main-asdf > .main-div {
 	position: absolute;
 	top: 50px;
 	width: 300px; 
 	margin-left: 100px;
+
 }
 
-.bg-asdf {
+.main-asdf > .bg-asdf {
 	/* 상대경로 지정 */
 	background-image: url('calender.jpeg');
-	top: 20%;
+	top: 47%;
 	left: 700px;
 	position: sticky;
 	width: 500px;
 	height: 500px;
+
 }
 
 .bg-main3 {
@@ -554,7 +572,7 @@ header span {
 	width: 200px;
 	height: 200px;
 	left: 80%;
-	top: 15%;
+	top: 5%;
 	justify-content: center;
 	align-items: center;
 	background: url(http://samuel-garcia.site/img/clock-sam.png);
@@ -730,12 +748,7 @@ header span {
   box-sizing: border-box;
 } */
 
-body {
-  --black: #242424;
-  --white: #f5f5f5;
-  --pill: #e0d4be;
-  --red: #cc033f;
-} 
+
 
 /* ul {
   list-style: none;

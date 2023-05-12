@@ -167,9 +167,9 @@ var ani3 = anime({
 	translateX: '200',
 	autoplay: true
 });
-
-/*var ani4 = anime({
-	targets: 'main .main-asdf',
+/*
+var ani4 = anime({
+	targets: 'main .bg-asdf',
 	translateX: '270',
 	delay: anime.stagger(300)
 

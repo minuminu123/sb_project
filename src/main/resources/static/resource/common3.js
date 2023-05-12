@@ -1,15 +1,17 @@
-
+/*
 const asdf = document.querySelector('.main-asdf');
 const asdfHeight = asdf.getBoundingClientRect().height;
-
+console.log(asdfHeight);
+console.log(window.scrollY);
 document.addEventListener('scroll', () => {
+	
 	if (window.scrollY > asdfHeight + 200) {
 		asdf.classList.add('opa1');
 		asdf.style.transition = '.7s';
 	} else {
 		asdf.classList.remove('opa1');
 	}
-});
+}); */
 
 
 let burger = document.getElementById("burger");

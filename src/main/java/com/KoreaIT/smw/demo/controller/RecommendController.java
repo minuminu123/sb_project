@@ -21,8 +21,9 @@ public class RecommendController {
     @GetMapping("/usr/home/recommend")
     public String news(Model model) throws Exception{
         List<Recommend> recommendList = recommendService.getNewsDatas();
+        int recommendCount = recommendList.size();
         model.addAttribute("recommendList", recommendList);
-
+        model.addAttribute("recommendCount", recommendCount);
         return "/usr/home/recommend";
     }
 }
