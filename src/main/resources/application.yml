@@ -1,6 +1,17 @@
 server:
   port: 8081
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: thdalsdn999@gmail.com
+    password: jzukklekrhyvewwv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -13,7 +24,11 @@ spring:
     password: alsdn96321
 mybatis:
   type-aliases-package: com.KoreaIT.smw.demo.vo
-  custom:
+custom:
+  siteName: SB_AM_04
+  siteMainUri: http://localhost:8081
+  emailFrom: no-reply@localhost
+  emailFromName: SB_AM_04
   logging:
     dir: log
     level: debug

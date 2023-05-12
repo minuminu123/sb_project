@@ -66,7 +66,7 @@
 	}
 </script>
 
-<section class="mt-8 text-xl">
+<article class="mt-36 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<form action="../member/doModify" method="POST" onsubmit="MemberModify__submit(this); return false;">
@@ -144,6 +144,6 @@
 
 		</div>
 	</div>
-</section>
+</article>
 
 <%@ include file="../common/foot.jspf"%>

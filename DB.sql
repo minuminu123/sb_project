@@ -68,7 +68,7 @@ loginPw = 'test1',
 `name` = '회원1',
 `nickname` = '회원1',
 cellphoneNum = '01043214321',
-email = 'abcd@gmail.com';
+email = 'thdalsdn999@gmail.com';
 
 INSERT INTO `member` 
 SET regDate = NOW(),

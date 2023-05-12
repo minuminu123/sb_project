@@ -5,7 +5,7 @@
 <%@ page import="com.KoreaIT.smw.demo.util.Ut"%>
 <hr />
 
-<article class="mt-8 text-xl">
+<article class="mt-36 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<table border="1">
