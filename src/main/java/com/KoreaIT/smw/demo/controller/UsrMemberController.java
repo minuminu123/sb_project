@@ -1,20 +1,16 @@
 package com.KoreaIT.smw.demo.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.KoreaIT.smw.demo.service.ArticleService;
 import com.KoreaIT.smw.demo.service.MemberService;
 import com.KoreaIT.smw.demo.util.Ut;
-import com.KoreaIT.smw.demo.vo.Article;
+import com.KoreaIT.smw.demo.util.Validator;
 import com.KoreaIT.smw.demo.vo.Member;
 import com.KoreaIT.smw.demo.vo.ResultData;
 import com.KoreaIT.smw.demo.vo.Rq;
@@ -45,8 +41,62 @@ public class UsrMemberController {
 		if (existsMember != null) {
 			return ResultData.from("F-2", "해당 아이디는 이미 사용중이야", "loginId", loginId);
 		}
-
+		
 		return ResultData.from("S-1", "사용 가능!", "loginId", loginId);
+	}
+	
+	@RequestMapping("/usr/member/getEmailDup")
+	@ResponseBody
+	public ResultData getEmailDup(String email) {
+
+		if (Ut.empty(email)) {
+			return ResultData.from("F-1", "email을 입력해주세요");
+		}
+		
+		boolean isValid = Validator.isValidEmail(email);
+        if (!isValid) {
+        	return ResultData.from("F-3", "이메일 형식에 맞춰 작성해 주세요(gmail)", "email", email);
+        }
+
+		Member existsMember = memberService.getMemberByEmail(email);
+
+		if (existsMember != null) {
+			return ResultData.from("F-2", "해당 이메일은 이미 사용중이야", "email", email);
+		}
+		
+		return ResultData.from("S-1", "사용 가능!", "email", email);
+	}
+	
+	@RequestMapping("/usr/member/chkcellPhoneNum")
+	@ResponseBody
+	public ResultData chkcellPhoneNum(String cellphoneNum) {
+
+		if (Ut.empty(cellphoneNum)) {
+			return ResultData.from("F-1", "cellphoneNum 입력해주세요");
+		}
+		
+		boolean isValid = Validator.validatePhoneNumber(cellphoneNum);
+        if (!isValid) {
+        	return ResultData.from("F-3", "전화번호 형식에 맞게 작성해주세요", "cellphoneNum", cellphoneNum);
+        }
+		
+		return ResultData.from("S-1", "사용 가능!", "cellphoneNum", cellphoneNum);
+	}
+	
+	@RequestMapping("/usr/member/getLoginPwDup")
+	@ResponseBody
+	public ResultData getLoginPwDup(String loginPw) {
+
+		if (Ut.empty(loginPw)) {
+			return ResultData.from("F-1", "비밀번호를 입력해주세요");
+		}
+		
+		boolean isValid = Validator.isValidPassword(loginPw);
+        if (!isValid) {
+        	return ResultData.from("F-3", "비밀번호 형식에 맞게 작성헤주세요", "loginPw", loginPw);
+        }
+		
+		return ResultData.from("S-1", "사용 가능!", "loginPw", loginPw);
 	}
 	
 	@RequestMapping("/usr/member/doJoin")
@@ -73,6 +123,17 @@ public class UsrMemberController {
 //			return rq.jsHistoryBack("F-6", "이메일을 입력해주세요");
 //		}
 
+		boolean isValid = Validator.isValidEmail(email);
+        if (!isValid) {
+        	return rq.jsHistoryBack("F-1", "이메일 형식에 맞춰 작성해 주세요");
+//            System.out.println("유효한 이메일입니다.");
+        }
+		
+		isValid = Validator.validatePhoneNumber(cellphoneNum);
+        if (!isValid) {
+        	return rq.jsHistoryBack("F-2", "전화번호 형식에 맞춰 작성해 주세요");
+        }
+        
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {
@@ -131,6 +192,10 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
 
+		if(rq.isNotLogined()) {
+			return rq.jsReplace("로그인 후 이용해주세요", "/usr/member/login");
+		}
+		
 		rq.logout();
 
 		return Ut.jsReplace("S-1", "로그아웃 되었습니다", afterLogoutUri);

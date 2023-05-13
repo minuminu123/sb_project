@@ -9,7 +9,10 @@
 <script>
 	let submitJoinFormDone = false;
 	let validLoginId = "";
-
+	let validEmail = "";
+	let validLoginPw = "";
+	let validCellphoneNum = "";
+	
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
 			alert('처리중입니다');
@@ -90,6 +93,115 @@
 	}
 	
 	const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup, 600);
+	
+	function checkEmailDup(el) {
+		$('.checkDup-msg2').empty();
+		const form = $(el).closest('form').get(0);
+		if (form.email.value.length == 0) {
+			validEmail = '';
+			return;
+		}
+		if(validEmail == form.email.value){
+			return;
+		}
+		$.get('../member/getEmailDup', {
+			isAjax : 'Y',
+			email : form.email.value
+		}, function(data) {
+			if (data.success) {
+				$('.checkDup-msg2').html('<div class="mt-2">' + data.msg + '</div>')
+				validEmail = data.data1;
+			} else {
+				$('.checkDup-msg2').html('<div class="mt-2 text-red-500">' + data.msg + '</div>')
+				validEmail = '';
+			}
+		}, 'json');
+	}
+	
+	const checkEmailDupDebounced = _.debounce(checkEmailDup, 600);
+	
+	function chkcellPhoneNum(el) {
+		$('.checkDup-msg4').empty();
+		const form = $(el).closest('form').get(0);
+		if (form.cellphoneNum.value.length == 0) {
+			validCellphoneNum = '';
+			return;
+		}
+		if(validCellphoneNum == form.cellphoneNum.value){
+			return;
+		}
+		$.get('../member/chkcellPhoneNum', {
+			isAjax : 'Y',
+			cellphoneNum : form.cellphoneNum.value
+		}, function(data) {
+			if (data.success) {
+				$('.checkDup-msg4').html('<div class="mt-2">' + data.msg + '</div>')
+				validCellphoneNum = data.data1;
+			} else {
+				$('.checkDup-msg4').html('<div class="mt-2 text-red-500">' + data.msg + '</div>')
+				validCellphoneNum = '';
+			}
+		}, 'json');
+	}
+	
+	const chkcellPhoneNumDebounced = _.debounce(chkcellPhoneNum, 600);
+	
+	function checkLoginPw(el) {
+		$('.checkDup-msg3').empty();
+		const form = $(el).closest('form').get(0);
+		if (form.loginPw.value.length == 0) {
+			validLoginPw = '';
+			return;
+		}
+		if(validLoginPw == form.loginPw.value){
+			return;
+		}
+		$.get('../member/getLoginPwDup', {
+			isAjax : 'Y',
+			loginPw : form.loginPw.value
+		}, function(data) {
+			if (data.success) {
+				$('.checkDup-msg3').html('<div class="mt-2">' + data.msg + '</div>')
+				validLoginPw = data.data1;
+			} else {
+				$('.checkDup-msg3').html('<div class="mt-2 text-red-500">' + data.msg + '</div>')
+				validLoginPw = '';
+			}
+		}, 'json');
+	}
+	
+	const checkLoginPwDebounced = _.debounce(checkLoginPw, 600);
+	
+	// DOMContentLoaded 이벤트 리스너 등록
+	  document.addEventListener('DOMContentLoaded', function () {
+	// 입력칸과 에러 메시지 요소 가져오기
+	  var passwordInput = document.getElementById('password');
+	  var confirmPasswordInput = document.getElementById('confirmPassword');
+	  var errorMessage = document.getElementById('error-message');
+
+	  // 입력칸 변경 이벤트 리스너 등록
+	  confirmPasswordInput.addEventListener('blur', validatePassword);
+
+	  // 비밀번호 확인 함수
+	  function validatePassword() {
+	    var password = passwordInput.value;
+	    var confirmPassword = confirmPasswordInput.value;
+
+	    // 비밀번호와 비밀번호 확인이 일치하지 않으면 에러 메시지 표시
+	    if (password !== confirmPassword) {
+	      errorMessage.textContent = '비밀번호가 일치하지 않습니다.';
+	    } else {
+	      errorMessage.textContent = ''; // 일치하면 에러 메시지 제거
+	    }
+	  }
+	// confirmPassord 입력칸의 변경 이벤트 리스너 등록
+	    confirmPasswordInput.addEventListener('input', function () {
+	      // confirmPassword 입력칸이 비워지면 에러 메시지 숨기기
+	      if (confirmPasswordInput.value === '') {
+	        errorMessage.textContent = '';
+	      }
+	    });
+	  });
 </script>
 
 <article class="mt-8 text-xl">
@@ -113,13 +225,16 @@
 					<tr>
 						<th>비밀번호</th>
 						<td>
-							<input name="loginPw" class="w-full input input-bordered  max-w-xs" placeholder="비밀번호를 입력해주세요" />
+							<input onkeyup="checkLoginPwDebounced(this);" name="loginPw" id="password" class="w-full input input-bordered  max-w-xs" placeholder="(8자이상 특수문자1개 이상)" />
+							<div class="checkDup-msg3"></div>
+							
 						</td>
 					</tr>
 					<tr>
 						<th>비밀번호 확인</th>
 						<td>
-							<input name="loginPwConfirm" class="w-full input input-bordered  max-w-xs" placeholder="비밀번호 확인을 입력해주세요" />
+							<input name="loginPwConfirm" id="confirmPassword" class="w-full input input-bordered  max-w-xs" placeholder="(8자이상 특수문자1개 이상)" />
+							<div id="error-message" style="color: red;"></div>
 						</td>
 					</tr>
 					<tr>
@@ -137,13 +252,15 @@
 					<tr>
 						<th>전화번호</th>
 						<td>
-							<input name="cellphoneNum" class="w-full input input-bordered  max-w-xs" placeholder="전화번호를 입력해주세요" />
+							<input name="cellphoneNum" onkeyup="chkcellPhoneNumDebounced(this)" class="w-full input input-bordered  max-w-xs" placeholder="전화번호를 입력해주세요" />
+							<div class="checkDup-msg4"></div>
 						</td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td>
-							<input name="email" class="w-full input input-bordered  max-w-xs" placeholder="이메일을 입력해주세요" />
+							<input onkeyup="checkEmailDupDebounced(this);" name="email" class="w-full input input-bordered  max-w-xs" placeholder="이메일을 입력해주세요(gmail만 가능)" />
+							<div class="checkDup-msg2"></div>
 						</td>
 					</tr>
 					<tr>
