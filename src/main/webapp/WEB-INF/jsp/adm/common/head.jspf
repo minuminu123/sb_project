@@ -20,7 +20,7 @@
 
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="shortcut icon" href="/resource/favicon.ico" />
-<script src="/resource/common.js" defer="defer"></script>
+<!-- <script src="/resource/common.js" defer="defer"></script> -->
 </head>
 <body>
 

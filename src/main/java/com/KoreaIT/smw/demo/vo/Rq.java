@@ -165,7 +165,7 @@ public class Rq {
 		switch (requestUri) {
 		case "/usr/article/write":
 			return "../member/doLogout?afterLogoutUri=" + "/";
-		case "/adm/memberAndArticle/list":
+		case "/adm/member/list":
 			return "../member/doLogout?afterLogoutUri=" + "/";
 		}
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
