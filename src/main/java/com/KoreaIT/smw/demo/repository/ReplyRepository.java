@@ -112,5 +112,15 @@ public interface ReplyRepository {
 		""")
 	List<Reply> getForPrintReplies2(int actorId, String relTypeCode, int relId);
 
+	
+	@Select("""
+			SELECT R.*, M.nickname AS extra__writer
+			FROM reply AS R
+			INNER JOIN `member` AS M
+			ON R.memberId = M.id
+			WHERE R.id = #{id}
+			""")
+	Reply getForPrintReply2(int id);
+
 
 }

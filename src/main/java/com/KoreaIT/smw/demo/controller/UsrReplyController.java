@@ -127,5 +127,18 @@ public class UsrReplyController {
 
 		return rq.jsReplace(modifyReplyRd.getMsg(), replaceUri);
 	}
+	
+	@RequestMapping("/usr/reply/getModifyForm")
+	@ResponseBody
+	public ResultData getModifyForm(int id) {
+		
+		Reply reply = replyService.getForPrintReply2(id);
+
+		if(reply == null) {
+			return ResultData.from("F-1", "해당 댓글은 존재하지 않습니다");
+		}
+
+		return ResultData.from("S-1", "댓글 정보 조회 성공", "reply", reply);
+	}
 
 }

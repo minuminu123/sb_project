@@ -215,12 +215,42 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	      });
 	  }
 
+	function ReplyModify__getForm(replyId, i) {
+		
+		$.get('../reply/getModifyForm', {
+			id: replyId,
+			ajaxMode: 'Y'
+		}, function(data) {
+			let modifyForm = $('#' + i);
+			
+			modifyForm.empty().html("");
+			
+			let addHtml = `
+				<form action="../reply/doModify" method="POST" onsubmit="ReplyWrite__submitForm(this); return false;">
+					<input type="hidden" name="id" value="` + data.data1.id + `" />
+					<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
+					<div class="mt-2 p-4 rounded-lg border border-gray-400 text-base" style="margin-right: 70px;">
+						<div class="mb-2"><span>작성자 : ` + data.data1.extra__writer +`</span></div>
+						<textarea class="textarea textarea-bordered w-full" name="body" rows="2" placeholder="댓글 수정">` + data.data1.body + `</textarea>
+						<div class="flex justify-end">
+							<a href="detail?id="` + data.data1.relId + `" class="btn btn-active btn-ghost btn-sm mr-2">취소</a>
+							<button class="btn btn-active btn-ghost btn-sm">등록</button>
+				</form>
+			</div>
+		</div>`;
+			
+		modifyForm.append(addHtml);
+		}, 'json');
+		
+		
+	}
+	
 </script>
 <div class="bg-detail">
 <article class="mt-36 text-xl">
-		<div class="container mx-auto px-3" style="width: 800px; background-color: white;">
+		<div class="container mx-auto px-3" style="width: 800px;">
 				<div class="table-box-type-1">
-						<table border="1">
+						<table border="1" style="background-color: white;">
 								<colgroup>
 										<col width="200" />
 								</colgroup>
@@ -293,20 +323,27 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 												<th>내용</th>
 												<td>${article.body }</td>
 										</tr>
+										<tr>
+												<th></th>
+												<td>
+												<button class="btn-text-link btn btn-active btn-ghost btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+												<c:if test="${article.actorCanModify }">
+													<a class="btn-text-link btn btn-active btn-ghost btn-sm" href="../article/modify?id=${article.id }">수정</a>	
+												</c:if>
+												<c:if test="${article.actorCanDelete }">
+													<a class="btn-text-link btn btn-active btn-ghost btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
+													href="../article/doDelete?id=${article.id }">삭제</a>
+												</c:if>
+												</td>
+										</tr>
 								</tbody>
 
 						</table>
 				</div>
 				<div class="btns flex justify-around ml-24" style="width: 600px;">
-						<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+						
 						<div style="width: 300px;"></div>
-						<c:if test="${article.actorCanModify }">
-								<a class="btn-text-link btn btn-active btn-ghost" href="../article/modify?id=${article.id }">수정</a>
-						</c:if>
-						<c:if test="${article.actorCanDelete }">
-								<a class="btn-text-link btn btn-active btn-ghost" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
-										href="../article/doDelete?id=${article.id }">삭제</a>
-						</c:if>
+						
 				</div>
 		</div>
 </article>
@@ -329,107 +366,57 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	}
 </script>
 
-<article class="text-xl" style="top: 800px; height: 300px;">
-	<div class="container mx-auto px-3" style="width: 700px; background-color: wheat;">
-		<div class="table-box-type-1">
-			<c:if test="${rq.logined }">
+<div style="height: 100px;"></div>
+
+
+<article style="top: 1150px; height: 300px; width: 850px; left: 200px;">
+	<div class="container mx-auto px-3">
+		<h1 class="text-3xl">댓글 리스트(${repliesCount })</h1>
+		<c:if test="${rq.logined }">
 				<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submitForm(this); return false;">
 					<input type="hidden" name="relTypeCode" value="article" />
 					<input type="hidden" name="relId" value="${article.id }" />
 					<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
-					<table style="right: 100px;">
-						<colgroup>
-							<col width="200" />
-						</colgroup>
-
-						<tbody>
-							<tr>
-								<th>댓글</th>
-								<td>
-									<textarea class="input input-bordered w-full max-w-xs" type="text" name="body" placeholder="내용을 입력해주세요" /></textarea>
-								</td>
-							</tr>
-							<tr>
-								<th></th>
-								<td>
-									<button type="submit" value="작성" />
-									댓글 작성
-									</button>
-								</td>
-							</tr>
-						</tbody>
-
-					</table>
+					<div class="mt-4 p-4 rounded-lg border border-gray-400 text-base">
+						<div class="mb-2"><span>${rq.loginedMember.nickname }</span></div>
+						<textarea class="textarea textarea-bordered w-full" name="body" rows="2" placeholder="댓글을 작성하세요"></textarea>
+						<div class="flex justify-end"><button class="btn btn-active btn-ghost btn-sm btn-text-link">등록</button></div>
+					</div>
 				</form>
 			</c:if>
 			<c:if test="${rq.notLogined }">
-				<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 하고 해라
+				<div style="background-color: white;" class="flex justify-center">
+					<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 
+					<div class="text-2xl" style="margin-top: 10px;">후 댓글을 작성할 수 있습니다</div>
+				</div>
 			</c:if>
-		</div>
-
-	</div>
-</article>
-<article style="top: 1000px; height: 300px; width: 850px;">
-	<div class="container mx-auto px-3">
-		<h1 class="text-3xl">댓글 리스트(${repliesCount })</h1>
-		<table class="table table-zebra w-full">
-			<colgroup>
-				<col width="70" />
-				<col width="100" />
-				<col width="100" />
-				<col width="50" />
-				<col width="140" />
-				<col width="50" />
-				<col width="50" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>날짜</th>
-					<th>작성자</th>
-					<th>추천</th>
-					<th>내용</th>
-					<th>수정</th>
-					<th>삭제</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<c:forEach var="reply" items="${replies }" varStatus="status">
-					<tr class="hover">
-						<td>
-							<div class="badge">${reply.id}</div>
-						</td>
-						<td>${reply.getForPrintRegDateType1()}</td>
-						<td>${reply.extra__writer}</td>
-						<td>
-						<button class="btn-reply-good${reply.id } like-button3" onclick="doGoodReaction2(${reply.id})">
+		<div style="height: 100px;"></div>
+		<c:forEach var="reply" items="${replies }" varStatus="status">
+			<div id="${status.count }" class="py-2 pl-16 text-base" style="background-color: white;">
+				<div class="font-semibold"><span>${reply.extra__writer }</span></div>
+				<div><span>${reply.body }</span></div>
+				<div style="border: 2px solid; display: inline-block; background-color: gray; margin-top: 10px;">
+				<button class="btn-reply-good${reply.id } like-button3" onclick="doGoodReaction2(${reply.id})">
 							<span class="replygood${reply.id }">${reply.goodReactionPoint }</span>
 								<?xml version="1.0" encoding="utf-8"?>
 								<svg width="20" height="20" viewBox="0 0 1792 1792" class="bi bi-hand-thumbs-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 							<path
 								d="M320 1344q0-26-19-45t-45-19q-27 0-45.5 19t-18.5 45q0 27 18.5 45.5t45.5 18.5q26 0 45-18.5t19-45.5zm160-512v640q0 26-19 45t-45 19h-288q-26 0-45-19t-19-45v-640q0-26 19-45t45-19h288q26 0 45 19t19 45zm1184 0q0 86-55 149 15 44 15 76 3 76-43 137 17 56 0 117-15 57-54 94 9 112-49 181-64 76-197 78h-129q-66 0-144-15.5t-121.5-29-120.5-39.5q-123-43-158-44-26-1-45-19.5t-19-44.5v-641q0-25 18-43.5t43-20.5q24-2 76-59t101-121q68-87 101-120 18-18 31-48t17.5-48.5 13.5-60.5q7-39 12.5-61t19.5-52 34-50q19-19 45-19 46 0 82.5 10.5t60 26 40 40.5 24 45 12 50 5 45 .5 39q0 38-9.5 76t-19 60-27.5 56q-3 6-10 18t-11 22-8 24h277q78 0 135 57t57 135z" /></svg>
-						</button>
-						
-						
-						</td>
-						<td align="left">${reply.body}</td>
-						<td>
-							<c:if test="${reply.actorCanModify }">
-<a class="btn-text-link btn btn-active btn-ghost"
-									href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>							</c:if>
-						</td>
-						<td>
-							<c:if test="${reply.actorCanDelete }">
-								<a class="btn-text-link btn btn-active btn-ghost" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
-									href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">삭제</a>
-							</c:if>
-						</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-
-		</table>
+				</button>
+				</div>
+				<div class="text-sm text-gray-400"><span>${reply.getForPrintRegDateType1() }</span></div>
+				<div class="flex justify-end">
+				<c:if test="${reply.actorCanModify }">
+					<a class="btn btn-active btn-ghost btn-sm btn-text-link" onclick="ReplyModify__getForm(${reply.id },${status.count });">수정</a>							
+				</c:if>
+				<c:if test="${reply.actorCanDelete }">
+					<a class="btn btn-active btn-ghost btn-sm btn-text-link ml-4" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
+					href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">삭제</a>
+				</c:if>
+				</div>
+			</div>
+			<hr />
+		</c:forEach>
 	</div>
 </article>
 </div>

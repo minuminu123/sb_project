@@ -111,4 +111,8 @@ public class ReplyService {
 		return ResultData.from("S-1", "좋아요 감소", "affectedRow", affectedRow);		
 	}
 
+	public Reply getForPrintReply2(int id) {
+		return replyRepository.getForPrintReply2(id);
+	}
+
 }
