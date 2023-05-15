@@ -5,6 +5,14 @@
     font-style: normal;
 }
 
+
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
 	background-image: linear-gradient(-45deg, #4571d8, #21586f, #666b7a, #2b5ea5);
 	animation: bg-anim 15s ease infinite;
@@ -223,6 +231,71 @@ main {
 } 
 
 /* ==================== 스타일 부분 합치는 중==============*/
+
+#hero-1 > .hero-info > h1 {
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+	font-size: 3rem;
+	margin-left: 20px;
+}
+
+#hero-1 > .hero-info > h3 {
+	margin-left: 20px;
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+}
+
+#hero-2 > .hero-info > h1 {
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+	font-size: 3rem;
+	margin-left: 20px;
+}
+
+#hero-2 > .hero-info > h3 {
+	margin-left: 20px;
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+}
+
+#hero-3 > .hero-info > h1 {
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+	font-size: 3rem;
+	margin-left: 20px;
+}
+
+#hero-3 > .hero-info > h3 {
+	margin-left: 20px;
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+}
+
+#hero-4 > .hero-info > h1 {
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+	font-size: 3rem;
+	margin-left: 20px;
+}
+
+#hero-4 > .hero-info > h3 {
+	margin-left: 20px;
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+}
+
+#hero-5 > .hero-info > h1 {
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+	font-size: 3rem;
+	margin-left: 20px;
+}
+
+#hero-5 > .hero-info > h3 {
+	margin-left: 20px;
+	color: white;
+	font-family: 'SBAggroB', sans-serif;
+}
 
 .con {
 	border: 10px solid red;
@@ -497,14 +570,11 @@ fieldset input:focus {
 	position: relative;
 }
 
-/* .opa1 {
-	opacity: 1;
-}
- */
 .main-asdf > .main-div {
-	position: absolute;
-	top: 50px;
+	position: sticky;
+	top: 100px;
 	width: 300px; 
+	height: 300px;
 	margin-left: 100px;
 
 }
@@ -512,7 +582,7 @@ fieldset input:focus {
 .main-asdf > .bg-asdf {
 	/* 상대경로 지정 */
 	background-image: url('calender.jpeg');
-	top: 47%;
+	top: 4%;
 	left: 700px;
 	position: sticky;
 	width: 500px;
@@ -662,7 +732,7 @@ header span {
 	width: 300px;
 	transition: 1000ms all cubic-bezier(0.19, 1, 0.22, 1);
 	transform: translateX(-100%);
-	left: 60px;
+	left: 50px;
 	opacity: .5;
 }
 
@@ -692,7 +762,7 @@ header span {
 }
 
 .hamburger {
-	left: 20px;
+	left: 15px;
 	position: fixed;
 	width: 20px;
 	height: 20px;
@@ -870,35 +940,35 @@ article {
 }
 
 .hi-1 {
-  background-image: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-image: url("/resource/main-beach.jpg");
 }
 
 /* Photo by Lucas Favre
    https://unsplash.com/photos/BRTV55ErUZg
 ----------------------------------------------- */
 .hi-2 {
-  background-image: url("https://images.unsplash.com/photo-1517057011470-8f36d636e6ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-image: url("/resource/main.jpeg");
 }
 
 /* Photo by Roell de Ram
    https://unsplash.com/photos/2DM7eOR5iyc
 ----------------------------------------------- */
 .hi-3 {
-  background-image: url("https://images.unsplash.com/flagged/photo-1552035791-b3cc1632e933?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80");
+  background-image: url("/resource/main2.jpg");
 }
 
 /* Photo by Go to Bernd Wahlbrinck
    https://unsplash.com/photos/lVVvYiR66kw
 ----------------------------------------------- */
 .hi-4 {
-  background-image: url("https://images.unsplash.com/photo-1574700273608-7962d3602a9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-image: url("/resource/main3.jpg");
 }
 
 /* Photo by Micheal Schofield
    https://unsplash.com/photos/d0ohwP3BRf4
 ----------------------------------------------- */
 .hi-5 {
-  background-image: url("https://images.unsplash.com/photo-1605045544284-d13c6d6a60a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-image: url("/resource/main4.jpg");
 }
 
 /*  SECTION: Overlay Menu Section
@@ -1042,6 +1112,11 @@ section {
     animation: blink 1s infinite;
 }
 
+.blinking-hamburger {
+    width: 50%;
+    animation: blink 1s infinite;
+}
+
 @keyframes blink {
     0% {
           opacity: 1;
@@ -1055,4 +1130,8 @@ section {
           opacity: 1;
           color: green;
         }
+ }
+ 
+.lorem-text {
+ 	font-family: 'SBAggroB', sans-serif;
  }

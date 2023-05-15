@@ -14,18 +14,16 @@
 				<main class="main-first">
 						<article id="hero-1" style="--i: 5">
 								<div class="hero-info">
-										<h2>Travel the</h2>
-										<h1>World</h1>
-										<h3>Pragser Wildsee, Italy</h3>
+										<h1>즐거운 여름휴가</h1>
+										<h3>정보를 바다가다.</h3>
 								</div>
 								<div class="hero-image hi-1"></div>
 						</article>
 
 						<article id="hero-2" style="--i: 4">
 								<div class="hero-info">
-										<h2>Savour the</h2>
-										<h1>Journey</h1>
-										<h3>Marignier, France</h3>
+										<h1>좋은사람들과의 추억</h1>
+										<h3>즐거움을 바다가다.</h3>
 								</div>
 								<div class="hero-image hi-2"></div>
 
@@ -33,9 +31,8 @@
 
 						<article id="hero-3" style="--i: 3">
 								<div class="hero-info">
-										<h2>Expand Your</h2>
-										<h1>Horizons</h1>
-										<h3>Hooker Valley Track, New Zealand</h3>
+										<h1>무더운 더위</h1>
+										<h3>시원함을 바다가다.</h3>
 								</div>
 								<div class="hero-image hi-3"></div>
 
@@ -43,9 +40,8 @@
 
 						<article id="hero-4" style="--i: 2">
 								<div class="hero-info">
-										<h2>Explore and</h2>
-										<h1>Reflect</h1>
-										<h3>Dolmites, Italy</h3>
+										<h1>리얼 경험으로</h1>
+										<h3>신뢰성을 바다가다.</h3>
 								</div>
 								<div class="hero-image hi-4"></div>
 
@@ -53,9 +49,8 @@
 
 						<article id="hero-5" style="--i: 1">
 								<div class="hero-info">
-										<h2>Change Your</h2>
-										<h1>Perspective</h1>
-										<h3>Phuket, Thailand</h3>
+										<h1>정확한 정보로</h1>
+										<h3>편리함을 바다가다.</h3>
 								</div>
 								<div class="hero-image hi-5"></div>
 						</article>
@@ -163,19 +158,9 @@
 
 </div>
 
-<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <filter id="water">
-    <feTurbulence type="fractalNoise" baseFrequency=".05 .05" numOctaves="1" result="noise1"></feTurbulence>
-    <feColorMatrix in="noise1" type="hueRotate" values="0" result="noise2">
-      <animate attributeName="values" from="0" to="360" dur="1s" repeatCount="indefinite" />
-    </feColorMatrix>
-    <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="7" in="SourceGraphic" in2="noise2" />
-  </filter>
-</svg>
 <input class="input input-bordered w-3/6 ml-auto mr-auto text-center absolute z-20" type="text" name="title"
 		data-aos="fade-up" placeholder="내가 원하는 해수욕장 찾기" style="top: 500px;" />
-<img class="img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg"
-		alt="Hawaiian water crashes against the rocks">
+
 
 
 
@@ -204,46 +189,15 @@
 		<div class="bg-main">
 				<div class="main-asdf">
 						<div class="bg-asdf" data-aos="fade-left"></div>
-						<div class="main-div" data-aos="fade-right">Lorem ipsum dolor sit amet, consectetur adipisicing
-								elit. Nostrum suscipit autem dolorum pariatur officiis ex tempora atque esse quidem ea porro voluptatibus ad
-								dignissimos ut perspiciatis delectus aut laudantium quibusdam.Lorem ipsum dolor sit amet, consectetur
-								adipisicing elit. Voluptatibus et sint aut repudiandae ea velit culpa nulla corporis facere quae eaque ullam in
-								debitis accusamus doloremque beatae dolore. Error voluptatem.Lorem ipsum dolor sit amet, consectetur adipisicing
-								elit. Quae voluptatum dolor voluptates alias veritatis voluptatibus officia recusandae sunt incidunt autem porro
-								repellat necessitatibus quia ducimus cumque delectus dolores rerum! Possimus.</div>
-
+						<div class="main-div" data-aos="fade-right">
+								<p class="lorem-text">무더운 여름날 6,7,8월 휴가 계획을 정하고 싶다고? 사람들과 소통하며 좋은 해수욕장 찾아가자! 경상도? 강원도? 전라도? 충청도? 딱 정해!</p>
+								<a href="/usr/article/list?boardId=2&page=1" class="btn btn-outline btn-info mt-12">추천 게시판 바로가기</a>
+						</div>
 				</div>
-
-				<!-- 				<div class="main-asdf">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima molestias a et
-						consequatur dolor qui optio sapiente ex aliquid excepturi repudiandae quam fuga? Porro fugiat ad libero aliquam
-						eveniet quod.</div> -->
 		</div>
 </div>
 
-<div class="bg-main2"></div>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi
-explicabo quis ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem
-ipsum dolor sit amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias!
-Suscipit aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius. Lorem ipsum
-dolor sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi explicabo
-quis ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor
-sit amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
-aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius. Lorem ipsum dolor
-sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi explicabo quis
-ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor sit
-amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
-aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius. Lorem ipsum dolor
-sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi explicabo quis
-ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor sit
-amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
-aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius. Lorem ipsum dolor
-sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi explicabo quis
-ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor sit
-amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
-aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius. Lorem ipsum dolor
-sit amet, consectetur adipisicing elit. Ducimus atque sint molestias distinctio eaque nisi hic! Sequi explicabo quis
-ducimus animi deleniti praesentium cupiditate sapiente delectus inventore cum nobis temporibus! Lorem ipsum dolor sit
-amet, consectetur adipisicing elit. Est incidunt odit dolorem porro explicabo doloremque cumque alias! Suscipit
-aspernatur in harum repellat saepe fugit reiciendis similique obcaecati pariatur consequuntur eius.
+<div class="bg-main2">각 해수욕장 사진과 해당 해수욕장 이름 밑에 띄우게 (ex에 있는 해린이 사진)</div>
+
 
 <%@ include file="../common/foot.jspf"%>

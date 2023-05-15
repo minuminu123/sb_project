@@ -93,7 +93,7 @@
 										</li>
 								</c:if>
 						</ul>
-						<div class="hamburger">
+						<div class="hamburger blinking-hamburger" style="width: 20px;">
 								<div class="line"></div>
 								<div class="line"></div>
 								<div class="line"></div>
@@ -104,16 +104,16 @@
 
 										<ul>
 												<li class="hover:underline">
-														<a href="/usr/article/list?boardId=1&page=1">NOTICE</a>
+														<a href="/usr/article/list?boardId=1&page=1">공지 게시판</a>
 												</li>
 												<li class="hover:underline">
-														<a href="/usr/article/list?boardId=2&page=1">FREE</a>
+														<a href="/usr/article/list?boardId=2&page=1" style="white-space: normal;">해수욕장 추천 게시판</a>
 												</li>
 												<li class="hover:underline">
-														<a href="/usr/article/list?boardId=3&page=1">QnA</a>
+														<a href="/usr/article/list?boardId=3&page=1">질문 게시판</a>
 												</li>
 												<li class="hover:underline">
-														<a href="/usr/home/recommend" style="white-space: normal;">해수욕장 추천 페이지</a>
+														<a href="/usr/home/recommend" style="white-space: normal;">네이버 인플루언서 추천 페이지</a>
 												</li>
 										</ul>
 								</div>
