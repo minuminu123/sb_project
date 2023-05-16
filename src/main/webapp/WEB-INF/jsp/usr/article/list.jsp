@@ -81,9 +81,7 @@
 								</table>
 						</div>
 						&nbsp;
-						<c:if test="${rq.isLogined() }">
-								<a class="btn-text-link btn btn-active btn-ghost a-middle" href="../article/write">게시글 쓰기</a>
-						</c:if>
+
 						&nbsp; &nbsp;
 						<div class="pagination flex justify-center">
 								<div class="btn-group">

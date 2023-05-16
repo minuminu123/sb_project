@@ -15,11 +15,13 @@ $('select[data-value]').each(function(index, el) {
 $('#menu').mouseover(function() {
 	$('body span').css('filter', 'blur(10px)');
 	$('body  main').css('filter', 'blur(10px)');
+	$('body .top-control').css('filter', 'blur(10px)');
 });
 
 $('#menu').mouseleave(function() {
 	$('body span').css('filter', 'blur(0)');
 	$('body  main').css('filter', 'blur(0)');
+	$('body .top-control').css('filter', 'blur(0)');
 });
 
 $(document).ready(function() {

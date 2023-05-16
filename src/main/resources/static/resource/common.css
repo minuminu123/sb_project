@@ -580,6 +580,10 @@ fieldset input:focus {
 	height: 1000px;
 }
 
+bg-rec {
+	
+}
+
 .main-content {
 	position: relative;
 }
@@ -616,6 +620,28 @@ fieldset input:focus {
 
 }
 
+.main-asdf > .bg-asdf2 {
+	/* 상대경로 지정 */
+	background-image: url('main5.png');
+	top: 4%;
+	left: 700px;
+	position: sticky;
+	width: 500px;
+	height: 400px;
+
+}
+
+.main-asdf > .bg-asdf3 {
+	/* 상대경로 지정 */
+	background-image: url('main6.webp');
+	top: 4%;
+	left: 700px;
+	position: sticky;
+	width: 500px;
+	height: 400px;
+
+}
+
 .bg-main3 {
 	background-image:
 		url('main-beach.jpg');
@@ -625,9 +651,16 @@ fieldset input:focus {
 }
 
 .img {
-  	background-size: cover;
-	background-attachment: fixed;
+	filter: url(#water);
 	height: 1000px;
+}
+
+/* 배경이미지 고정 */
+.img2 {
+	background-image:
+		url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg');
+	background-attachment: fixed;
+	background-size: cover;
   	filter: url(#water);
 }
 
@@ -1144,6 +1177,12 @@ section {
     animation: blink 3s infinite;
 }
 
+.blinking-text3 {
+	width: 100%;
+    background-color: wheat;
+    animation: blink 1s infinite;
+}
+
 .blinking-hamburger {
     width: 50%;
     animation: blink 1s infinite;
@@ -1167,3 +1206,30 @@ section {
 .lorem-text {
  	font-family: 'SBAggroB', sans-serif;
  }
+ 
+.top-control{
+    width: 5%;
+    height: 44px;
+    top: 500px;
+    right: 20px;
+    position: fixed;
+    z-index: 1;
+}
+
+.user-wrap{
+    width: 100%;
+    margin: 10px auto;
+    position: relative;
+    border-radius: 50%;
+}
+
+.user-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate( -50%, -50% );
+    font-size: 20px;
+    color: black;
+    text-align: center;
+}

@@ -186,18 +186,35 @@
 
 
 <div>
-		<div class="bg-main">
+		<div class="bg-main2">
 				<div class="main-asdf">
 						<div class="bg-asdf" data-aos="fade-left"></div>
 						<div class="main-div" data-aos="fade-right">
-								<p class="lorem-text">무더운 여름날 6,7,8월 휴가 계획을 정하고 싶다고? 사람들과 소통하며 좋은 해수욕장 찾아가자! 경상도? 강원도? 전라도? 충청도? 딱 정해!</p>
-								<a href="/usr/article/list?boardId=2&page=1" class="btn btn-outline btn-info mt-12">추천 게시판 바로가기</a>
+								<p class="lorem-text">무더운 여름날 휴가 계획을 정하고 싶다고? 사람들과 소통하며 좋은 해수욕장 찾아가자! 경상도? 강원도? 전라도? 충청도? 딱 정해!</p>
+								<a href="/usr/article/list?boardId=2&page=1" class="btn btn-outline btn-info mt-12 blinking-text3">추천 게시판 바로가기</a>
 						</div>
 				</div>
 		</div>
 </div>
 
-<div class="bg-main2">각 해수욕장 사진과 해당 해수욕장 이름 밑에 띄우게 (ex에 있는 해린이 사진)</div>
+<div class="bg-main2">
+	<div class="main-asdf">
+			<div class="bg-asdf2" data-aos="fade-left"></div>
+			<div class="main-div" data-aos="fade-right">
+					<p class="lorem-text"> 카카오맵에서 검색해서 원하는 해수욕장 찾기 (각 해수욕장 사진과 해당 해수욕장 이름 밑에 띄우게 (ex에 있는 사진))</p>
+						<a href="/usr/home/MapSearch" class="btn btn-outline btn-info mt-12 blinking-text3">검색 페이지 바로가기</a>
+			</div>
+	</div>
+</div>
 
+<div class="bg-main2">
+	<div class="main-asdf">
+			<div class="bg-asdf3" data-aos="fade-left"></div>
+			<div class="main-div" data-aos="fade-right">
+					<p class="lorem-text"> 네이버 인플루언서가 추천하는 최근 20개 둘러보기</p>
+						<a href="/usr/home/recommend" class="btn btn-outline btn-info mt-12 blinking-text3">인플루언서 추천 페이지 바로가기</a>
+			</div>
+	</div>
+</div>
 
 <%@ include file="../common/foot.jspf"%>
