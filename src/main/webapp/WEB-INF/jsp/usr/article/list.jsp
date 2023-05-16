@@ -27,16 +27,15 @@
 												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 900px; background-color: wheat;" type=submit>검색</button>
 										</form>
 								</div>
-								<table class="table table-zebra z-10 mt-60">
+								<table class="table table-zebra z-10 mt-60" style="margin-left: 70px;">
 										<colgroup>
 												<col width="70" />
 												<col width="140" />
 												<col width="140" />
 												<col width="140" />
-												<col width="140" />
-												<col width="140" />
-												<col width="140" />
-												<col width="140" />
+												<col width="70" />
+												<col width="70" />
+												<col width="70" />
 										</colgroup>
 										<thead>
 												<tr>
@@ -62,17 +61,19 @@
 																			<c:choose>
 																				<c:when test="${article.title.length() > 16}">
 																					<span>${article.title.substring(0, 14)}...</span>
+																					<span style="color: blue;">[${article.repliesCount }]</span>
 																				</c:when>
 																				<c:otherwise>
 																					<span>${article.title}</span>
+																					<span style="color: blue;">[${article.repliesCount }]</span>
 																				</c:otherwise>
 																			</c:choose>
 																		</a>
 																</td>
 																<td>${article.extra__writer}</td>
-																<td>${article.hitCount}</td>
-																<td>${article.goodReactionPoint}</td>
-																<td>${article.badReactionPoint}</td>
+																<td style="border: none;">${article.hitCount}</td>
+																<td style="border: none;">${article.goodReactionPoint}</td>
+																<td style="border: none;">${article.badReactionPoint}</td>
 
 														</tr>
 												</c:forEach>

@@ -68,7 +68,7 @@ loginPw = 'test1',
 `name` = '회원1',
 `nickname` = '회원1',
 cellphoneNum = '01043214321',
-email = 'thdalsdn999@gmail.com';
+email = 'abcd@gmail.com';
 
 INSERT INTO `member` 
 SET regDate = NOW(),
@@ -268,6 +268,16 @@ INNER JOIN (
 ON R.id = RP_SUM.relId
 SET R.goodReactionPoint = RP_SUM.goodReactionPoint;
 
+alter table article add column repliesCount int(10) unsigned not null default 0;
+
+UPDATE article AS A
+INNER JOIN (
+	SELECT R.relId , count(*) AS repliesCount FROM reply AS R
+	group by R.relId
+) AS RP_SUM
+ON A.id = RP_SUM.relId
+SET A.repliesCount = RP_SUM.repliesCount;
+
 ## 댓글에 좋아요 데이터삽입
 INSERT INTO reactionPoint
 SET regDate = NOW(),
@@ -307,6 +317,11 @@ SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM `reply`;
+
+### 댓글 갯수 해당 게시물에 있는
+SELECT count(*) FROM reply
+WHERE relId = 4 AND 
+relTypeCode ='article';
 
 ### 댓글 좋아요 쿼리v2
 select RP.*, R.relId AS ArticleId

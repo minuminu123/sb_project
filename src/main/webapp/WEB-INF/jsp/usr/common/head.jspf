@@ -37,7 +37,7 @@
 
 		<header class="fixed flex w-full">
 				<div class=" h-20 flex justify-around container mx-auto text-4xl">
-						<a href="/" class=" flex items-center px-3" style="background-color: black; border-radius: 50%; height: 70px;">
+						<a href="/" class=" flex items-center px-3" style="background-color: white; border-radius: 50%; height: 60px; margin-top: 10px;">
 							<i class="fa-solid fa-umbrella-beach" style="color: #85ba21;"></i>						
 						</a>
 
