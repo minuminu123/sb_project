@@ -67,6 +67,32 @@ main {
 	padding: 10px;
 	text-align: center;
 }
+/* ---------------------- */
+
+.table-box-type-2 thead th, .table-box-type-2 tbody th,
+	.table-box-type-2 td {
+	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+.table-box-type-2 table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.table-box-type-2 td {
+	word-wrap: break-word;
+	max-width: 100%;
+}
+
+.table-box-type-2 td div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* ---------------------- */
 
 .table th:first-child {
 	position: inherit;
@@ -311,7 +337,7 @@ main {
 .panel {
 	width: 450px;
 	max-width: 90%;
-	height: 700px;
+	height: 100%;
 	background:
 		url('https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2AuX/image/WqiVybrAyq8Pan1UKBEwwhBZNyQ.jpg')
 		#fff;
@@ -1110,6 +1136,12 @@ section {
     width: 50%;
     background-color: wheat;
     animation: blink 1s infinite;
+}
+
+.blinking-text2 {
+    width: 50%;
+    background-color: wheat;
+    animation: blink 3s infinite;
 }
 
 .blinking-hamburger {

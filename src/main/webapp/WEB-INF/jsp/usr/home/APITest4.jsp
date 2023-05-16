@@ -189,7 +189,7 @@
 #pagination .on {
 	font-weight: bold;
 	cursor: default;
-	color: #777;
+	color: red;
 }
 
 #category {

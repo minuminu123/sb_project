@@ -13,15 +13,18 @@
 										<div class="flex-grow"></div>
 										<form action="">
 												<input type="hidden" name="boardId" value="${param.boardId }" />
+												<c:if test="${boardId == 2 }">
+													<div class="blinking-text2" style="position: absolute; left: 100px; top: 130px; width: 300px;"> 여기는 해수욕장 추천 페이지 입니다!!</div>
+												</c:if>
 												<select data-value="${param.searchKeywordTypeCode }" name="searchKeywordTypeCode"
-														class="select select-ghost" style="top: 130px; position: absolute; left: 500px;">
+														class="select select-ghost" style="top: 130px; position: absolute; left: 500px; background-color: white;">
 														<option value="title">제목</option>
 														<option value="body">내용</option>
 														<option value="title,body">제목 + 내용</option>
 												</select>
 												<input value="${param.searchKeyword }" maxlength="20" name="searchKeyword" class="input input-bordered"
 														type="text" placeholder="검색어를 입력해주세요" style="top: 130px; position: absolute; left: 700px;"/>
-												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 1000px;" type=submit>검색</button>
+												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 900px; background-color: wheat;" type=submit>검색</button>
 										</form>
 								</div>
 								<table class="table table-zebra z-10 mt-60">
@@ -55,7 +58,16 @@
 																</td>
 																<td>${article.regDate.substring(2,16)}</td>
 																<td>
-																		<a class="hover:underline" href="${rq.getArticleDetailUriFromArticleList(article) }">${article.title}</a>
+																		<a class="hover:underline" href="${rq.getArticleDetailUriFromArticleList(article) }">
+																			<c:choose>
+																				<c:when test="${article.title.length() > 16}">
+																					<span>${article.title.substring(0, 14)}...</span>
+																				</c:when>
+																				<c:otherwise>
+																					<span>${article.title}</span>
+																				</c:otherwise>
+																			</c:choose>
+																		</a>
 																</td>
 																<td>${article.extra__writer}</td>
 																<td>${article.hitCount}</td>

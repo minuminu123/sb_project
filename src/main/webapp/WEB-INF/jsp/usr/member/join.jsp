@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="JOIN" />
 <%@ include file="../common/head.jspf"%>
-
+<hr />
 <!-- lodash debounce -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
@@ -204,80 +204,47 @@
 	  });
 </script>
 
-<article class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
-		<form class="table-box-type-1" method="POST" action="../member/doJoin" onsubmit="submitJoinForm(this); return false;">
-			<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
-			<table class="table table-zebra w-3/4 mt-24">
-				<colgroup>
-					<col width="200" />
-				</colgroup>
 
-				<tbody>
-					<tr>
-						<th>아이디</th>
-						<td>
-							<input onkeyup="checkLoginIdDupDebounced(this);" name="loginId" class="w-full input input-bordered  max-w-xs"
-								placeholder="아이디를 입력해주세요" autocomplete="off" />
-							<div class="checkDup-msg"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td>
-							<input onkeyup="checkLoginPwDebounced(this);" name="loginPw" id="password" class="w-full input input-bordered  max-w-xs" placeholder="(8자이상 특수문자1개 이상)" />
-							<div class="checkDup-msg3"></div>
-							
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호 확인</th>
-						<td>
-							<input name="loginPwConfirm" id="confirmPassword" class="w-full input input-bordered  max-w-xs" placeholder="(8자이상 특수문자1개 이상)" />
-							<div id="error-message" style="color: red;"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>이름</th>
-						<td>
-							<input name="name" class="w-full input input-bordered  max-w-xs" placeholder="이름을 입력해주세요" />
-						</td>
-					</tr>
-					<tr>
-						<th>닉네임</th>
-						<td>
-							<input name="nickname" class="w-full input input-bordered  max-w-xs" placeholder="닉네임을 입력해주세요" />
-						</td>
-					</tr>
-					<tr>
-						<th>전화번호</th>
-						<td>
-							<input name="cellphoneNum" onkeyup="chkcellPhoneNumDebounced(this)" class="w-full input input-bordered  max-w-xs" placeholder="전화번호를 입력해주세요" />
-							<div class="checkDup-msg4"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>
-							<input onkeyup="checkEmailDupDebounced(this);" name="email" class="w-full input input-bordered  max-w-xs" placeholder="이메일을 입력해주세요(gmail만 가능)" />
-							<div class="checkDup-msg2"></div>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td>
-							<button class="btn btn-active btn-ghost" type="submit" value="회원가입">회원가입</button>
-						</td>
-					</tr>
-				</tbody>
+<div style="margin-top: 100px;">
+		<div class="panel shadow1">
+				<form class="login-form top-20" action="../member/doJoin" method="POST" onsubmit="submitJoinForm(this); return false;">
+						<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
 
-			</table>
-		</form>
-	</div>
+						<div class="panel-switch animate__animated animate__fadeIn">
+								<h2 class="animated fadeInUp animate1 text-center" id="title-login" style="color: white; font-size: 2rem;">회원가입</h2>
 
-	<div class="container mx-auto btns">
-		<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
-	</div>
+						</div>
+						<h1 class="animate__animated animate__fadeInUp animate1 text-center" id="title-login">Welcome!</h1>
+						<fieldset id="login-fieldset">
+								<input onkeyup="checkLoginIdDupDebounced(this);" class="login animate__animated animate__fadeInUp animate2 text-center"
+										style="margin: 0 40px; height: 40px;" type="text" placeholder="아이디" name="loginId" autocomplete="off" />
+										<div class="checkDup-msg text-center"></div>
+								<input onkeyup="checkLoginPwDebounced(this);" class="login animate__animated animate__fadeInUp animate3 text-center"
+										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호" name="loginPw"
+										autocomplete="off" id="password"/>
+										<div class="checkDup-msg3 text-center"></div>
+								<input name="loginPwConfirm" id="confirmPassword" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="비밀번호 확인 (8자이상 특수문자1개 이상)" type="password" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>
+										<div id="error-message" style="color: red; text-align: center; margin-top: 7px;"></div>
+								<input name="name" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="이름을 입력해주세요" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>
+								<input name="nickname" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="닉네임을 입력해주세요" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>
+								<input name="cellphoneNum" onkeyup="chkcellPhoneNumDebounced(this)" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="전화번호를 입력해주세요" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>
+									<div class="checkDup-msg4 text-center"></div>
+								<input onkeyup="checkEmailDupDebounced(this);" name="email" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="이메일을 입력해주세요(gmail만 가능)" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>
+									<div class="checkDup-msg2 text-center"></div>
+						</fieldset>
 
-</article>
+						<input type="submit" id="login-form-submit" class="login_form button animate__animated animate__fadeInUp animate4"
+								style="margin: 0 40px; height: 40px; margin-top: 30px; left: 45px;" value="회원가입">
+						
+						<button class="login_form button animate__animated animate__fadeInUp animate4"
+								style="margin: 0 40px; height: 40px; margin-top: 30px; left: 45px;" type="button" onclick="history.back();">뒤로가기</button>
+				</form>
+				<div class="mt-8 ml-24">
+					<a class="btn btn-active btn-ghost btn-text-link animate__animated animate__fadeIn animate5" href="${rq.findLoginIdUri }">아이디 찾기</a>
+					<a class="btn btn-ghost btn-active btn-text-link animate__animated animate__fadeIn animate5" style="margin-left: 20px;" href="${rq.findLoginPwUri }">비밀번호찾기</a>
+				</div>
+				
+		</div>
+</div>
+
 <%@ include file="../common/foot.jspf"%>

@@ -37,8 +37,8 @@
 
 		<header class="fixed flex w-full">
 				<div class=" h-20 flex justify-around container mx-auto text-4xl">
-						<a href="/" class=" flex items-center px-3">
-								<span>로고</span>
+						<a href="/" class=" flex items-center px-3" style="background-color: black; border-radius: 50%; height: 70px;">
+							<i class="fa-solid fa-umbrella-beach" style="color: #85ba21;"></i>						
 						</a>
 
 						<ul class="flex">

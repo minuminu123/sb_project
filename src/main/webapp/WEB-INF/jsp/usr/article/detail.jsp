@@ -248,8 +248,8 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 </script>
 <div class="bg-detail">
 <article class="mt-36 text-xl">
-		<div class="container mx-auto px-3" style="width: 800px;">
-				<div class="table-box-type-1">
+		<div class="container px-3" style="width: 800px; margin-left: 45px;">
+				<div class="table-box-type-2">
 						<table border="1" style="background-color: white;">
 								<colgroup>
 										<col width="200" />
@@ -394,7 +394,7 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 		<c:forEach var="reply" items="${replies }" varStatus="status">
 			<div id="${status.count }" class="py-2 pl-16 text-base" style="background-color: white;">
 				<div class="font-semibold"><span>${reply.extra__writer }</span></div>
-				<div><span>${reply.body }</span></div>
+				<div><span style="word-wrap: break-word;">${reply.body }</span></div>
 				<div style="border: 2px solid; display: inline-block; background-color: gray; margin-top: 10px;">
 				<button class="btn-reply-good${reply.id } like-button3" onclick="doGoodReaction2(${reply.id})">
 							<span class="replygood${reply.id }">${reply.goodReactionPoint }</span>
