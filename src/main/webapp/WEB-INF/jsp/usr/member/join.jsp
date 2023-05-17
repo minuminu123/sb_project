@@ -220,7 +220,7 @@
 										style="margin: 0 40px; height: 40px;" type="text" placeholder="아이디" name="loginId" autocomplete="off" />
 										<div class="checkDup-msg text-center"></div>
 								<input onkeyup="checkLoginPwDebounced(this);" class="login animate__animated animate__fadeInUp animate3 text-center"
-										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호" name="loginPw"
+										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호(8자이상 특수문자1개 이상)" name="loginPw"
 										autocomplete="off" id="password"/>
 										<div class="checkDup-msg3 text-center"></div>
 								<input name="loginPwConfirm" id="confirmPassword" class="login animate__animated animate__fadeInUp animate3 text-center" placeholder="비밀번호 확인 (8자이상 특수문자1개 이상)" type="password" style="margin: 0 40px; height: 40px; margin-top: 30px;"/>

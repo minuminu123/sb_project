@@ -4,11 +4,11 @@
 <%@ include file="../common/head.jspf"%>
 <%@ page import="com.KoreaIT.smw.demo.util.Ut"%>
 <hr />
-
+<div class="bg-main3">
 <article class="mt-36 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
-			<table border="1">
+			<table border="1" style="background-color: white;">
 				<colgroup>
 					<col width="200" />
 				</colgroup>
@@ -55,5 +55,7 @@
 		</div>
 	</div>
 </article>
+</div>
+
 
 <%@ include file="../common/foot.jspf"%>

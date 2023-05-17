@@ -65,13 +65,13 @@
 
 	}
 </script>
-
+<div class="bg-main3">
 <article class="mt-36 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<form action="../member/doModify" method="POST" onsubmit="MemberModify__submit(this); return false;">
 			<input type="hidden" name="loginId" value="${rq.loginedMember.loginId }" />
-				<table border="1">
+				<table border="1" style="background-color: white;">
 					<colgroup>
 						<col width="200" />
 					</colgroup>
@@ -145,5 +145,7 @@
 		</div>
 	</div>
 </article>
+</div>
+
 
 <%@ include file="../common/foot.jspf"%>

@@ -347,7 +347,7 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 				</div>
 		</div>
 </article>
-
+</div>
 <!-- 댓글 관련 -->
 <script type="text/javascript">
 	let ReplyWrite__submitFormDone = false;
@@ -365,11 +365,11 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 		form.submit();
 	}
 </script>
-
+<div class="bg-detail">
 <div style="height: 100px;"></div>
 
-
 <article style="top: 1150px; height: 300px; width: 850px; left: 200px;">
+
 	<div class="container mx-auto px-3">
 		<h1 class="text-3xl">댓글 리스트(${repliesCount })</h1>
 		<c:if test="${rq.logined }">
@@ -377,7 +377,7 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 					<input type="hidden" name="relTypeCode" value="article" />
 					<input type="hidden" name="relId" value="${article.id }" />
 					<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
-					<div class="mt-4 p-4 rounded-lg border border-gray-400 text-base">
+					<div class="mt-4 p-4 rounded-lg border border-gray-400 text-base" style="background-color: wheat;">
 						<div class="mb-2"><span>${rq.loginedMember.nickname }</span></div>
 						<textarea class="textarea textarea-bordered w-full" name="body" rows="2" placeholder="댓글을 작성하세요"></textarea>
 						<div class="flex justify-end"><button class="btn btn-active btn-ghost btn-sm btn-text-link">등록</button></div>
@@ -418,12 +418,12 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 			<hr />
 		</c:forEach>
 	</div>
+	
 </article>
 </div>
 
-<script>
 
-</script>
+
 
 <script src="/resource/detail.js" defer="defer"></script>
 <%@ include file="../common/foot.jspf"%>

@@ -198,7 +198,7 @@ public class UsrMemberController {
 		
 		rq.logout();
 
-		return Ut.jsReplace("S-1", "로그아웃 되었습니다", afterLogoutUri);
+		return Ut.jsReplace("S-1", "로그아웃 되었습니다", "/");
 	}
 
 	@RequestMapping("/usr/member/myPage")

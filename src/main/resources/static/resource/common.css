@@ -580,13 +580,9 @@ fieldset input:focus {
 .bg-detail {
 	/* 상대경로 지정 */
 	background-image: url('water-in.webp');
-	background-size: cover;
 	background-attachment: fixed;
-	height: 1000px;
-}
-
-bg-rec {
-	
+	background-size: cover;
+	height: 3000px;
 }
 
 .main-content {
