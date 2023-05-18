@@ -62,7 +62,12 @@ public class UsrBeachController {
 
 	    if (!searchKeyword.isEmpty()) {
 	        for (String[] row : data) {
-	            String searchTarget = row[6]; // 주소 정보
+	        	String searchTarget;
+                if (searchType == 0) {
+                    searchTarget = row[6]; // 위치 정보
+                } else {
+                    searchTarget = row[1]; // 해수욕장 이름 정보
+                }
 	            if (searchTarget.contains(searchKeyword)) {
 	                filteredData.add(row);
 	            }
