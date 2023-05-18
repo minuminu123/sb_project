@@ -57,7 +57,7 @@ public class Rq {
 		this.loginedMember = loginedMember;
 
 		this.req.setAttribute("rq", this);
-		
+
 		String requestUri = req.getRequestURI();
 
 		boolean isAjax = requestUri.endsWith("Ajax");
@@ -155,24 +155,25 @@ public class Rq {
 	public String getJoinUri() {
 		return "/usr/member/join?afterLoginUri=" + getAfterLoginUri();
 	}
-	
+
 	public String getLoginUri() {
 		return "/usr/member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 
 	public String getLogoutUri() {
 		String requestUri = req.getRequestURI();
+
 		switch (requestUri) {
 		case "/usr/article/write":
 			return "../member/doLogout?afterLogoutUri=" + "/";
 		case "/adm/member/list":
 			return "../member/doLogout?afterLogoutUri=" + "/";
 		}
+
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 
-	private String getAfterLogoutUri() {
-
+	public String getAfterLogoutUri() {
 		return getEncodedCurrentUri();
 	}
 
@@ -185,7 +186,6 @@ public class Rq {
 		case "/usr/member/login":
 		case "/usr/member/join":
 			return Ut.getEncodedUri(Ut.getAttr(paramMap, "afterLoginUri", ""));
-
 		}
 
 		return getEncodedCurrentUri();
@@ -194,11 +194,11 @@ public class Rq {
 	public String getEncodedCurrentUri() {
 		return Ut.getEncodedCurrentUri(getCurrentUri());
 	}
-	
+
 	public String getArticleDetailUriFromArticleList(Article article) {
 		return "/usr/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
-	
+
 	public String getFindLoginIdUri() {
 		return "/usr/member/findLoginId?afterFindLoginIdUri=" + getAfterFindLoginIdUri();
 	}
@@ -214,7 +214,7 @@ public class Rq {
 	private String getAfterFindLoginPwUri() {
 		return getEncodedCurrentUri();
 	}
-	
+
 	public boolean isAdmin() {
 		if (isLogined == false) {
 			return false;
@@ -222,4 +222,17 @@ public class Rq {
 
 		return loginedMember.isAdmin();
 	}
+
+	public String getImgUri(int id) {
+		return "/common/genFile/file/article/" + id + "/extra/Img/1";
+	}
+
+	public String getProfileFallbackImgUri() {
+		return "https://via.placeholder.com/150/?text=*^_^*";
+	}
+
+	public String getProfileFallbackImgOnErrorHtml() {
+		return "this.src = '" + getProfileFallbackImgUri() + "'";
+	}
+
 }

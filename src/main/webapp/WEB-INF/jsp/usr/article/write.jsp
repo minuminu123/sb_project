@@ -41,7 +41,8 @@
 <article class="mt-8 text-xl" style="top: 100px;">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
-			<form action="../article/doWrite" method="POST" onsubmit="ArticleWrite__submit(this); return false;">
+			<form action="../article/doWrite" method="POST" onsubmit="ArticleWrite__submit(this); return false;"
+				enctype="multipart/form-data">
 				<input type="hidden" name="body">
 				<table style="width: 700px;">
 					<colgroup>
@@ -71,6 +72,11 @@
 							<td>
 								<input class="input input-bordered w-full max-w-xs" type="text" name="title" placeholder="제목을 입력해주세요" />
 							</td>
+						</tr>
+						<tr>
+							<th>첨부 이미지</th>
+							<td>
+								<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />							</td>
 						</tr>
 						<tr>
 							<th>내용</th>

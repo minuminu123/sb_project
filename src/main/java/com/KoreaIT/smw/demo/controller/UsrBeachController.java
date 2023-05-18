@@ -21,7 +21,9 @@ public class UsrBeachController {
 	@RequestMapping("/usr/beach/list")
 	public String index(Model model,
             @RequestParam(required = false, defaultValue = "") String searchKeyword,
-            @RequestParam(required = false, defaultValue = "0") int searchType) {
+            @RequestParam(required = false, defaultValue = "0") int searchType,
+        	@RequestParam(required = false, defaultValue = "1") int pageNo,
+        	@RequestParam(required = false, defaultValue = "10") int pageSize) {
 	    List<String[]> data = new ArrayList<>();
 
 	    try (InputStream inputStream = getClass().getResourceAsStream("/csv/beach2.csv");
@@ -76,9 +78,18 @@ public class UsrBeachController {
 	        filteredData = data;
 	    }
 
-	    model.addAttribute("data", filteredData);
-	    model.addAttribute("searchKeyword", searchKeyword);
-	    model.addAttribute("searchType", searchType);
+		// 페이지네이션 처리
+		int totalCount = filteredData.size();
+		int startIdx = (pageNo - 1) * pageSize;
+		int endIdx = Math.min(startIdx + pageSize, totalCount);
+		List<String[]> paginatedData = filteredData.subList(startIdx, endIdx);
+
+		model.addAttribute("data", paginatedData);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("pageSize", pageSize);
 	    return "usr/beach/list";
 	}
 }
