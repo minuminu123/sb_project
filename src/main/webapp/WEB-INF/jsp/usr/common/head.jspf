@@ -53,8 +53,13 @@
 										</a>
 								</li>
 								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/article/write">
+										<a class="h-full px-3 flex items-center" href="/usr/beach/list">
 												<span>해수욕장 리스트</span>
+										</a>
+								</li>
+								<li class="hover:underline">
+										<a class="h-full px-3 flex items-center" href="/usr/home/weather">
+												<span>오늘의 날씨</span>
 										</a>
 								</li>
 								<c:if test="${!rq.logined }">
