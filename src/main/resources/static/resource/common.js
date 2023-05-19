@@ -75,93 +75,87 @@ $(document).ready(function() {
 });
 
 $(window).on('load', function() {
-	var height = document.body.scrollHeight,
-		x = 0, y = height / 2,
-		curveX = 10,
-		curveY = 0,
-		targetX = 0,
-		xitteration = 0,
-		yitteration = 0,
-		menuExpanded = false;
+  var height = document.body.scrollHeight,
+    x = 0, y = height / 2,
+    curveX = 0, curveY = height / 2,
+    targetX = 0,
+    xitteration = 0,
+    yitteration = 0,
+    menuExpanded = false;
 
-	blob = $('#blob'),
-		blobPath = $('#blob-path'),
+  blob = $('#blob'),
+    blobPath = $('#blob-path'),
 
-		hamburger = $('.hamburger');
+    hamburger = $('.hamburger');
 
-	$(this).on('mousemove', function(e) {
-		x = e.clientX;
+  $(this).on('mousemove', function(e) {
+    x = e.clientX;
+    y = e.clientY;
+  });
 
-		y = e.clientY;
-	});
+  $('.hamburger, .menu-inner').on('mouseenter', function() {
+    $(this).parent().addClass('expanded');
+    $('.hamburger').css('visibility', 'hidden');
+    $('#menu').css('opacity', 1);
+    menuExpanded = true;
+  });
 
-	$('.hamburger, .menu-inner').on('mouseenter', function() {
-		$(this).parent().addClass('expanded');
-		$('.hamburger').css('visibility', 'hidden');
-		$('#menu').css('opacity', 1);
-		menuExpanded = true;
-	});
+  $('.menu-inner').on('mouseleave', function() {
+    menuExpanded = false;
+    $(this).parent().removeClass('expanded');
+    $('.hamburger').css('visibility', 'visible');
+    $('#menu').css('opacity', .5);
+  });
 
-	$('.menu-inner').on('mouseleave', function() {
-		menuExpanded = false;
-		$(this).parent().removeClass('expanded');
-		$('.hamburger').css('visibility', 'visible');
-		$('#menu').css('opacity', .5);
-	});
+  function easeOutExpo(currentIteration, startValue, changeInValue, totalIterations) {
+    return changeInValue * (-Math.pow(2, -10 * currentIteration / totalIterations) + 1) + startValue;
+  }
 
-	function easeOutExpo(currentIteration, startValue, changeInValue, totalIterations) {
-		return changeInValue * (-Math.pow(2, -10 * currentIteration / totalIterations) + 1) + startValue;
-	}
+  var hoverZone = 150;
+  var expandAmount = 150; // 변경된 값: 40으로 수정
 
-	var hoverZone = 150;
-	var expandAmount = 20;
+  function svgCurve() {
+    if ((curveX > x - 1) && (curveX < x + 1)) {
+      xitteration = 0;
+    } else {
+      if (menuExpanded) {
+        targetX = 0;
+      } else {
+        xitteration = 0;
+        if (x > hoverZone) {
+          targetX = 0;
+        } else {
+          targetX = -(((60 + expandAmount) / 100) * (x - hoverZone));
+        }
+      }
+      xitteration++;
+    }
 
-	function svgCurve() {
-		if ((curveX > x - 1) && (curveX < x + 1)) {
-			xitteration = 0;
-		} else {
-			if (menuExpanded) {
-				targetX = 0;
-			} else {
-				xitteration = 0;
-				if (x > hoverZone) {
-					targetX = 0;
-				} else {
-					targetX = -(((60 + expandAmount) / 100) * (x - hoverZone));
-				}
-			}
-			xitteration++;
-		}
+    if ((curveY > y - 1) && (curveY < y + 1)) {
+      yitteration = 0;
+    } else {
+      yitteration = 0;
+      yitteration++;
+    }
 
-		if ((curveY > y - 1) && (curveY < y + 1)) {
-			yitteration = 0;
-		} else {
-			yitteration = 0;
-			yitteration++;
-		}
+    curveX = easeOutExpo(xitteration, curveX, targetX - curveX, 100);
+    curveY = easeOutExpo(yitteration, curveY, y - curveY, 100);
 
-		curveX = easeOutExpo(xitteration, curveX, targetX - curveX, 100);
-		curveY = easeOutExpo(yitteration, curveY, y - curveY, 100);
+    var anchorDistance = 200;
+    var curviness = anchorDistance - 40;
 
-		//올라오는 각도
-		var anchorDistance = 200;
-		var curviness = anchorDistance - 40;
+    var newCurve2 = "M60," + height + "H0V" + (curveY - anchorDistance) + "c0," + curviness + "," + curveX + "," + curviness + "," + curveX + "," + anchorDistance + "S60," + (curveY) + ",60," + (curveY + (anchorDistance * 2)) + "V" + height + "z";
 
-		var newCurve2 = "M60," + height + "H0V0h60v" + (curveY - anchorDistance) + "c0," + curviness + "," + curveX + "," + curviness + "," + curveX + "," + anchorDistance + "S60," + (curveY) + ",60," + (curveY + (anchorDistance * 2)) + "V" + height + "z";
+    blobPath.attr('d', newCurve2);
+    blob.width(curveX + 60);
 
-		blobPath.attr('d', newCurve2);
+    // 페이지 새로고침 시 초기 위치로 이동
+    window.scrollTo(0, 0);
 
-		//가져다 대는 영역 커지면 가까이 안가도 커짐
-		blob.width(curveX + 60);
+    window.requestAnimationFrame(svgCurve);
+  }
 
-		//hamburger.css('transform', 'translate('+curveX+'px, '+curveY+'px)');
-
-		/*$('h2').css('transform', 'translateY('+curveY+'px)');*/
-		window.requestAnimationFrame(svgCurve);
-	}
-
-	window.requestAnimationFrame(svgCurve);
-
+  window.requestAnimationFrame(svgCurve);
 });
 
 var ani3 = anime({
@@ -170,6 +164,7 @@ var ani3 = anime({
 	delay: anime.stagger(100), // 뒤 따르는 각 요소마다 100ms 지연(delay)을 설정합니다.
 	autoplay: true
 });
+
 /*
 var ani4 = anime({
 	targets: 'main .bg-asdf',

@@ -1261,3 +1261,7 @@ section {
 .side_font {
 	font-size: 50%;
 }
+
+.shadow {
+    box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.70);
+}
