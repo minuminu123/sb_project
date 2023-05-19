@@ -217,6 +217,40 @@ CREATE TABLE reply (
     `body`TEXT NOT NULL
 );
 
+CREATE TABLE `tb_weather_area` (
+	`areacode` VARCHAR(50) NOT NULL COMMENT '행정구역코드' COLLATE 'utf8_general_ci',
+	`step1` VARCHAR(50) NOT NULL COMMENT '시도' COLLATE 'utf8_general_ci',
+	`step2` VARCHAR(50) NULL DEFAULT NULL COMMENT '시군구' COLLATE 'utf8_general_ci',
+	`step3` VARCHAR(50) NULL DEFAULT NULL COMMENT '읍면동' COLLATE 'utf8_general_ci',
+	`gridX` VARCHAR(50) NOT NULL COMMENT '격자X' COLLATE 'utf8_general_ci',
+	`gridY` VARCHAR(50) NOT NULL COMMENT '격자Y' COLLATE 'utf8_general_ci',
+	`longitudeHour` VARCHAR(50) NOT NULL COMMENT '경도(시)' COLLATE 'utf8_general_ci',
+	`longitudeMin` VARCHAR(50) NOT NULL COMMENT '경도(분)' COLLATE 'utf8_general_ci',
+	`longitudeSec` VARCHAR(50) NOT NULL COMMENT '경도(초)' COLLATE 'utf8_general_ci',
+	`latitudeHour` VARCHAR(50) NOT NULL COMMENT '위도(시)' COLLATE 'utf8_general_ci',
+	`latitudeMin` VARCHAR(50) NOT NULL COMMENT '위도(분)' COLLATE 'utf8_general_ci',
+	`latitudeSec` VARCHAR(50) NOT NULL COMMENT '위도(초)' COLLATE 'utf8_general_ci',
+	`longitudeMs` VARCHAR(50) NOT NULL COMMENT '경도(초/100)' COLLATE 'utf8_general_ci',
+	`latitudeMs` VARCHAR(50) NOT NULL COMMENT '위도(초/100)' COLLATE 'utf8_general_ci'
+)
+COMMENT='Excel 파일의 값들을 DB화 한 테이블'
+COLLATE='utf8_general_ci'
+ENGINE=INNODB
+;
+
+CREATE TABLE `tw_weather_response` (
+	`baseDate` VARCHAR(50) NOT NULL COMMENT '발표일자' COLLATE 'utf8_general_ci',
+	`baseTime` VARCHAR(50) NOT NULL COMMENT '발표시각' COLLATE 'utf8_general_ci',
+	`category` VARCHAR(50) NOT NULL COMMENT '자료구분코드' COLLATE 'utf8_general_ci',
+	`nx` VARCHAR(50) NOT NULL COMMENT '예보지점X좌표' COLLATE 'utf8_general_ci',
+	`ny` VARCHAR(50) NOT NULL COMMENT '예보지점Y좌표' COLLATE 'utf8_general_ci',
+	`obsrValue` VARCHAR(50) NOT NULL COMMENT '실황 값' COLLATE 'utf8_general_ci'
+)
+COMMENT='날씨 API 호출 응답값 저장'
+COLLATE='utf8_general_ci'
+ENGINE=INNODB
+;
+
 # 2번 회원이 1번 글에 
 INSERT INTO reply
 SET regDate = NOW(),

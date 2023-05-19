@@ -23,12 +23,10 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	params.memberId = parseInt('${loginedMemberId}');
 	var actorCanCancelGoodReaction = ${actorCanCancelGoodReaction};
 	var actorCanCancelBadReaction = ${actorCanCancelBadReaction};
-/* 	var actorCanCancelGoodReaction2 = ${actorCanCancelGoodReaction2};
- */
 
 </script>
 
-<!-- 조회수 관련 -->
+<!-- 조회수 관련 localStorage에 저장해서 다시 들어가도 조회수 오르지 않게 설정 -->
 <script>
 	function ArticleDetail__increaseHitCount() {
 		const localStorageKey = 'article__' + params.id + '__alreadyView';
@@ -87,7 +85,9 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 		
 	});
 	
-	/* 댓글 좋아요 관련 */
+	/* 댓글 좋아요 관련 : doGoodReaction에서 성공하고 난 후 S-로 시작하면 좋아요 클래스에 눌렀다는 표시와 갯수를 하나 늘린다.
+	
+	그리고 이미싫어요를 눌렀다면 싫어요에있던 눌렀다는 표시를 없애주고 좋아요에 옮겨 준다. */
 	function doGoodReaction2(replyId) {
 		 if(params.memberId==0) {
 		        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
@@ -215,6 +215,7 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	      });
 	  }
 
+	/* 댓글수정을 ajax로 수행 */
 	function ReplyModify__getForm(replyId, i) {
 		
 		$.get('../reply/getModifyForm', {

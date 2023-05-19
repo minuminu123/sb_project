@@ -37,8 +37,8 @@
 
 		<header class="fixed flex w-full">
 				<div class=" h-20 flex justify-around container mx-auto text-4xl">
-						<a href="/" class=" flex items-center px-3" style="background-color: white; border-radius: 50%; height: 60px; margin-top: 10px;">
-							<i class="fa-solid fa-umbrella-beach" style="color: #85ba21;"></i>						
+						<a href="/" class=" flex items-center px-3" style=" border-radius: 50%; height: 60px; width: 100px; margin-top: 10px;">
+							<img src="https://cdn-icons-png.flaticon.com/128/6348/6348567.png" alt="" style="width: 100%; height: 100%;"/>					
 						</a>
 
 						<ul class="flex">
@@ -52,16 +52,7 @@
 												<span>WRITE</span>
 										</a>
 								</li>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/beach/list">
-												<span>해수욕장 리스트</span>
-										</a>
-								</li>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/home/weather">
-												<span>오늘의 날씨</span>
-										</a>
-								</li>
+
 								<c:if test="${!rq.logined }">
 										<li class="hover:underline">
 												<a class="h-full px-3 flex items-center" href="${rq.loginUri }">
@@ -113,17 +104,32 @@
 								<div class="menu-inner">
 
 										<ul>
-												<li class="hover:underline">
+												<li class="hover:underline side_font">
+													<a class="h-full px-3 flex items-center" href="/usr/beach/list">
+														해수욕장 리스트
+													</a>
+												</li>
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
+													<a class="h-full px-3 flex items-center" href="/usr/home/weather">
+														오늘의 날씨
+													</a>
+												</li>
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
 														<a href="/usr/article/list?boardId=1&page=1">공지 게시판</a>
 												</li>
-												<li class="hover:underline">
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
 														<a href="/usr/article/list?boardId=2&page=1" style="white-space: normal;">해수욕장 추천 게시판</a>
 												</li>
-												<li class="hover:underline">
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
 														<a href="/usr/article/list?boardId=3&page=1">질문 게시판</a>
 												</li>
-												<li class="hover:underline">
-														<a href="/usr/home/recommend" style="white-space: normal;">네이버 인플루언서 추천 페이지</a>
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
+														<a href="/usr/home/recommend" style="white-space: normal;">네이버 인플루언서 추천</a>
 												</li>
 										</ul>
 								</div>

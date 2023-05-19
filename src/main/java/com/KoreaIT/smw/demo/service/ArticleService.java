@@ -22,8 +22,9 @@ public class ArticleService {
 
 	public ResultData<Integer> writeArticle(int memberId, int boardId, String title, String body) {
 
+		/* 글작성 함수 */
 		articleRepository.writeArticle(memberId, boardId, title, body);
-
+		/* 게시글의 마지막 번호를 알아와서 글을 작성하면 +1 되게 */
 		int id = articleRepository.getLastInsertId();
 
 		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다", id), "id", id);
@@ -63,7 +64,7 @@ public class ArticleService {
 		if (article == null) {
 			return;
 		}
-
+		/* 게시글 수정 삭제 권한 체크 */
 		ResultData actorCanDeleteRd = actorCanDelete(actorId, article);
 		article.setActorCanDelete(actorCanDeleteRd.isSuccess());
 
@@ -93,6 +94,7 @@ public class ArticleService {
 	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page, String searchKeywordTypeCode,
 			String searchKeyword) {
 
+		/* 검색한 결과를 가져오는 함수 */
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 

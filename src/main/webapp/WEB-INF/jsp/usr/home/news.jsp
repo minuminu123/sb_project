@@ -5,7 +5,7 @@
 <title>Today Weather</title>
 </head>
 <body>
-		<h3>네이버 오픈 API를 활용한 오늘의 날씨</h3>
+		<h3>네이버 오픈 API를 활용한 뉴스 기사 검색</h3>
 
 		<table border="1">
 				<tr>

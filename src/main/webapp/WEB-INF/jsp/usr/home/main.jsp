@@ -181,8 +181,8 @@
 </div>
 
 
-<form action="TWeather">
-<input type="text" name="text" placeholder="날씨를 검색하세요"/>
+<form action="news">
+<input type="text" name="text" placeholder="기사 검색"/>
 </form>
 
 

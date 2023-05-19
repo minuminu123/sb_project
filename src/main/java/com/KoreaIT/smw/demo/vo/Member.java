@@ -20,6 +20,7 @@ public class Member {
 	private String email;
 	private boolean delStatus;
 	private String delDate;
+	/* 날짜를 자르기위한 함수 */
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2, 16).replace(" ", "<br />");
 	}
@@ -27,7 +28,7 @@ public class Member {
 	public String getForPrintType1UpdateDate() {
 		return updateDate.substring(2, 16).replace(" ", "<br />");
 	}
-
+	/* 어드민인지 체크하는 함수 */
 	public boolean isAdmin() {
 		return this.authLevel == 7;
 	}

@@ -18,6 +18,7 @@ public class RecommendController {
         this.recommendService = recommendService;
     }
 
+    /* 네이버 인플루언서 추천 페이지를 jsoup으로 크롤링후 가져온 리스트를 보여주는 url */
     @GetMapping("/usr/home/recommend")
     public String news(Model model) throws Exception{
         List<Recommend> recommendList = recommendService.getNewsDatas();

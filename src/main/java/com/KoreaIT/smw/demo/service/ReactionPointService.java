@@ -30,14 +30,13 @@ public class ReactionPointService {
 		if (actorId == 0) {
 			return ResultData.from("F-1", "로그인 하고 오렴");
 		}
+		// 리액션을 할수 있는지 체크 (1이면 이미 했다는 거고 0이면 안했다)
 		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode,
 				relId);
 
 		if (sumReactionPointByMemberId != 0) {
-			System.out.println("너니?");
 			return ResultData.from("F-2", "추천 불가", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 		}
-		System.out.println("너니!");
 		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
@@ -103,7 +102,7 @@ public class ReactionPointService {
 
 		return ResultData.from("S-1", "싫어요 취소 처리 됨");
 	}
-	// 해당 게시글에 "article"에 로그인한 멤버의 댓글을 리스트로받고로그인한 멤버의 id와 reactionPoint 같은 거 찾아서 있으면 reply 리턴 아니면 
+	// 해당 게시글에 "article"에 로그인한 멤버의 댓글을 리스트로받고로그인한 멤버의 id와 reactionPoint 같은 거 찾아서 있으면 reply 리턴 
 	public List<Reply> actorCanCancelGoodReaction2(int relId, String relTypeCode) {
 		return replyRepository.getForPrintReplies2(rq.getLoginedMemberId(), relTypeCode, relId);
 	}

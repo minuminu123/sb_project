@@ -41,6 +41,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
 
+		// sha256으로 암호화
 		loginPw = Ut.sha256(loginPw);
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
@@ -66,6 +67,7 @@ public class MemberService {
 		return ResultData.from("S-1", "회원 정보 수정이 완료되었습니다");
 	}
 
+	// 비밀번호 찾기시 임시 패스워드 발송해주는 함수
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Ut.getTempPassword(6);
@@ -91,6 +93,7 @@ public class MemberService {
 		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 	}
 
+	// 관리자 페이지에서 권한, 키워드 타입,키워드로 멤버들 가져오는 함수
 	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
 			int itemsInAPage, int page) {
 

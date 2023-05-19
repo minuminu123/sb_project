@@ -63,6 +63,7 @@ public class MailService {
 
 		MailHandler mail;
 		try {
+			/* 이메일 수신자, 보내는 사람, 이메일 제목 설정,HTML 형식의 본문을 설정, 메일 보내기 : setTo(), setFrom(), setSubject(), setText(), send() */
 			mail = new MailHandler(sender);
 			mail.setFrom(emailFrom.replaceAll(" ", ""), emailFromName);
 			mail.setTo(email);

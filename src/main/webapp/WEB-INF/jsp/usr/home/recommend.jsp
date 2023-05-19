@@ -53,16 +53,11 @@
 </div>
 
 
-<!-- <img class="img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg"
-		alt="Hawaiian water crashes against the rocks">
-		 -->
-
-
 <script>
     // 이미지 개수 설정
     var imageCount = ${recommendCount};
 
-    // 이미지 가져오기 및 HTML 표시
+    // 랜덤 이미지 가져오기 및 HTML 표시
     for (var i = 0; i < imageCount; i++) {
         var imageUrl = "https://picsum.photos/300/300?random=" + i;
         var imageHtml = "<img style='margin-right: auto; margin-left: auto;' src='" + imageUrl + "' alt='랜덤 이미지'>";

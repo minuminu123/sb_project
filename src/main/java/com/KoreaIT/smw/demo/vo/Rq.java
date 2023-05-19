@@ -15,7 +15,7 @@ import com.KoreaIT.smw.demo.service.MemberService;
 import com.KoreaIT.smw.demo.util.Ut;
 
 import lombok.Getter;
-
+/* 세션값을 저장해두는 클래스로 전역에서사용가능하도록 설정 */
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
@@ -34,6 +34,11 @@ public class Rq {
 
 	private Map<String, String> paramMap;
 
+	/* Rq 클래스의 생성자이며, HttpServletRequest, HttpServletResponse, MemberService를 매개변수로 받는다
+	 * 변수들을 this를 통해 할당하고 로그인 상태인지 여부(isLogined), 로그인된 회원의 아이디(loginedMemberId), 
+	 * 로그인된 회원의 정보(loginedMember)를 저장하고 isAjax 변수를 초기화한다. 초기값은 false이고
+	요청이 Ajax 요청인지 확인한다. Ajax 요청은 URI가 "Ajax"로 끝나는 경우를 말한다. 그 외에도 ajax 또는 isAjax 파라미터 값이 "Y"인 경우도 Ajax 요청으로 간주한다.
+	isAjax 값을 멤버 변수에 할당한다 */
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
@@ -78,11 +83,14 @@ public class Rq {
 
 	}
 
+	/* historyback() 하는 함수로 resp.setContentType("text/html; charset=UTF-8"); 를 통해 인코딩 해준다.
+	 * 
+ */
 	public void printHitoryBackJs(String msg) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsHistoryBack("F-B", msg));
 	}
-
+	/* 			resp.getWriter().append(str);를 통해 스트링을 덧붙인다. */
 	public void print(String str) {
 		try {
 			resp.getWriter().append(str);
@@ -95,14 +103,15 @@ public class Rq {
 		print(str + "\n");
 	}
 
+	// 로그인이 되었다면 세션에 loginedMemberId라는 속성을 설정해준다.
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
 	}
-
+	// 로그아웃하면 loginedMemberId 속성값을 삭제한다.
 	public void logout() {
 		session.removeAttribute("loginedMemberId");
 	}
-
+	// js.jsp 에서 스크립트문을 통해 historyback이 되도록 설정한 함수
 	public String jsHitoryBackOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
@@ -138,28 +147,30 @@ public class Rq {
 	public void initOnBeforeActionInterceptor() {
 
 	}
-
+	/* 로그인하지 않았다면 true를 리턴하는 함수 */
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
 
+	/* 메인화면에 접속할때 rq를 실행하는함수 */
 	public void run() {
 		System.out.println("===========================run A");
 	}
 
+	/* 돌아갈 replaceUri와 메시지를 받는 함수(인코딩) */
 	public void jsprintReplace(String msg, String replaceUri) {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, replaceUri));
 	}
-
+	/* 회원가입후 돌아갈 uri적은 함수 */
 	public String getJoinUri() {
 		return "/usr/member/join?afterLoginUri=" + getAfterLoginUri();
 	}
-
+	/* 로그인후 돌아갈 uri적은 함수 */
 	public String getLoginUri() {
 		return "/usr/member/login?afterLoginUri=" + getAfterLoginUri();
 	}
-
+	/* 로그아웃 후 돌아갈 uri 적은 함수 */
 	public String getLogoutUri() {
 		String requestUri = req.getRequestURI();
 
@@ -206,7 +217,7 @@ public class Rq {
 	private String getAfterFindLoginIdUri() {
 		return getEncodedCurrentUri();
 	}
-
+	/* 패스워드를 찾은후 돌아갈 uri를 적은 함수 */
 	public String getFindLoginPwUri() {
 		return "/usr/member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
 	}

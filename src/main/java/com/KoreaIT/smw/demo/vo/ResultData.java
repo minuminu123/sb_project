@@ -24,6 +24,7 @@ public class ResultData<DT> {
 		this.msg = msg;
 		this.body = Ut.mapOf(args);
 	}
+	/* 인자를 2개로 받는 from 함수 선언시 밑에거로 리턴 */
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
 	}
@@ -37,7 +38,7 @@ public class ResultData<DT> {
 
 		return rd;
 	}
-
+	/* 성공했는지 체크하는 함수 */
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");
 	}
@@ -45,7 +46,7 @@ public class ResultData<DT> {
 	public boolean isFail() {
 		return isSuccess() == false;
 	}
-
+	/* 새로운 형태의 ResultData를 만들기위한 함수 */
 	public static <DT> ResultData<DT> newData(ResultData rd, String data1Name, DT newData) {
 		return from(rd.getResultCode(), rd.getMsg(), data1Name, newData);
 	}

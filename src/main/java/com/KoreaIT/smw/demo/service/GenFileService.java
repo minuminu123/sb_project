@@ -28,6 +28,8 @@ public class GenFileService {
 	@Autowired
 	private GenFileRepository genFileRepository;
 
+	/* 이 코드는 파일의 메타 정보를 입력받아 데이터베이스에 저장하는 기능을 제공한다.
+	 *  저장된 파일의 식별자(id)를 반환하여 클라이언트에게 전달한다. */
 	public ResultData saveMeta(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo,
 			String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, int fileSize,
 			String fileDir) {
@@ -41,7 +43,8 @@ public class GenFileService {
 		int id = Ut.getAsInt(param.get("id"), 0);
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
-
+	/* 파일을 저장하는 함수.  이 코드는 업로드된 파일을 저장하고, 파일의 메타 정보를 데이터베이스에 저장한다.
+	 *  파일의 식별자(id), 저장된 파일 경로, 파일명 등을 포함한 결과를 반환한다.*/
 	public ResultData save(MultipartFile multipartFile, String relTypeCode, int relId, String typeCode,
 			String type2Code, int fileNo) {
 		String fileInputName = multipartFile.getName();

@@ -1,7 +1,7 @@
 package com.KoreaIT.smw.demo.util;
 
 import java.util.regex.Pattern;
-
+/* 이메일, 비밀번호, 전화번호 정규식을 정하는 클래스 */
 public class Validator {
     private static final String EMAIL_REGEX = "^.*@gmail\\.com$";
     private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);

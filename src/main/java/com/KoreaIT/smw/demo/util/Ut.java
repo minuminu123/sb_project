@@ -27,10 +27,12 @@ public class Ut {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 
+	/* 스트링 형식으로 바꿔주는 함수. args는 Object...로 받아서 뒤에 몇개의 인자가와도 가능하게 설정 */
 	public static String f(String format, Object... args) {
 		return String.format(format, args);
 	}
 
+	/* 뒤로가는 함수 */
 	public static String jsHistoryBack(String resultCode, String msg) {
 
 		if (msg == null) {
@@ -48,6 +50,7 @@ public class Ut {
 				""", msg);
 	}
 
+	/* 페이지 이동하는 함수 */
 	public static String jsReplace(String msg, String uri) {
 		if (msg == null) {
 			msg = "";
@@ -88,6 +91,7 @@ public class Ut {
 
 	}
 
+	// 뒤로가는함수인데 프론트에있는 js.jsp를 통해 뒤로가기 하는 함수
 	public static String jsHitoryBackOnView(HttpServletRequest req, String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
@@ -95,6 +99,7 @@ public class Ut {
 		return "usr/common/js";
 	}
 
+	/* 현재 url를 인코딩 하는 함수 */
 	public static String getEncodedCurrentUri(String currentUri) {
 
 		try {
@@ -116,6 +121,7 @@ public class Ut {
 
 	}
 
+	/* afterUri를 중복으로 받지 않기 위해 사용하는 함수 */
 	public static Map<String, String> getParamMap(HttpServletRequest req) {
 		Map<String, String> param = new HashMap<>();
 
@@ -130,7 +136,11 @@ public class Ut {
 
 		return param;
 	}
-	
+
+	/*
+	 *map에서 attrName과 일치하는 키의 값을 가져오고, 없는 경우에는 기본값인 defaultValue를 반환합니다.
+	 * 반환되는 값은 String 타입입니다.
+	 */
 	public static String getAttr(Map map, String attrName, String defaultValue) {
 
 		if (map.containsKey(attrName)) {
@@ -140,388 +150,401 @@ public class Ut {
 		return defaultValue;
 	}
 
-	// sha256
-		public static String sha256(String input) {
-			try {
-				MessageDigest md = MessageDigest.getInstance("SHA-256");
-				byte[] hash = md.digest(input.getBytes("UTF-8"));
-				StringBuffer hexString = new StringBuffer();
+	// 임시 비밀번호를 sha256으로 암호화하는 함수
+	public static String sha256(String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			byte[] hash = md.digest(input.getBytes("UTF-8"));
+			StringBuffer hexString = new StringBuffer();
 
-				for (int i = 0; i < hash.length; i++) {
-					String hex = Integer.toHexString(0xff & hash[i]);
-					if (hex.length() == 1)
-						hexString.append('0');
-					hexString.append(hex);
+			for (int i = 0; i < hash.length; i++) {
+				String hex = Integer.toHexString(0xff & hash[i]);
+				if (hex.length() == 1)
+					hexString.append('0');
+				hexString.append(hex);
+			}
+
+			return hexString.toString();
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/* 임시 비밀번호 만드는 함수 */
+	public static String getTempPassword(int length) {
+		int index = 0;
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+				'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < length; i++) {
+			index = (int) (charArr.length * Math.random());
+			sb.append(charArr[index]);
+		}
+
+		return sb.toString();
+	}
+
+	/* map에 넣을때 key, value의 쌍이 짝수개가 맞는지 확인하는 함수 */
+	public static Map<String, Object> mapOf(Object... args) {
+		if (args.length % 2 != 0) {
+			throw new IllegalArgumentException("인자를 짝수개 입력해주세요.");
+		}
+
+		int size = args.length / 2;
+
+		Map<String, Object> map = new LinkedHashMap<>();
+
+		for (int i = 0; i < size; i++) {
+			int keyIndex = i * 2;
+			int valueIndex = keyIndex + 1;
+
+			String key;
+			Object value;
+
+			try {
+				key = (String) args[keyIndex];
+			} catch (ClassCastException e) {
+				throw new IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.getMessage());
+			}
+
+			value = args[valueIndex];
+
+			map.put(key, value);
+		}
+
+		return map;
+	}
+
+	/* object 로 받은 값은 캐스팅을 해줘야하기 때문에 여러가지 경우의 수를 사용하여 캐스팅하는 함수 */
+	public static int getAsInt(Object object, int defaultValue) {
+		if (object instanceof BigInteger) {
+			return ((BigInteger) object).intValue();
+		} else if (object instanceof Double) {
+			return (int) Math.floor((double) object);
+		} else if (object instanceof Float) {
+			return (int) Math.floor((float) object);
+		} else if (object instanceof Long) {
+			return (int) object;
+		} else if (object instanceof Integer) {
+			return (int) object;
+		} else if (object instanceof String) {
+			return Integer.parseInt((String) object);
+		}
+
+		return defaultValue;
+	}
+
+	/*
+	 * 데이터(data)가 null이 아닌지 확인하고 data가 null이 아닌 경우 data를 반환
+	 * defaultValue에서 데이터(data)가 null인 경우 반환할 기본값이다.
+	 */
+	public static <T> T ifNull(T data, T defaultValue) {
+		return data != null ? data : defaultValue;
+	}
+
+	public static <T> T reqAttr(HttpServletRequest req, String attrName, T defaultValue) {
+		return (T) ifNull(req.getAttribute(attrName), defaultValue);
+	}
+
+	/* 오브젝트로 받은 인자가 만약 스트링이 아니라면 return true 해주고 string이면 공백제거하고 길이를 재서 0인지 확인하는 함수 */
+	public static boolean empty(Object obj) {
+		if (obj == null) {
+			return true;
+		}
+
+		if (obj instanceof Integer) {
+			return ((int) obj) == 0;
+		}
+
+		if (obj instanceof Long) {
+			return ((long) obj) == 0;
+		}
+
+		if (obj instanceof String == false) {
+			return true;
+		}
+
+		String str = (String) obj;
+
+		return str.trim().length() == 0;
+	}
+
+	public static boolean isEmpty(Object data) {
+		if (data == null) {
+			return true;
+		}
+
+		if (data instanceof String) {
+			String strData = (String) data;
+
+			return strData.trim().length() == 0;
+		} else if (data instanceof List) {
+			List listData = (List) data;
+
+			return listData.isEmpty();
+		} else if (data instanceof Map) {
+			Map mapData = (Map) data;
+
+			return mapData.isEmpty();
+		}
+
+		return false;
+	}
+
+	public static String jsHistoryBack(String msg) {
+		return Ut.f("""
+				<script>
+				const msg = '%s'.trim();
+				if ( msg.length > 0 ) {
+					alert(msg);
 				}
+				history.back();
+				</script>
+				""", msg);
+	}
 
-				return hexString.toString();
-			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return null;
-			}
+	public static String getUriEncoded(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch (Exception e) {
+			return str;
 		}
-		
-		public static String getTempPassword(int length) {
-			int index = 0;
-			char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-					'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	}
+	/* 날짜 포맷을 정해주는 함수 */
+	public static String getDateStrLater(long seconds) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-			StringBuffer sb = new StringBuffer();
+		String dateStr = format.format(System.currentTimeMillis() + seconds * 1000);
 
-			for (int i = 0; i < length; i++) {
-				index = (int) (charArr.length * Math.random());
-				sb.append(charArr[index]);
-			}
+		return dateStr;
+	}
 
-			return sb.toString();
-		}
-		
-		public static Map<String, Object> mapOf(Object... args) {
-			if (args.length % 2 != 0) {
-				throw new IllegalArgumentException("인자를 짝수개 입력해주세요.");
-			}
-
-			int size = args.length / 2;
-
-			Map<String, Object> map = new LinkedHashMap<>();
-
-			for (int i = 0; i < size; i++) {
-				int keyIndex = i * 2;
-				int valueIndex = keyIndex + 1;
-
-				String key;
-				Object value;
-
-				try {
-					key = (String) args[keyIndex];
-				} catch (ClassCastException e) {
-					throw new IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.getMessage());
-				}
-
-				value = args[valueIndex];
-
-				map.put(key, value);
-			}
-
-			return map;
+	/* 주어진 객체(obj)를 JSON 형식의 문자열로 변환하는 기능을 수행 */
+	public static String toJsonStr(Object obj) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
 
-		public static int getAsInt(Object object, int defaultValue) {
-			if (object instanceof BigInteger) {
-				return ((BigInteger) object).intValue();
-			} else if (object instanceof Double) {
-				return (int) Math.floor((double) object);
-			} else if (object instanceof Float) {
-				return (int) Math.floor((float) object);
-			} else if (object instanceof Long) {
-				return (int) object;
-			} else if (object instanceof Integer) {
-				return (int) object;
-			} else if (object instanceof String) {
-				return Integer.parseInt((String) object);
-			}
+		return "";
+	}
 
-			return defaultValue;
+	public static String toJsonStr(Map<String, Object> param) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(param);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
 
-		public static <T> T ifNull(T data, T defaultValue) {
-			return data != null ? data : defaultValue;
+		return "";
+	}
+
+	public static String getStrAttr(Map map, String attrName, String defaultValue) {
+		if (map.containsKey(attrName)) {
+			return (String) map.get(attrName);
 		}
 
-		public static <T> T reqAttr(HttpServletRequest req, String attrName, T defaultValue) {
-			return (T) ifNull(req.getAttribute(attrName), defaultValue);
+		return defaultValue;
+	}
+
+	// 파일 업로드시 파일의 확장자를 관리하는 함수
+	public static String getFileExtTypeCodeFromFileName(String fileName) {
+		String ext = getFileExtFromFileName(fileName).toLowerCase();
+
+		switch (ext) {
+		case "jpeg":
+		case "jpg":
+		case "gif":
+		case "png":
+			return "img";
+		case "mp4":
+		case "avi":
+		case "mov":
+			return "video";
+		case "mp3":
+			return "audio";
 		}
 
-		public static boolean empty(Object obj) {
-			if (obj == null) {
-				return true;
-			}
+		return "etc";
+	}
 
-			if (obj instanceof Integer) {
-				return ((int) obj) == 0;
-			}
+	public static String getFileExtType2CodeFromFileName(String fileName) {
+		String ext = getFileExtFromFileName(fileName).toLowerCase();
 
-			if (obj instanceof Long) {
-				return ((long) obj) == 0;
-			}
-
-			if (obj instanceof String == false) {
-				return true;
-			}
-
-			String str = (String) obj;
-
-			return str.trim().length() == 0;
-		}
-
-		public static boolean isEmpty(Object data) {
-			if (data == null) {
-				return true;
-			}
-
-			if (data instanceof String) {
-				String strData = (String) data;
-
-				return strData.trim().length() == 0;
-			} else if (data instanceof List) {
-				List listData = (List) data;
-
-				return listData.isEmpty();
-			} else if (data instanceof Map) {
-				Map mapData = (Map) data;
-
-				return mapData.isEmpty();
-			}
-
-			return false;
-		}
-
-		public static String jsHistoryBack(String msg) {
-			return Ut.f("""
-					<script>
-					const msg = '%s'.trim();
-					if ( msg.length > 0 ) {
-						alert(msg);
-					}
-					history.back();
-					</script>
-					""", msg);
-		}
-
-		public static String getUriEncoded(String str) {
-			try {
-				return URLEncoder.encode(str, "UTF-8");
-			} catch (Exception e) {
-				return str;
-			}
-		}
-
-		public static String getDateStrLater(long seconds) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-			String dateStr = format.format(System.currentTimeMillis() + seconds * 1000);
-
-			return dateStr;
-		}
-
-		public static String toJsonStr(Object obj) {
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				return mapper.writeValueAsString(obj);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-
-			return "";
-		}
-
-		public static String toJsonStr(Map<String, Object> param) {
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				return mapper.writeValueAsString(param);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-
-			return "";
-		}
-
-		public static String getStrAttr(Map map, String attrName, String defaultValue) {
-			if (map.containsKey(attrName)) {
-				return (String) map.get(attrName);
-			}
-
-			return defaultValue;
-		}
-
-		public static String getFileExtTypeCodeFromFileName(String fileName) {
-			String ext = getFileExtFromFileName(fileName).toLowerCase();
-
-			switch (ext) {
-			case "jpeg":
-			case "jpg":
-			case "gif":
-			case "png":
-				return "img";
-			case "mp4":
-			case "avi":
-			case "mov":
-				return "video";
-			case "mp3":
-				return "audio";
-			}
-
-			return "etc";
-		}
-
-		public static String getFileExtType2CodeFromFileName(String fileName) {
-			String ext = getFileExtFromFileName(fileName).toLowerCase();
-
-			switch (ext) {
-			case "jpeg":
-			case "jpg":
-				return "jpg";
-			case "gif":
-				return ext;
-			case "png":
-				return ext;
-			case "mp4":
-				return ext;
-			case "mov":
-				return ext;
-			case "avi":
-				return ext;
-			case "mp3":
-				return ext;
-			}
-
-			return "etc";
-		}
-
-		public static String getFileExtFromFileName(String fileName) {
-			int pos = fileName.lastIndexOf(".");
-			String ext = fileName.substring(pos + 1);
-
+		switch (ext) {
+		case "jpeg":
+		case "jpg":
+			return "jpg";
+		case "gif":
+			return ext;
+		case "png":
+			return ext;
+		case "mp4":
+			return ext;
+		case "mov":
+			return ext;
+		case "avi":
+			return ext;
+		case "mp3":
 			return ext;
 		}
 
-		public static String getNowYearMonthDateStr() {
-			SimpleDateFormat format1 = new SimpleDateFormat("yyyy_MM");
+		return "etc";
+	}
 
-			String dateStr = format1.format(System.currentTimeMillis());
+	public static String getFileExtFromFileName(String fileName) {
+		int pos = fileName.lastIndexOf(".");
+		String ext = fileName.substring(pos + 1);
 
-			return dateStr;
+		return ext;
+	}
+
+	// 현재의 날짜를 가져오는 함수
+	public static String getNowYearMonthDateStr() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy_MM");
+
+		String dateStr = format1.format(System.currentTimeMillis());
+
+		return dateStr;
+	}
+
+	/*  주어진 문자열을 지정된 구분자로 분리하여 정수값의 리스트로 반환하는 기능을 제공합니다. 
+	 * 반환되는 리스트는 각 분리된 문자열을 정수로 변환한 결과 */
+	public static List<Integer> getListDividedBy(String str, String divideBy) {
+		return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim()))
+				.collect(Collectors.toList());
+	}
+
+	public static boolean deleteFile(String filePath) {
+		java.io.File ioFile = new java.io.File(filePath);
+		if (ioFile.exists()) {
+			return ioFile.delete();
 		}
 
-		public static List<Integer> getListDividedBy(String str, String divideBy) {
-			return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim()))
-					.collect(Collectors.toList());
+		return true;
+	}
+
+	public static String numberFormat(int num) {
+		DecimalFormat df = new DecimalFormat("###,###,###");
+
+		return df.format(num);
+	}
+
+	public static String numberFormat(String numStr) {
+		return numberFormat(Integer.parseInt(numStr));
+	}
+
+	public static boolean allNumberString(String str) {
+		if (str == null) {
+			return false;
 		}
 
-		public static boolean deleteFile(String filePath) {
-			java.io.File ioFile = new java.io.File(filePath);
-			if (ioFile.exists()) {
-				return ioFile.delete();
-			}
-
+		if (str.length() == 0) {
 			return true;
 		}
 
-		public static String numberFormat(int num) {
-			DecimalFormat df = new DecimalFormat("###,###,###");
-
-			return df.format(num);
-		}
-
-		public static String numberFormat(String numStr) {
-			return numberFormat(Integer.parseInt(numStr));
-		}
-
-		public static boolean allNumberString(String str) {
-			if (str == null) {
+		for (int i = 0; i < str.length(); i++) {
+			if (Character.isDigit(str.charAt(i)) == false) {
 				return false;
 			}
-
-			if (str.length() == 0) {
-				return true;
-			}
-
-			for (int i = 0; i < str.length(); i++) {
-				if (Character.isDigit(str.charAt(i)) == false) {
-					return false;
-				}
-			}
-
-			return true;
 		}
 
-		public static boolean startsWithNumberString(String str) {
-			if (str == null) {
-				return false;
-			}
+		return true;
+	}
 
-			if (str.length() == 0) {
-				return false;
-			}
-
-			return Character.isDigit(str.charAt(0));
+	public static boolean startsWithNumberString(String str) {
+		if (str == null) {
+			return false;
 		}
 
-		public static boolean isStandardLoginIdString(String str) {
-			if (str == null) {
-				return false;
-			}
-
-			if (str.length() == 0) {
-				return false;
-			}
-
-			// 조건
-			// 5자 이상, 20자 이하로 구성
-			// 숫자로 시작 금지
-			// _, 알파벳, 숫자로만 구성
-			return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
+		if (str.length() == 0) {
+			return false;
 		}
 
-		public static String getNewUriRemoved(String uri, String paramName) {
-			String deleteStrStarts = paramName + "=";
-			int delStartPos = uri.indexOf(deleteStrStarts);
+		return Character.isDigit(str.charAt(0));
+	}
 
-			if (delStartPos != -1) {
-				int delEndPos = uri.indexOf("&", delStartPos);
-
-				if (delEndPos != -1) {
-					delEndPos++;
-					uri = uri.substring(0, delStartPos) + uri.substring(delEndPos, uri.length());
-				} else {
-					uri = uri.substring(0, delStartPos);
-				}
-			}
-
-			if (uri.charAt(uri.length() - 1) == '?') {
-				uri = uri.substring(0, uri.length() - 1);
-			}
-
-			if (uri.charAt(uri.length() - 1) == '&') {
-				uri = uri.substring(0, uri.length() - 1);
-			}
-
-			return uri;
+	public static boolean isStandardLoginIdString(String str) {
+		if (str == null) {
+			return false;
 		}
 
-		public static String getNewUri(String uri, String paramName, String paramValue) {
-			uri = getNewUriRemoved(uri, paramName);
+		if (str.length() == 0) {
+			return false;
+		}
 
-			if (uri.contains("?")) {
-				uri += "&" + paramName + "=" + paramValue;
+		// 조건
+		// 5자 이상, 20자 이하로 구성
+		// 숫자로 시작 금지
+		// _, 알파벳, 숫자로만 구성
+		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
+	}
+
+	public static String getNewUriRemoved(String uri, String paramName) {
+		String deleteStrStarts = paramName + "=";
+		int delStartPos = uri.indexOf(deleteStrStarts);
+
+		if (delStartPos != -1) {
+			int delEndPos = uri.indexOf("&", delStartPos);
+
+			if (delEndPos != -1) {
+				delEndPos++;
+				uri = uri.substring(0, delStartPos) + uri.substring(delEndPos, uri.length());
 			} else {
-				uri += "?" + paramName + "=" + paramValue;
-			}
-
-			uri = uri.replace("?&", "?");
-
-			return uri;
-		}
-
-		public static String getNewUriAndEncoded(String uri, String paramName, String pramValue) {
-			return getUriEncoded(getNewUri(uri, paramName, pramValue));
-		}
-
-		public static <T> T fromJsonStr(String jsonStr, Class<T> cls) {
-			ObjectMapper om = new ObjectMapper();
-			try {
-				return (T) om.readValue(jsonStr, cls);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-				return null;
+				uri = uri.substring(0, delStartPos);
 			}
 		}
 
-		public static <T> T ifEmpty(T data, T defaultValue) {
-			if (isEmpty(data)) {
-				return defaultValue;
-			}
-
-			return data;
+		if (uri.charAt(uri.length() - 1) == '?') {
+			uri = uri.substring(0, uri.length() - 1);
 		}
+
+		if (uri.charAt(uri.length() - 1) == '&') {
+			uri = uri.substring(0, uri.length() - 1);
+		}
+
+		return uri;
+	}
+
+	public static String getNewUri(String uri, String paramName, String paramValue) {
+		uri = getNewUriRemoved(uri, paramName);
+
+		if (uri.contains("?")) {
+			uri += "&" + paramName + "=" + paramValue;
+		} else {
+			uri += "?" + paramName + "=" + paramValue;
+		}
+
+		uri = uri.replace("?&", "?");
+
+		return uri;
+	}
+
+	public static String getNewUriAndEncoded(String uri, String paramName, String pramValue) {
+		return getUriEncoded(getNewUri(uri, paramName, pramValue));
+	}
+
+	public static <T> T fromJsonStr(String jsonStr, Class<T> cls) {
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return (T) om.readValue(jsonStr, cls);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static <T> T ifEmpty(T data, T defaultValue) {
+		if (isEmpty(data)) {
+			return defaultValue;
+		}
+
+		return data;
+	}
 }

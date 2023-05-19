@@ -40,9 +40,9 @@ public class UsrHomeController {
 		return "usr/home/ex2";
 	}
 
-	@RequestMapping("/usr/home/TWeather")
+	@RequestMapping("/usr/home/news")
 	public String TWeather(String text, Model model) {
-		// 네이버 검색 API 요청
+		// 네이버 뉴스 검색 API 요청
 		String clientId = "FTz2f8retxTdxp8Vssbr";
 		String clientSecret = "AaaoVfoyAY";
 
@@ -74,7 +74,7 @@ public class UsrHomeController {
 		List<Weather> WeatherList = resultVO.getItems(); // weatherList를 list.html에 출력 -> model 선언
 		model.addAttribute("WeatherList", WeatherList);
 
-		return "/usr/home/TWeather";
+		return "/usr/home/news";
 	}
 
 }

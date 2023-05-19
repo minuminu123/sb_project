@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
-<c:set var="pageTitle" value="CAMPING" />
+<c:set var="pageTitle" value="Beach List" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 <%

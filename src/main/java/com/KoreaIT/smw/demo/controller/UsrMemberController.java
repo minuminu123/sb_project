@@ -27,7 +27,7 @@ public class UsrMemberController {
 	public String showJoin() {
 		return "usr/member/join";
 	}
-	
+	/* 로그인 중복 검사 url(ajax로 사용) */
 	@RequestMapping("/usr/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {
@@ -36,6 +36,7 @@ public class UsrMemberController {
 			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
 
+		/* 입력받은 loginId로 멤버가 존재하는지 확인 */
 		Member existsMember = memberService.getMemberByLoginId(loginId);
 
 		if (existsMember != null) {
@@ -44,7 +45,7 @@ public class UsrMemberController {
 		
 		return ResultData.from("S-1", "사용 가능!", "loginId", loginId);
 	}
-	
+	/* 이메일 중복 검사 url */
 	@RequestMapping("/usr/member/getEmailDup")
 	@ResponseBody
 	public ResultData getEmailDup(String email) {
@@ -67,6 +68,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능!", "email", email);
 	}
 	
+	/* 핸드폰 번호 형식 검사 url */
 	@RequestMapping("/usr/member/chkcellPhoneNum")
 	@ResponseBody
 	public ResultData chkcellPhoneNum(String cellphoneNum) {
@@ -83,6 +85,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능!", "cellphoneNum", cellphoneNum);
 	}
 	
+	/* 비밀번호 형식 확인 url */
 	@RequestMapping("/usr/member/getLoginPwDup")
 	@ResponseBody
 	public ResultData getLoginPwDup(String loginPw) {
@@ -99,6 +102,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능!", "loginPw", loginPw);
 	}
 	
+	/* 회원가입 url */
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
@@ -152,6 +156,7 @@ public class UsrMemberController {
 		return "usr/member/login";
 	}
 
+	/* 로그인 수행 url */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
@@ -187,7 +192,7 @@ public class UsrMemberController {
 
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getName()), afterLoginUri);
 	}
-
+	/* 로그아웃 url */
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
@@ -212,7 +217,7 @@ public class UsrMemberController {
 
 		return "usr/member/checkPw";
 	}
-
+	/* 아이디 찾기 할때 사용하는 url */
 	@RequestMapping("/usr/member/doCheckPw")
 	@ResponseBody
 	public String doCheckPw(String loginPw, String replaceUri) {
@@ -234,7 +239,7 @@ public class UsrMemberController {
 
 		return "usr/member/modify";
 	}
-
+	/* 로그인한 사용자의 정보를 수정하는 url */
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
@@ -259,6 +264,7 @@ public class UsrMemberController {
 		return "usr/member/findLoginId";
 	}
 
+	/* 아이디를 찾는 url */
 	@RequestMapping("/usr/member/doFindLoginId")
 	@ResponseBody
 	public String doFindLoginId(@RequestParam(defaultValue = "/") String afterFindLoginIdUri, String name,
@@ -278,7 +284,8 @@ public class UsrMemberController {
 
 		return "usr/member/findLoginPw";
 	}
-
+	
+	/* pw 찾는  */
 	@RequestMapping("/usr/member/doFindLoginPw")
 	@ResponseBody
 	public String doFindLoginPw(@RequestParam(defaultValue = "/") String afterFindLoginPwUri, String loginId,
@@ -293,7 +300,7 @@ public class UsrMemberController {
 		if (member.getEmail().equals(email) == false) {
 			return Ut.jsHistoryBack("F-2", "일치하는 이메일이 없는데?");
 		}
-
+		/* 임시 패스워드 설정해서 유저의 이메일에 발송하는 함수 */
 		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
 
 		return Ut.jsReplace(notifyTempLoginPwByEmailRd.getResultCode(), notifyTempLoginPwByEmailRd.getMsg(),

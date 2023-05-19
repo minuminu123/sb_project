@@ -21,6 +21,7 @@ public class ReplyService {
 		this.replyRepository = replyRepository;
 	}
 
+	/* 게시글 서비스와 비슷 */
 	public ResultData<Integer> writeReply(int actorId, String relTypeCode, int relId, String body) {
 		replyRepository.writeReply(actorId, relTypeCode, relId, body);
 
