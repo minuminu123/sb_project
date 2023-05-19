@@ -58,13 +58,13 @@ main {
 /* 커스텀 */
 .table-box-type-1 tbody th,
 	.table-box-type-1 td {
-	border: 1px solid black;
+
 	padding: 10px;
 	text-align: center;
 }
 
 .table tbody th, .table td {
-	border: 1px solid black;
+
 	padding: 10px;
 	text-align: center;
 }
@@ -77,7 +77,7 @@ main {
 
 .table-box-type-2 thead th, .table-box-type-2 tbody th,
 	.table-box-type-2 td {
-	border: 1px solid black;
+
 	padding: 10px;
 	text-align: center;
 }
@@ -635,7 +635,7 @@ fieldset input:focus {
 
 .main-asdf > .bg-asdf3 {
 	/* 상대경로 지정 */
-	background-image: url('main6.webp');
+	background-image: url('https://64.media.tumblr.com/356cae9898a94364db896076980e8654/848d1d2ab8cff6f4-0d/s500x750/e8a2f3234f83ed29a35e6bfaaf504c1b8c24a319.jpg');
 	top: 4%;
 	left: 700px;
 	position: sticky;
@@ -657,14 +657,36 @@ fieldset input:focus {
 	height: 1000px;
 }
 
-/* 배경이미지 고정 */
+/*===================================*/
+
 .img2 {
-	background-image:
-		url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg');
-	background-attachment: fixed;
-	background-size: cover;
-  	filter: url(#water);
-}
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img2::before {
+    content: "";
+    display: block;
+  }
+
+  .img2 .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg');
+    background-attachment: fixed;
+    background-size: cover;
+    filter: url(#water);
+  }
+
+  .table-container {
+    position: relative;
+    z-index: 2;
+  }
+
+/*=================================*/
 
 .input {
 	top: 1200px;

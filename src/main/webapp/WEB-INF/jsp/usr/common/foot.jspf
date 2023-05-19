@@ -14,7 +14,7 @@
                              alt="..."/ style="border-radius: 50%;">
                     </div>
                     <div class="user-text" style="z-index: 1;">
-                        <p>top</p>
+                        <p style="color: skyblue;">top</p>
                     </div>
                 </div>
             </a>

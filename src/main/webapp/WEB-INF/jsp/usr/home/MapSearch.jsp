@@ -367,7 +367,7 @@
 						<div>
 								<form onsubmit="searchPlaces(); return false;">
 										키워드 :
-										<input type="text" value="해수욕장" id="keyword" size="30">
+										<input type="text" value="${value }" id="keyword" size="30">
 										<button type="submit">검색하기</button>
 								</form>
 						</div>

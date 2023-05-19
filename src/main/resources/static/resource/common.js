@@ -165,8 +165,9 @@ $(window).on('load', function() {
 });
 
 var ani3 = anime({
-	targets: ['main table'],
+	targets: ['main table > thead, main table > tbody > tr'],
 	translateX: '200',
+	delay: anime.stagger(100), // 뒤 따르는 각 요소마다 100ms 지연(delay)을 설정합니다.
 	autoplay: true
 });
 /*

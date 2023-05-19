@@ -15,7 +15,7 @@ int pageNo = (int) request.getAttribute("pageNo");
 int pageSize = (int) request.getAttribute("pageSize");
 %>
     <meta charset="UTF-8">
-    <h1>Camping List</h1>
+    <h1>Beach List</h1>
    <div>
     <form class="flex mt-16">
         <select name="searchType" class="select select-bordered" style="width: 150px;">
@@ -29,7 +29,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 </div>
 
 <h1>Beach List</h1>
-<table class="table-box-type-1 table w-full mt-24" style="border-collaspe: collaspe; width: 700px;">
+<table class="table table-zebra z-10 mt-60" style=" width: 700px;">
     <thead>
         <tr>
             <th>해수욕장 이름</th>
@@ -42,7 +42,7 @@ int pageSize = (int) request.getAttribute("pageSize");
             <tr>
                 <th><%= row[1] %></th>
                 <th><%= row[6] %></th>
-                <th><a href="/usr/caming/detail">지도</a></th>
+                <th><a href="/usr/home/MapSearch?value=<%=row[1] %>">지도</a></th>
             </tr>
         <% } %>
     </tbody>

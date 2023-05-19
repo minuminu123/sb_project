@@ -199,7 +199,7 @@
 		</div>
 </div>
 
-<div class="bg-main2">
+<div class="bg-main3">
 	<div class="main-asdf">
 			<div class="bg-asdf2" data-aos="fade-left"></div>
 			<div class="main-div" data-aos="fade-right">
@@ -213,7 +213,7 @@
 	<div class="main-asdf">
 			<div class="bg-asdf3" data-aos="fade-left"></div>
 			<div class="main-div" data-aos="fade-right">
-					<p class="lorem-text"> 네이버 인플루언서가 추천하는 최근 20개 둘러보기</p>
+					<p class="lorem-text"> 네이버 인플루언서가 추천 해수욕장 둘러보기</p>
 						<a href="/usr/home/recommend" class="btn btn-outline btn-info mt-12 blinking-text3">인플루언서 추천 페이지 바로가기</a>
 			</div>
 	</div>
