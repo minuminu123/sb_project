@@ -251,14 +251,15 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 <article class="mt-36 text-xl">
 		<div class="container px-3" style="width: 800px; margin-left: 45px;">
 				<div class="table-box-type-2">
-						<table border="1" style="background-color: white;">
+						<table border="1" style="background-color: white; border-radius: 10px; margin-left: 175px;">
 								<colgroup>
-										<col width="200" />
+										<col width="200" style="background-color: cadetblue;"/>
 								</colgroup>
 
 								<tbody>
 										<tr>
 												<th>번호</th>
+												
 												<td>
 														<div class="badge">${article.id}</div>
 												</td>
@@ -355,6 +356,8 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 				</div>
 		</div>
 </article>
+
+
 </div>
 <!-- 댓글 관련 -->
 <script type="text/javascript">
@@ -373,10 +376,10 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 		form.submit();
 	}
 </script>
-<div class="bg-detail">
+
 <div style="height: 100px;"></div>
 
-<article style="top: 1150px; height: 300px; width: 850px; left: 200px;">
+<article style="top: 1500px; height: 300px; width: 850px; left: 200px;">
 
 	<div class="container mx-auto px-3">
 		<h1 class="text-3xl">댓글 리스트(${repliesCount })</h1>
@@ -428,7 +431,7 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	</div>
 	
 </article>
-</div>
+
 
 
 

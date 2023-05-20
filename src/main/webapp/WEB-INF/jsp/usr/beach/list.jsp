@@ -29,7 +29,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 </div>
 
 <h1>Beach List</h1>
-<table class="table table-zebra z-10 mt-60" style=" width: 700px;">
+<table class="table table-zebra z-10 mt-60" id="table" style=" width: 700px;">
     <thead>
         <tr>
             <th>해수욕장 이름</th>

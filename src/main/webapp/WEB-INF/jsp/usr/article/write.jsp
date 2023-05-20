@@ -44,9 +44,9 @@
 			<form action="../article/doWrite" method="POST" onsubmit="ArticleWrite__submit(this); return false;"
 				enctype="multipart/form-data">
 				<input type="hidden" name="body">
-				<table style="width: 700px;">
+				<table style="width: 600px; background-color: white; margin-left: 100px;">
 					<colgroup>
-						<col width="200" />
+						<col width="200"  style="background-color: cadetblue;"/>
 					</colgroup>
 
 					<tbody>
@@ -76,7 +76,7 @@
 						<tr>
 							<th>첨부 이미지</th>
 							<td>
-								<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />							</td>
+								<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file"  class="file-input file-input-bordered file-input-info w-full max-w-xs"/>							</td>
 						</tr>
 						<tr>
 							<th>내용</th>
@@ -90,8 +90,8 @@
 						</tr>
 						<tr>
 							<th></th>
-							<td>
-								<button type="submit" value="작성" />
+							<td style="background-color: wheat;">
+								<button type="submit" value="작성" class="btn btn-primary" style="width: 200px;"/>
 								작성
 								</button>
 							</td>

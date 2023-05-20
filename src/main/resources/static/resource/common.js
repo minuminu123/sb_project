@@ -112,7 +112,7 @@ $(window).on('load', function() {
   }
 
   var hoverZone = 150;
-  var expandAmount = 150; // 변경된 값: 40으로 수정
+  var expandAmount = 150;
 
   function svgCurve() {
     if ((curveX > x - 1) && (curveX < x + 1)) {
@@ -149,9 +149,6 @@ $(window).on('load', function() {
     blobPath.attr('d', newCurve2);
     blob.width(curveX + 60);
 
-    // 페이지 새로고침 시 초기 위치로 이동
-    window.scrollTo(0, 0);
-
     window.requestAnimationFrame(svgCurve);
   }
 
@@ -159,7 +156,7 @@ $(window).on('load', function() {
 });
 
 var ani3 = anime({
-	targets: ['main table > thead, main table > tbody > tr'],
+	targets: ['main .bg-list table > thead, main .bg-list table > tbody > tr, main #table th'],
 	translateX: '200',
 	delay: anime.stagger(100), // 뒤 따르는 각 요소마다 100ms 지연(delay)을 설정합니다.
 	autoplay: true

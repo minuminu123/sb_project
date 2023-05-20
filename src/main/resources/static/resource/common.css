@@ -82,14 +82,29 @@ main {
 	text-align: center;
 }
 
-.table-box-type-2 table {
-	table-layout: fixed;
-	width: 100%;
+.table-box-type-2 tbody th {
+	border: 3px solid white;
 }
 
 .table-box-type-2 td {
+	border: 3px solid beige;
 	word-wrap: break-word;
 	max-width: 100%;
+}
+
+.table-box-type-1 tbody th {
+	border: 3px solid white;
+}
+
+.table-box-type-1 td {
+
+	word-wrap: break-word;
+	max-width: 100%;
+}
+
+.table-box-type-2 table {
+	table-layout: fixed;
+	width: 100%;
 }
 
 .table-box-type-2 td div {
@@ -584,6 +599,7 @@ fieldset input:focus {
 	background-attachment: fixed;
 	background-size: cover;
 	height: 3000px;
+
 }
 
 .main-content {

@@ -57,6 +57,9 @@ public class ArticleService {
 
 		controlForPrintData(actorId, article);
 
+		if(article == null) {
+			return null;
+		}
 		return article;
 	}
 

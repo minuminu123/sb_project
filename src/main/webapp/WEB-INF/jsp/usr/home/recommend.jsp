@@ -52,49 +52,6 @@
 		</div>
 </div>
 
-		<%-- <svg class="svg-overlay" width="0" height="0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  			<filter id="water">
-    		<feTurbulence type="fractalNoise" baseFrequency=".05 .05" numOctaves="1" result="noise1"></feTurbulence>
-    		<feColorMatrix in="noise1" type="hueRotate" values="0" result="noise2">
-      		<animate attributeName="values" from="0" to="360" dur="1s" repeatCount="indefinite" />
-    		</feColorMatrix>
-   	 		<feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="7" in="SourceGraphic" in2="noise2" />
-  			</filter>
-		</svg>
-
-
-		<table class="table table-zebra z-10" style="left: 45px; width: 800px; margin-top: 100px;">
-				<colgroup>
-						<col width="280" />
-						<col width="140" />
-				</colgroup>
-				<thead>
-						<tr>
-								<th style="--tw-bg-opacity: 1; background-color: rgba(191, 219, 254, var(--tw-bg-opacity));">사진</th>
-								<th style="--tw-bg-opacity: 1; background-color: rgba(191, 219, 254, var(--tw-bg-opacity));">링크</th>
-						</tr>
-				</thead>
-				<tbody>
-						<c:forEach var="recommend" items="${recommendList}">
-								<tr class="hover">
-										<td>
-												<a href="${recommend.url}">
-														<div class="image-container"></div>
-												</a>
-										</td>
-										<td>
-												<a href="${recommend.url}" class="block">
-														<span class="block" style="white-space: normal;">${recommend.subject}</span>
-												</a>
-										</td>
-								</tr>
-						</c:forEach>
-				</tbody>
-		</table> --%>
-
-
-
-
 <script>
 	// 이미지 개수 설정
 	var imageCount = ${recommendCount};

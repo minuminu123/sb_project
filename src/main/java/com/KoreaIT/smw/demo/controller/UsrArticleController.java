@@ -189,6 +189,10 @@ public class UsrArticleController {
 	public String showDetail(Model model, int id) {
 		// id 는 article의 id
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		
+		if (article == null) {
+			return rq.jsHitoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다!", id));
+		}
 
 		/* ResultData에 이 멤버가 이 게시글에 좋아요나 싫어요를 할수있는지를 확인하는 함수(한번만 가능하기 때문) */
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),

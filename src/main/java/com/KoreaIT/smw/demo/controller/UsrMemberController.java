@@ -138,6 +138,11 @@ public class UsrMemberController {
         	return rq.jsHistoryBack("F-2", "전화번호 형식에 맞춰 작성해 주세요");
         }
         
+        isValid = Validator.isValidPassword(loginPw);
+        if (!isValid) {
+        	return rq.jsHistoryBack("F-3", "비밀번호 형식에 맞춰 작성해 주세요");
+        }
+        
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {

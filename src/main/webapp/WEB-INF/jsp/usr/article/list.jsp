@@ -25,6 +25,7 @@
 												<input value="${param.searchKeyword }" maxlength="20" name="searchKeyword" class="input input-bordered"
 														type="text" placeholder="검색어를 입력해주세요" style="top: 130px; position: absolute; left: 700px;"/>
 												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 900px; background-color: wheat;" type=submit>검색</button>
+												
 										</form>
 								</div>
 								<table class="table table-zebra z-10 mt-60" style="margin-left: 70px;">
