@@ -46,7 +46,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId,
 			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
-			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "recent") String filter) {
 
 		/* board 클래스는 article과 조인되어있는 테이블로 어느 게시판에 속해있는지 가져오는 형태이다. 만약 게시판 번호가 지정되어 있지 않다면 없는 게시판으로 지정 */
 		Board board = boardService.getBoardById(boardId);
@@ -67,7 +67,7 @@ public class UsrArticleController {
 		/* 게시글들의 리스트를 받아오는 함수로 boardId, itemsInAPage, page, searchKeywordTypeCode,
 				searchKeyword 를 매개변수로 받는다. */
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode,
-				searchKeyword);
+				searchKeyword, filter);
 		/* 프론트에서 사용하기 위한 데이터를 보낸다. */
 		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
 		model.addAttribute("searchKeyword", searchKeyword);

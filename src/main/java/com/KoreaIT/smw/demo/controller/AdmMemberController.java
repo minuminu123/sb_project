@@ -34,7 +34,8 @@ public class AdmMemberController {
 			@RequestParam(defaultValue = "loginId,name,nickname") String MsearchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String MsearchKeyword, @RequestParam(defaultValue = "1") int Mpage,
 			@RequestParam(defaultValue = "title,body") String AsearchKeywordTypeCode,
-			@RequestParam(defaultValue = "") String AsearchKeyword, @RequestParam(defaultValue = "1") int Apage) {
+			@RequestParam(defaultValue = "") String AsearchKeyword, @RequestParam(defaultValue = "1") int Apage,
+			@RequestParam(defaultValue = "recent") String filter) {
 
 		/* 멤버 수 세기 */
 		int membersCount = memberService.getMembersCount(authLevel, MsearchKeywordTypeCode, MsearchKeyword);
@@ -52,7 +53,7 @@ public class AdmMemberController {
 				memberItemsInAPage, Mpage);
 		/* 게시글들 가져오기 */
 		List<Article> articles = articleService.getForPrintArticles(boardId, articleItemsInAPage, Apage,
-				AsearchKeywordTypeCode, AsearchKeyword);
+				AsearchKeywordTypeCode, AsearchKeyword, filter);
 
 		model.addAttribute("authLevel", authLevel);
 		model.addAttribute("MsearchKeywordTypeCode", MsearchKeywordTypeCode);

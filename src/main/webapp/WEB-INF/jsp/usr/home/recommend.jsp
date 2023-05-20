@@ -21,7 +21,7 @@
 <div class="img2">
 	<div class="background-image"></div>
 	<div class="table-container">
-		<table class="table table-zebra z-10 top-24" style="left: 45px; width: 800px;">
+		<table class="table table-zebra z-10 top-24" style="left: 270px; width: 800px;">
 				<colgroup>
 						<col width="280" />
 						<col width="140" />

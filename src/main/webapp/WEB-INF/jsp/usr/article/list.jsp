@@ -17,14 +17,28 @@
 													<div class="blinking-text2" style="position: absolute; left: 100px; top: 130px; width: 300px;"> 여기는 해수욕장 추천 페이지 입니다!!</div>
 												</c:if>
 												<select data-value="${param.searchKeywordTypeCode }" name="searchKeywordTypeCode"
-														class="select select-ghost" style="top: 130px; position: absolute; left: 500px; background-color: white;">
+														class="select select-ghost" style="top: 130px; position: absolute; left: 300px; background-color: white;">
 														<option value="title">제목</option>
 														<option value="body">내용</option>
 														<option value="title,body">제목 + 내용</option>
 												</select>
 												<input value="${param.searchKeyword }" maxlength="20" name="searchKeyword" class="input input-bordered"
-														type="text" placeholder="검색어를 입력해주세요" style="top: 130px; position: absolute; left: 700px;"/>
-												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 900px; background-color: wheat;" type=submit>검색</button>
+														type="text" placeholder="검색어를 입력해주세요" style="top: 130px; position: absolute; left: 450px;"/>
+												<button class="btn btn-ghost" style="top: 130px; position: absolute; left: 650px; background-color: wheat;" type=submit>검색</button>
+												
+												
+												<select data-value="${param.filter }" name="filter" class="select select-ghost"
+												 style="top: 130px; position: absolute; right: 280px; background-color: white;">
+												 <option value="recent">최신순</option>
+        											<option value="hitCount">조회순</option>
+        											<option value="comments">댓글 많은순</option>
+        											<option value="old">오래된 순</option>
+        											<option value="goodReaction">좋아요 많은순</option>
+    											</select>
+    
+    											<button class="btn btn-ghost" style="top: 130px; position: absolute; right: 200px; background-color: wheat;" type=submit>정렬하기</button>
+												
+												
 												
 										</form>
 								</div>

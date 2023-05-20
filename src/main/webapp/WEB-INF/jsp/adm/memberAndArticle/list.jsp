@@ -22,6 +22,17 @@
 						<option value="0">전체</option>
 
 					</select>
+					
+					<select data-value="${param.filter }" name="filter" class="select select-ghost"
+					style="top: 350px; position: absolute; right: 200px; background-color: white;">
+        				<option value="hitCount">조회순</option>
+        				<option value="comments">댓글 많은순</option>
+        				<option value="recent">최신순</option>
+        				<option value="old">오래된 순</option>
+    				</select>
+    
+    				<button class="btn btn-ghost" style="top: 350px; position: absolute; right: 120px; background-color: wheat;" type=submit>정렬하기</button>
+					
 					<select data-value="${searchKeywordTypeCode }" name="MsearchKeywordTypeCode" class="select select-bordered">
 						<option disabled="disabled">검색 타입</option>
 						<option value="loginId">아이디</option>

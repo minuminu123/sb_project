@@ -58,14 +58,30 @@ public interface ArticleRepository {
 					</otherwise>
 				</choose>
 			</if>
-			ORDER BY A.id DESC
+			<choose>
+					<when test="filter == 'recent'" >
+						ORDER BY A.id DESC
+					</when>
+					<when test="filter == 'hitCount'" >
+						ORDER BY A.hitCount DESC
+					</when>
+					<when test="filter == 'comments'">
+						ORDER BY A.repliesCount DESC
+					</when>
+					<when test="filter == 'old'">
+						ORDER BY A.id ASC
+					</when>
+					<otherwise>
+						ORDER BY A.goodReactionPoint DESC
+					</otherwise>
+			</choose>
 			<if test="limitFrom >= 0">
 				LIMIT #{limitFrom}, #{limitTake}
 			</if>
 			</script>
 				""")
 	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword,
-			int limitFrom, int limitTake);
+			int limitFrom, int limitTake, String filter);
 
 	@Select("""
 			SELECT *
