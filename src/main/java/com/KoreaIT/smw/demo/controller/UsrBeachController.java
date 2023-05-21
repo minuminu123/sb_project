@@ -6,18 +6,36 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.KoreaIT.smw.demo.service.BeachService;
+import com.KoreaIT.smw.demo.vo.Blog;
+import com.KoreaIT.smw.demo.vo.BlogResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class UsrBeachController {
+	
+    private final BeachService beachService;
 
+    public UsrBeachController(BeachService beachService) {
+    	this.beachService = beachService;
+    }
+	
 	/* 해변 리스트를 가져오는 url, 검색어,타입,페이지넘버, 페이지 사이즈를 받는 페이지 */
 	@RequestMapping("/usr/beach/list")
 	public String index(Model model,
@@ -108,5 +126,52 @@ public class UsrBeachController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 	    return "usr/beach/list";
+	}
+//	
+//    /* 각 해수욕장 이미지 페이지를 jsoup으로 크롤링후 가져온 리스트를 보여주는 url */
+//    @GetMapping("/usr/beach/getBeach")
+//    public String getBeach(Model model, @RequestParam (defaultValue = "해수욕장") String name) throws Exception{
+//        List<Recommend> beachImgList = beachService.getNewsDatas2();
+//        int beachImgCount = beachImgList.size();
+//        model.addAttribute("beachImgList", beachImgList);
+//        model.addAttribute("beachImgCount", beachImgCount);
+//        return "/usr/beach/getBeach";
+//    }
+//    
+	@RequestMapping("/usr/beach/getBeach")
+	public String getBeach( @RequestParam (defaultValue = "해수욕장") String name, Model model) {
+		// 네이버 뉴스 검색 API 요청
+		String clientId = "FTz2f8retxTdxp8Vssbr";
+		String clientSecret = "AaaoVfoyAY";
+
+		// String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text; //
+		// JSON 결과
+		URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/blog.json")
+				.queryParam("query", name.trim()).queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
+				.encode().build().toUri();
+
+		// Spring 요청 제공 클래스
+		RequestEntity<Void> req = RequestEntity.get(uri).header("X-Naver-Client-Id", clientId)
+				.header("X-Naver-Client-Secret", clientSecret).build();
+		// Spring 제공 restTemplate
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> resp = restTemplate.exchange(req, String.class);
+
+		// JSON 파싱 (Json 문자열을 객체로 만듦, 문서화)
+		ObjectMapper om = new ObjectMapper();
+		BlogResult resultVO = null;
+
+		try {
+			resultVO = om.readValue(resp.getBody(), BlogResult.class);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		List<Blog> BeachDetails = resultVO.getItems(); // weatherList를 list.html에 출력 -> model 선언
+		model.addAttribute("BeachDetails", BeachDetails);
+
+		return "/usr/beach/getBeach";
 	}
 }

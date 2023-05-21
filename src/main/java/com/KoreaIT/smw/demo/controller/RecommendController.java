@@ -2,16 +2,20 @@ package com.KoreaIT.smw.demo.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.KoreaIT.smw.demo.service.BeachService;
 import com.KoreaIT.smw.demo.service.RecommendService;
 import com.KoreaIT.smw.demo.vo.Recommend;
 
 @Controller
 public class RecommendController {
 
+	
     private final RecommendService recommendService;
 
     public RecommendController(RecommendService recommendService) {
@@ -27,4 +31,6 @@ public class RecommendController {
         model.addAttribute("recommendCount", recommendCount);
         return "/usr/home/recommend";
     }
+    
+
 }

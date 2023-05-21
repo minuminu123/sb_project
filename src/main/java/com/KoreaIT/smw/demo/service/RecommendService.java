@@ -37,4 +37,5 @@ public class RecommendService {
 
         return newsList;
     }
+
 }

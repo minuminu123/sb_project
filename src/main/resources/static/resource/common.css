@@ -593,6 +593,14 @@ fieldset input:focus {
 	height: 1000px;
 }
 
+.bg-beach {
+	/* 상대경로 지정 */
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/65e140167534923.64303f13aa01c.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	height: 1000px;
+}
+
 .bg-detail {
 	/* 상대경로 지정 */
 	background-image: url('water-in.webp');
@@ -1281,3 +1289,4 @@ section {
 .shadow {
     box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.70);
 }
+
