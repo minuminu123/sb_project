@@ -127,19 +127,9 @@ public class UsrBeachController {
 		model.addAttribute("pageSize", pageSize);
 	    return "usr/beach/list";
 	}
-//	
-//    /* 각 해수욕장 이미지 페이지를 jsoup으로 크롤링후 가져온 리스트를 보여주는 url */
-//    @GetMapping("/usr/beach/getBeach")
-//    public String getBeach(Model model, @RequestParam (defaultValue = "해수욕장") String name) throws Exception{
-//        List<Recommend> beachImgList = beachService.getNewsDatas2();
-//        int beachImgCount = beachImgList.size();
-//        model.addAttribute("beachImgList", beachImgList);
-//        model.addAttribute("beachImgCount", beachImgCount);
-//        return "/usr/beach/getBeach";
-//    }
-//    
+
 	@RequestMapping("/usr/beach/getBeach")
-	public String getBeach( @RequestParam (defaultValue = "해수욕장") String name, Model model) {
+	public String getBeach( @RequestParam (defaultValue = "해수욕장") String name, Model model, @RequestParam(defaultValue="sim") String sortType) {
 		// 네이버 뉴스 검색 API 요청
 		String clientId = "FTz2f8retxTdxp8Vssbr";
 		String clientSecret = "AaaoVfoyAY";
@@ -147,7 +137,7 @@ public class UsrBeachController {
 		// String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text; //
 		// JSON 결과
 		URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/blog.json")
-				.queryParam("query", name.trim()).queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
+				.queryParam("query", name.trim()).queryParam("display", 10).queryParam("start", 1).queryParam("sort", sortType)
 				.encode().build().toUri();
 
 		// Spring 요청 제공 클래스

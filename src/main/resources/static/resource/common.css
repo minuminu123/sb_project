@@ -601,6 +601,13 @@ fieldset input:focus {
 	height: 1000px;
 }
 
+.bg-getBeach {
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/af21ee156289543.6364296541c6b.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	height: 1000px;
+}
+
 .bg-detail {
 	/* 상대경로 지정 */
 	background-image: url('water-in.webp');
