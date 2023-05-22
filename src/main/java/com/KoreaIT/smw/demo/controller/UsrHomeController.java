@@ -39,6 +39,11 @@ public class UsrHomeController {
 	public String showMaina2() {
 		return "usr/home/ex2";
 	}
+	
+	@RequestMapping("/usr/home/ex3")
+	public String showMaina3() {
+		return "usr/home/ex3";
+	}
 
 	@RequestMapping("/usr/home/news")
 	public String TWeather(String text, Model model) {

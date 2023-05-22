@@ -172,7 +172,7 @@ public interface MemberRepository {
 
 	@Update("""
 			UPDATE `member` 
-			SET isAccountLocked = 0, failCount = 0 
+			SET isAccountLocked = 0, failCount = 0, lockedTime = 0
 			WHERE isAccountLocked > 0 AND 
 			id = #{actorId} AND 
 			TIMESTAMPDIFF(MINUTE, lockedTime, NOW()) >= #{minute}

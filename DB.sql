@@ -134,9 +134,9 @@ ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 ALTER table `member` add column failCount int(10) unsigned not null default 0;
 alter table `member` add column isAccountLocked tinyint(1) unsigned not null default 0;
-alter table `member` add column lockedTime datetime not null;
+alter table `member` add column lockedTime datetime not null default 0;
 
-
+SELECT * FROM `member`;
 
 # reactionPoint 테이블 생성
 CREATE TABLE reactionPoint (

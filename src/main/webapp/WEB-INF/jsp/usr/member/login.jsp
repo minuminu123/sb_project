@@ -43,7 +43,7 @@
 										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호" name="loginPw"
 										autocomplete="off" />
 								<c:if test="${failCount != 0 }">
-									<div class="blinking-text mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto;">로그인 남은 횟수: ${failCount+1 }</div>
+									<div class="blinking-text mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto;">로그인 남은 횟수: ${failCount }</div>
 								</c:if>
 						</fieldset>
 
