@@ -155,4 +155,42 @@ public interface MemberRepository {
 			""")
 	Member getMemberByEmail(String email);
 
+	@Update("""
+			UPDATE `member`
+			SET failCount = failCount + #{i}
+			WHERE id = #{actorId};
+			""")
+	int increaseFailCount(int actorId, int i);
+
+	@Update("""
+			UPDATE `member`
+			SET isAccountLocked = isAccountLocked + 1
+			,lockedTime = NOW()
+			WHERE id = #{actorId}
+			""")
+	int lockAccount(int actorId);
+
+	@Update("""
+			UPDATE `member` 
+			SET isAccountLocked = 0, failCount = 0 
+			WHERE isAccountLocked > 0 AND 
+			id = #{actorId} AND 
+			TIMESTAMPDIFF(MINUTE, lockedTime, NOW()) >= #{minute}
+			""")
+	void getMinute(int actorId, int minute);
+
+	@Update("""
+			UPDATE `member`
+			SET failCount = 0
+			WHERE id = #{actorId}
+			""")
+	void failCountZero(int actorId);
+
+	@Select("""
+			SELECT failCount
+			FROM `member`
+			WHERE id = #{id}
+			""")
+	int getFailCount(int id);
+
 }

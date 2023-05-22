@@ -19,7 +19,7 @@
 
 
 
-		<table class="table table-zebra z-10 mt-48" id="table" style="width: 700px; left: 100px;">
+		<table class="table table-zebra z-10 mt-48" id="table" style="width: 700px;">
 				<thead>
 						<tr>
 								<td>게시 날짜</td>

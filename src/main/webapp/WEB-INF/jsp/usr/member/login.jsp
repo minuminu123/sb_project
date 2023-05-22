@@ -5,13 +5,8 @@
 <hr />
 
 <script>
-	let submitLoginFormDone = false;
 	
 	function submitLoginForm(form) {
-		if (submitLoginFormDone) {
-			alert('처리중입니다');
-			return;
-		}
 		form.loginId.value = form.loginId.value.trim();
 		if (form.loginId.value == 0) {
 			alert('아이디를 입력해주세요');
@@ -22,7 +17,6 @@
 			alert('비밀번호를 입력해주세요');
 			return;
 		}
-		submitLoginFormDone = true;
 		form.submit();
 	}
 </script>
@@ -48,6 +42,9 @@
 								<input class="login animate__animated animate__fadeInUp animate3 text-center"
 										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호" name="loginPw"
 										autocomplete="off" />
+								<c:if test="${failCount != 0 }">
+									<div class="blinking-text mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto;">로그인 남은 횟수: ${failCount+1 }</div>
+								</c:if>
 						</fieldset>
 
 						<input type="submit" id="login-form-submit" class="login_form button animate__animated animate__fadeInUp animate4"

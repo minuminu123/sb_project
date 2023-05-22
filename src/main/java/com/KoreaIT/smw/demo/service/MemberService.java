@@ -108,4 +108,45 @@ public class MemberService {
 	public Member getMemberByEmail(String email) {
 		return memberRepository.getMemberByEmail(email);
 	}
+
+	public int increaseFailCount(int actorId) {
+		Member member = memberRepository.getMemberById(actorId);
+		
+		if(member.getFailCount() == 0) {
+			memberRepository.failCountZero(actorId);
+			return memberRepository.increaseFailCount(actorId, 1);	
+		} else if(member.getFailCount() == 1) {
+			memberRepository.failCountZero(actorId);
+			return memberRepository.increaseFailCount(actorId, 2);	
+		} else if(member.getFailCount() == 2) {
+			memberRepository.failCountZero(actorId);
+			return memberRepository.increaseFailCount(actorId, 3);	
+		} else if(member.getFailCount() == 3) {
+			memberRepository.failCountZero(actorId);
+			return memberRepository.increaseFailCount(actorId, 4);	
+		} else if(member.getFailCount() == 4){
+			memberRepository.failCountZero(actorId);
+			return memberRepository.increaseFailCount(actorId, 5);	
+		}
+			return 5;
+	}
+
+	public int lockAccount(int actorId) {
+		return memberRepository.lockAccount(actorId);
+		
+	}
+
+	public void getMinute(int actorId, int minute) {
+		memberRepository.getMinute(actorId, minute);
+		
+	}
+
+	public void failCountZero(int id) {
+		memberRepository.failCountZero(id);
+		
+	}
+
+	public int getFailCount(int id) {
+		return memberRepository.getFailCount(id);
+	}
 }

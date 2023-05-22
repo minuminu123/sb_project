@@ -132,6 +132,12 @@ WHERE id = 3;
 
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
+ALTER table `member` add column failCount int(10) unsigned not null default 0;
+alter table `member` add column isAccountLocked tinyint(1) unsigned not null default 0;
+alter table `member` add column lockedTime datetime not null;
+
+
+
 # reactionPoint 테이블 생성
 CREATE TABLE reactionPoint (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -226,7 +232,7 @@ CREATE TABLE `tb_weather_area` (
 	`gridY` VARCHAR(50) NOT NULL COMMENT '격자Y' COLLATE 'utf8_general_ci',
 	`longitudeHour` VARCHAR(50) NOT NULL COMMENT '경도(시)' COLLATE 'utf8_general_ci',
 	`longitudeMin` VARCHAR(50) NOT NULL COMMENT '경도(분)' COLLATE 'utf8_general_ci',
-	`longitudeSec` VARCHAR(50) NOT NULL COMMENT '경도(초)' COLLATE 'utf8_general_ci',
+	`longitudeSec` VARCHAR(50) NULL COMMENT '경도(초)' COLLATE 'utf8_general_ci',
 	`latitudeHour` VARCHAR(50) NOT NULL COMMENT '위도(시)' COLLATE 'utf8_general_ci',
 	`latitudeMin` VARCHAR(50) NOT NULL COMMENT '위도(분)' COLLATE 'utf8_general_ci',
 	`latitudeSec` VARCHAR(50) NOT NULL COMMENT '위도(초)' COLLATE 'utf8_general_ci',
@@ -344,7 +350,6 @@ ALTER TABLE `SB_AM_04`.`reply` ADD KEY `relTypeCodeId` (`relTypeCode` , `relId`)
 UPDATE `member`
 SET loginPw = SHA2(loginPw,256);
 
-
 # 파일 테이블 추가
 CREATE TABLE genFile (
   id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
@@ -367,13 +372,15 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM `reply`;
-SELECT * FROM getnFile;
+SELECT * FROM tb_weather_area;
+SELECT * FROM genFile;
 
 ### 댓글 갯수 해당 게시물에 있는
 SELECT count(*) FROM reply
@@ -543,3 +550,14 @@ LEFT JOIN reactionPoint AS RP
 ON A.id = RP.relId AND RP.relTypeCode = 'article'
 GROUP BY A.id
 ORDER BY A.id DESC;
+
+
+# 3분 지나면 0되는지 체크
+UPDATE member
+SET isAccountLocked = 1, lockedTime = NOW()
+WHERE isAccountLocked = 0 and id = 3;
+
+select * from `member`;
+
+UPDATE `member` 
+SET isAccountLocked = 0, failCount = 0 WHERE isAccountLocked = 1 AND id = 1 AND TIMESTAMPDIFF(MINUTE, lockedTime, NOW()) >= 3

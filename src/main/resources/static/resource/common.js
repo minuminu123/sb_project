@@ -162,13 +162,14 @@ var ani3 = anime({
 	autoplay: true
 });
 
-/*
-var ani4 = anime({
-	targets: 'main .bg-asdf',
-	translateX: '270',
-	delay: anime.stagger(300)
 
-}); */
+var ani4 = anime({
+	targets: ' .bg-getBeach table > tbody > tr,  main .bg-getBeach table > thead',
+	translateX: '100',
+	delay: anime.stagger(100),
+	autoplay: true
+
+});
 
 ///////////////////////////////////////////////////////////////////
 

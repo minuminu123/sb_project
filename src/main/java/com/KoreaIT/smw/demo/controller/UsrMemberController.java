@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -157,14 +158,17 @@ public class UsrMemberController {
 	}
 
 	@RequestMapping("/usr/member/login")
-	public String showLogin(HttpSession httpSession) {
+	public String showLogin(HttpSession httpSession, Model model, @RequestParam(defaultValue = "0") String maxFailCount) {
+
+		model.addAttribute("failCount", 5 - Integer.parseInt(maxFailCount));
+		
 		return "usr/member/login";
 	}
 
 	/* 로그인 수행 url */
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
+	public String doLogin(Model model, String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
 
 		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("F-5", "이미 로그인 상태입니다");
@@ -179,22 +183,46 @@ public class UsrMemberController {
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
+		
 		if (member == null) {
 			return Ut.jsHistoryBack("F-3", Ut.f("%s는 존재하지 않는 아이디입니다", loginId));
 		}
 
+		memberService.getMinute(member.getId(), 3);
+		
 		System.out.println(Ut.sha256(loginPw));
 
+		
+		
 		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
-			return Ut.jsHistoryBack("F-4", Ut.f("비밀번호가 일치하지 않습니다!!!!!"));
+			
+			
+			int maxFailCount = memberService.increaseFailCount(member.getId());
+			if(maxFailCount == 5) {
+				memberService.lockAccount(member.getId());
+				return Ut.jsHistoryBack("F-L", Ut.f("6회실패해서 잠시후에 다시 로그인 해주세요."));
+			}
+			
+			int getFailCount = memberService.getFailCount(member.getId());
+			
+//			model.addAttribute("failCount", 5 - maxFailCount);
+			return Ut.jsReplace("F-4", "비밀번호가 일치하지 않습니다!!!!!", "/usr/member/login?maxFailCount=" + getFailCount);
 		}
 
+
+		
+		if(member.isAccountLocked()) {
+			return Ut.jsHistoryBack("F-L", Ut.f("6회실패해서 잠시후에 다시 로그인 해주세요."));
+		}
+		
 		rq.login(member);
 		
 		// 우리가 갈 수 있는 경로를 경우의 수로 표현 
 		// 인코딩
 		// 그 외에는 처리 불가 -> 메인으로 보내자
 
+		memberService.failCountZero(member.getId());
+		
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getName()), afterLoginUri);
 	}
 	/* 로그아웃 url */
