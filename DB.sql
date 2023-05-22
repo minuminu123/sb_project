@@ -96,7 +96,7 @@ CREATE TABLE board (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), qna(질의응답), ....',
+    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), beachRecommend(바다추천), qna(질의응답), ....',
     `name` CHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜'
@@ -111,8 +111,8 @@ updateDate = NOW(),
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'FREE',
-`name` = '자유';
+`code` = 'beachRecommend',
+`name` = '바다추천';
 
 INSERT INTO board
 SET regDate = NOW(),

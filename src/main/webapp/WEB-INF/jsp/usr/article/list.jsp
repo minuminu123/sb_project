@@ -14,7 +14,7 @@
 										<form action="">
 												<input type="hidden" name="boardId" value="${param.boardId }" />
 												<c:if test="${boardId == 2 }">
-													<div class="blinking-text2" style="position: absolute; left: 100px; top: 130px; width: 300px;"> 여기는 해수욕장 추천 페이지 입니다!!</div>
+													<div class="blinking-text" style="position: absolute; left: 100px; top: 80px; width: 300px;"> 여기는 해수욕장 추천 페이지 입니다!!</div>
 												</c:if>
 												<select data-value="${param.searchKeywordTypeCode }" name="searchKeywordTypeCode"
 														class="select select-ghost" style="top: 130px; position: absolute; left: 300px; background-color: white;">
