@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.List"%>
 <c:set var="pageTitle" value="MAIN" />
 <%@ include file="../common/head.jspf"%>
 <script src="/resource/common3.js" defer="defer"></script>
@@ -7,7 +8,9 @@
 
 <script src="/resource/common1.js" defer="defer"></script>
 <!-- <hr /> -->
-
+<%
+List<String[]> data = (List<String[]>) request.getAttribute("data");
+%>
 <div class="page-wrap">
 		<header class="page-header">
 
@@ -218,5 +221,63 @@
 			</div>
 	</div>
 </div>
+
+<div class="bg-main2">
+	<div class="main-asdf">
+			<div class="bg-asdf3" data-aos="fade-left"></div>
+			<div class="main-div" data-aos="fade-right">
+					<p class="lorem-text" id="nearestLocation"> 당신의 가장 가까운 해수욕장: </p>
+						<a id="mapLink" href="/usr/home/MapSearch?value=" class="btn btn-outline btn-info mt-12 blinking-text3">지도에서 보기</a>
+			</div>
+	</div>
+</div>
+
+<script>
+navigator.geolocation.getCurrentPosition(function(position) {
+	  var latitude = position.coords.latitude;  // 위도
+	  var longitude = position.coords.longitude;  // 경도
+	  var locations = [
+	    <% for (String[] row : data) { %>
+	      { location: '<%=row[1]%>', gyeongdo: <%=row[4]%>, wido: <%=row[5]%> },
+	    <% } %>
+	  ];
+	  var distances = [];
+
+	  locations.forEach(function(location) {
+	    var gyeongdo = location.gyeongdo;
+	    var wido = location.wido;
+
+	    var distance = calculateDistance(longitude, latitude, gyeongdo, wido);
+	    distances.push(distance);
+	  });
+
+	  var minDistance = Math.min(...distances);
+	  var index = distances.indexOf(minDistance);
+	  var nearestLocation = locations[index].location;
+
+	  console.log("가장 가까운 거리: " + minDistance);
+	  console.log("가장 가까운 위치: " + nearestLocation);
+
+	  document.getElementById('nearestLocation').innerText += nearestLocation;
+	  document.getElementById('mapLink').href += nearestLocation;
+	});
+
+	function calculateDistance(lat1, lon1, lat2, lon2) {
+	  var earthRadius = 6371; // 지구의 반지름 (단위: km)
+	  var latDiff = toRadians(lat2 - lat1);
+	  var lonDiff = toRadians(lon2 - lon1);
+	  var a =
+	    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+	    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+	    Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  var distance = earthRadius * c;
+	  return distance;
+	}
+
+	function toRadians(degree) {
+	  return degree * (Math.PI / 180);
+	}
+</script>
 
 <%@ include file="../common/foot.jspf"%>

@@ -601,6 +601,14 @@ fieldset input:focus {
 	height: 1000px;
 }
 
+.bg-checkPw {
+	/* 상대경로 지정 */
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/3f711858936703.5a0ec31f43e61.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	height: 1000px;
+}
+
 .bg-getBeach {
 	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/af21ee156289543.6364296541c6b.jpg');
 	background-size: cover;
@@ -1296,4 +1304,5 @@ section {
 .shadow {
     box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.70);
 }
+
 

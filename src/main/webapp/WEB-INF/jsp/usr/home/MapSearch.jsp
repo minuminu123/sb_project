@@ -357,8 +357,8 @@
 <img class="img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/467/hawaii-water%20small.jpeg"
 		alt="Hawaiian water crashes against the rocks">
 
-<div class="blinking-text" style="margin-left: 200px; width: 400px; text-align: center; position: absolute; top: 200px;">↓
-		검색어를 입력해주세요(지역을 추가하면 자세히 찾기 가능)</div>
+<div class="blinking-text" style="margin-left: 200px; width: 500px; text-align: center; position: absolute; top: 200px;">↓
+		검색어를 입력해주세요(지역을 추가하면 자세히 찾기 가능 OR 괄호제거)</div>
 <div class="map_wrap">
 		<div id="map" style="width: 80%; height: 100%; position: relative; overflow: hidden; left: 150px;"></div>
 

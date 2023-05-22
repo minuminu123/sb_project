@@ -21,14 +21,14 @@ int pageSize = (int) request.getAttribute("pageSize");
 						<option value="0" ${searchType == 0 ? 'selected' : ''}>위치</option>
 						<option value="1" ${searchType == 1 ? 'selected' : ''}>해수욕장 이름</option>
 				</select>
-				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd absolute" style="top: 80px; left: 450px;" placeholder="검색어를 입력해주세요"
-						maxlength="20" value="${searchKeyword}" />
+				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd absolute"
+						style="top: 80px; left: 450px;" placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}" />
 				<button type="submit" class="absolute btn btn-ghost" style="background-color: wheat; top: 80px; left: 900px;">검색</button>
 		</form>
 
 
 
-		<table class="table table-zebra z-10 mt-36" id="table" style="width: 700px; left: 100px;">
+		<table class="table table-zebra z-10 mt-36" id="table" style="width: 700px; left: 170px;">
 				<thead>
 						<tr>
 								<th>해수욕장 이름</th>
@@ -42,11 +42,11 @@ int pageSize = (int) request.getAttribute("pageSize");
 						%>
 						<tr>
 								<th>
-									<a href="/usr/beach/getBeach?name=<%=row[1]%>"><%=row[1] %></a>
+										<a href="/usr/beach/getBeach?name=<%=row[1]%>"><%=row[1]%></a>
 								</th>
 								<th><%=row[6]%></th>
 								<th>
-									<a href="/usr/home/MapSearch?value=<%=row[1]%>">클릭</a>
+										<a href="/usr/home/MapSearch?value=<%=row[1]%>">클릭</a>
 								</th>
 						</tr>
 						<%
@@ -54,6 +54,8 @@ int pageSize = (int) request.getAttribute("pageSize");
 						%>
 				</tbody>
 		</table>
+
+		<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8" style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
 
 		<div class="pagination flex justify-center mt-12">
 				<div class="btn-group">
@@ -104,4 +106,51 @@ int pageSize = (int) request.getAttribute("pageSize");
 				</div>
 		</div>
 </div>
+
+<script>
+navigator.geolocation.getCurrentPosition(function(position) {
+	  var latitude = position.coords.latitude;  // 위도
+	  var longitude = position.coords.longitude;  // 경도
+	  var locations = [
+	    <% for (String[] row : data) { %>
+	      { location: '<%=row[1]%>', gyeongdo: <%=row[4]%>, wido: <%=row[5]%> },
+	    <% } %>
+	  ];
+	  var distances = [];
+
+	  locations.forEach(function(location) {
+	    var gyeongdo = location.gyeongdo;
+	    var wido = location.wido;
+
+	    var distance = calculateDistance(longitude, latitude, gyeongdo, wido);
+	    distances.push(distance);
+	  });
+
+	  var minDistance = Math.min(...distances);
+	  var index = distances.indexOf(minDistance);
+	  var nearestLocation = locations[index].location;
+
+	  console.log("가장 가까운 거리: " + minDistance);
+	  console.log("가장 가까운 위치: " + nearestLocation);
+
+	  document.getElementById('nearestLocation').innerText += nearestLocation;
+	});
+
+	function calculateDistance(lat1, lon1, lat2, lon2) {
+	  var earthRadius = 6371; // 지구의 반지름 (단위: km)
+	  var latDiff = toRadians(lat2 - lat1);
+	  var lonDiff = toRadians(lon2 - lon1);
+	  var a =
+	    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+	    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+	    Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  var distance = earthRadius * c;
+	  return distance;
+	}
+
+	function toRadians(degree) {
+	  return degree * (Math.PI / 180);
+	}
+</script>
 <%@ include file="../common/foot.jspf"%>

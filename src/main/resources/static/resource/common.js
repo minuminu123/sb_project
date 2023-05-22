@@ -158,7 +158,7 @@ $(window).on('load', function() {
 var ani3 = anime({
 	targets: ['main .bg-list table > thead, main .bg-list table > tbody > tr, main #table th'],
 	translateX: '200',
-	delay: anime.stagger(100), // 뒤 따르는 각 요소마다 100ms 지연(delay)을 설정합니다.
+	delay: anime.stagger(10), // 뒤 따르는 각 요소마다 100ms 지연(delay)을 설정합니다.
 	autoplay: true
 });
 
@@ -166,7 +166,7 @@ var ani3 = anime({
 var ani4 = anime({
 	targets: ' .bg-getBeach table > tbody > tr,  main .bg-getBeach table > thead',
 	translateX: '100',
-	delay: anime.stagger(100),
+	delay: anime.stagger(10),
 	autoplay: true
 
 });
