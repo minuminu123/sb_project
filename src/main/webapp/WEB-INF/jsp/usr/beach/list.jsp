@@ -17,13 +17,13 @@ int pageSize = (int) request.getAttribute("pageSize");
 <div class="bg-beach">
 		<h1 class="absolute blinking-text text-center" style="width: 100px; top: 100px; left: 150px;">Beach List</h1>
 		<form class="flex">
-				<select name="searchType" class="select select-bordered absolute" style="width: 150px; top: 80px; left: 300px;">
-						<option value="0" ${searchType == 0 ? 'selected' : ''}>위치</option>
-						<option value="1" ${searchType == 1 ? 'selected' : ''}>해수욕장 이름</option>
+				<select name="searchType" class="select select-bordered absolute" style="width: 150px; top: 80px; left: 350px;">
+						<option value="0" ${searchType == 0 ? 'selected' : ''}>해수욕장 이름</option>
+						<option value="1" ${searchType == 1 ? 'selected' : ''}>위치</option>
 				</select>
 				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd absolute"
-						style="top: 80px; left: 450px;" placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}" />
-				<button type="submit" class="absolute btn btn-ghost" style="background-color: wheat; top: 80px; left: 900px;">검색</button>
+						style="top: 80px; left: 500px;" placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}" />
+				<button type="submit" class="absolute btn btn-ghost" style="background-color: wheat; top: 80px; left: 950px;">검색</button>
 		</form>
 
 
@@ -55,7 +55,9 @@ int pageSize = (int) request.getAttribute("pageSize");
 				</tbody>
 		</table>
 
-		<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8" style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
+		<c:if test="${data.size() > 1 }">
+			<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8" style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
+		</c:if>
 
 		<div class="pagination flex justify-center mt-12">
 				<div class="btn-group">

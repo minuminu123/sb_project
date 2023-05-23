@@ -593,6 +593,32 @@ fieldset input:focus {
 	height: 1000px;
 }
 
+.bg-main-first {
+	/* 상대경로 지정 */
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/9099ae154772859.634821b392ba7.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	height: 1000px;
+}
+
+.bg-main-second {
+	/* 상대경로 지정 */
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/63d74e168680667.6440d4782f54c.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	width: 100%;
+	height: 1000px;
+}
+
+.bg-main-third {
+	/* 상대경로 지정 */
+	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/0f44b0168680667.6440d4782c3ef.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	width: 100%;
+	height: 1000px;
+}
+
 .bg-beach {
 	/* 상대경로 지정 */
 	background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/65e140167534923.64303f13aa01c.jpg');

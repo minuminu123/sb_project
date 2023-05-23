@@ -161,8 +161,11 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 
 </div>
 
-<input class="input input-bordered w-3/6 ml-auto mr-auto text-center absolute z-20" type="text" name="title"
+<form action="/usr/beach/list">
+	<input class="input input-bordered w-3/6 ml-auto mr-auto text-center absolute z-20" type="text" name="searchKeyword"
 		data-aos="fade-up" placeholder="내가 원하는 해수욕장 찾기" style="top: 500px;" />
+</form>
+
 
 
 
@@ -184,14 +187,14 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 </div>
 
 
-<form action="news">
+<!-- <form action="news">
 <input type="text" name="text" placeholder="기사 검색"/>
-</form>
+</form> -->
 
 
 
 <div>
-		<div class="bg-main2">
+		<div class="bg-main-first">
 				<div class="main-asdf">
 						<div class="bg-asdf" data-aos="fade-left"></div>
 						<div class="main-div" data-aos="fade-right">
@@ -212,7 +215,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 	</div>
 </div>
 
-<div class="bg-main2">
+<div class="bg-main-second">
 	<div class="main-asdf">
 			<div class="bg-asdf3" data-aos="fade-left"></div>
 			<div class="main-div" data-aos="fade-right">
@@ -222,7 +225,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 	</div>
 </div>
 
-<div class="bg-main2">
+<div class="bg-main-third">
 	<div class="main-asdf">
 			<div class="bg-asdf3" data-aos="fade-left"></div>
 			<div class="main-div" data-aos="fade-right">
