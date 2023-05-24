@@ -42,7 +42,8 @@
 								<input class="login animate__animated animate__fadeInUp animate3 text-center"
 										style="margin: 0 40px; height: 40px; margin-top: 30px;" type="password" placeholder="비밀번호" name="loginPw"
 										autocomplete="off" />
-								<c:if test="${failCount != 0 }">
+								<c:set var="count" value="0"></c:set>
+								<c:if test="${failCount != count }">
 									<div class="blinking-text mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto;">로그인 남은 횟수: ${failCount }</div>
 								</c:if>
 						</fieldset>

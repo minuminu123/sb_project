@@ -181,7 +181,7 @@ public interface MemberRepository {
 
 	@Update("""
 			UPDATE `member`
-			SET failCount = 0
+			SET failCount = 0, isAccountLocked = 0, lockedTime = 0
 			WHERE id = #{actorId}
 			""")
 	void failCountZero(int actorId);

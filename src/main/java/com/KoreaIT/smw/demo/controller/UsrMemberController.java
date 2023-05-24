@@ -160,7 +160,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/login")
 	public String showLogin(HttpSession httpSession, Model model, @RequestParam(defaultValue = "0") String maxFailCount) {
 
-		model.addAttribute("failCount", 5 - Integer.parseInt(maxFailCount));
+		model.addAttribute("failCount", 6 - Integer.parseInt(maxFailCount));
 		
 		return "usr/member/login";
 	}
@@ -188,7 +188,7 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-3", Ut.f("%s는 존재하지 않는 아이디입니다", loginId));
 		}
 
-		memberService.getMinute(member.getId(), 3);
+		memberService.getMinute(member.getId(), 2);
 		
 		System.out.println(Ut.sha256(loginPw));
 
@@ -200,7 +200,7 @@ public class UsrMemberController {
 			int maxFailCount = memberService.increaseFailCount(member.getId());
 			if(maxFailCount == 5) {
 				memberService.lockAccount(member.getId());
-				return Ut.jsHistoryBack("F-L", Ut.f("6회실패해서 잠시후에 다시 로그인 해주세요."));
+				return Ut.jsReplace("F-L","6회실패해서 잠시후에 다시 로그인 해주세요.", "/usr/member/login?maxFailCount=" + 6);
 			}
 			
 			int getFailCount = memberService.getFailCount(member.getId());
@@ -209,10 +209,12 @@ public class UsrMemberController {
 			return Ut.jsReplace("F-4", "비밀번호가 일치하지 않습니다!!!!!", "/usr/member/login?maxFailCount=" + getFailCount);
 		}
 
-
+		memberService.failCountZero(member.getId());
+		
+		member = memberService.getMemberByLoginId(loginId);
 		
 		if(member.isAccountLocked()) {
-			return Ut.jsHistoryBack("F-L", Ut.f("6회실패해서 잠시후에 다시 로그인 해주세요."));
+			return Ut.jsReplace("F-L", "6회 실패해서 잠시후에 다시 로그읺 해주세요.", "/usr/member/login?maxFailCount=" + 6);
 		}
 		
 		rq.login(member);
@@ -221,7 +223,7 @@ public class UsrMemberController {
 		// 인코딩
 		// 그 외에는 처리 불가 -> 메인으로 보내자
 
-		memberService.failCountZero(member.getId());
+		
 		
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getName()), afterLoginUri);
 	}
