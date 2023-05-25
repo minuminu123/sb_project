@@ -15,7 +15,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 %>
 <meta charset="UTF-8">
 <div class="bg-beach">
-		<h1 class="absolute blinking-text text-center" style="width: 100px; top: 100px; left: 150px;">Beach List</h1>
+		<h1 class="absolute text-center" style="width: 100px; top: 100px; left: 150px; font-size: 2rem;">Beach List</h1>
 		<form class="flex">
 				<select name="searchType" class="select select-bordered absolute" style="width: 150px; top: 80px; left: 350px;">
 						<option value="0" ${searchType == 0 ? 'selected' : ''}>해수욕장 이름</option>

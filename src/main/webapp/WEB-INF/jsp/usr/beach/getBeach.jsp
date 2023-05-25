@@ -5,7 +5,7 @@
 
 <div class="bg-getBeach">
 
-		<h1 class="absolute blinking-text text-center" style="top: 100px; left: 150px; width: 100px;">관련 블로그</h1>
+		<h1 class="absolute text-center" style="top: 100px; left: 150px; width: 100px;">관련 블로그</h1>
 
 		<form id="searchForm" action="/usr/beach/getBeach" method="GET" class="flex">
 				<select name="sortType" id="sortType" class="select select-ghost absolute" style="width: 200px; top: 100px; left: 600px;"

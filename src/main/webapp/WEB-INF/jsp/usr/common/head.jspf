@@ -94,7 +94,7 @@
 										</li>
 								</c:if>
 						</ul>
-						<div class="hamburger blinking-hamburger" style="width: 20px;">
+						<div class="hamburger" style="width: 20px;">
 								<div class="line"></div>
 								<div class="line"></div>
 								<div class="line"></div>
