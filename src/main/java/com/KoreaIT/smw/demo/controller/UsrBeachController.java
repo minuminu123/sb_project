@@ -11,10 +11,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@CrossOrigin(origins= "http://localhost:8081")
 @Controller
 public class UsrBeachController {
 	
@@ -131,7 +136,8 @@ public class UsrBeachController {
 	}
 
 	@RequestMapping("/usr/beach/getBeach")
-	public String getBeach( @RequestParam (defaultValue = "해수욕장") String name, Model model, @RequestParam(defaultValue="sim") String sortType) {
+	public String getBeach( @RequestParam (defaultValue = "해수욕장") String name, Model model, @RequestParam(defaultValue="sim") String sortType
+			) {
 		// 네이버 뉴스 검색 API 요청
 		String clientId = "FTz2f8retxTdxp8Vssbr";
 		String clientSecret = "AaaoVfoyAY";
@@ -163,10 +169,10 @@ public class UsrBeachController {
 
 		List<Blog> BeachDetails = resultVO.getItems(); // weatherList를 list.html에 출력 -> model 선언
 		
-		
+		List<String> imageUrls = beachService.getImg(name);
 		
 		model.addAttribute("BeachDetails", BeachDetails);
-
+		model.addAttribute("imageUrls", imageUrls);
 		return "/usr/beach/getBeach";
 	}
 	
@@ -180,5 +186,14 @@ public class UsrBeachController {
         return "/usr/home/ex4";
     }
     
-
+    @GetMapping("/proxy-image")
+    public ResponseEntity<byte[]> proxyImage(@RequestParam("imageUrl") String imageUrl) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(imageUrl, byte[].class);
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // 이미지 형식에 따라 콘텐츠 타입을 조정합니다.
+        
+        return new ResponseEntity<>(response.getBody(), headers, HttpStatus.OK);
+    }
 }

@@ -1,6 +1,7 @@
 package com.KoreaIT.smw.demo.service;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.smw.demo.vo.Recommend;
@@ -36,5 +44,48 @@ public class BeachService {
         }
 
         return newsList;
+	}
+
+	public List<String> getImg(String name) {
+		List<String> imageUrls = new ArrayList<>();
+		String driverPath = "/Users/songminwoo/Downloads/chromedriver_mac64/chromedriver";
+		String URL = "https://search.naver.com/search.naver?where=image&sm=tab_jum&query=" + name;
+        // 크롬 드라이버 경로 설정
+        System.setProperty("webdriver.chrome.driver", driverPath);
+
+        // 크롬 옵션 설정
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-popup-blocking");   // 팝업 안띄움
+        options.addArguments("headless");   // 브라우저 안띄움
+        options.addArguments("--disable-gpu");  // gpu 비활성화
+//        options.addArguments("--blink-settings=imagesEnabled=false");   // 이미지 다운 안받음
+        options.addArguments("--remote-allow-origins=*");    // 이거 붙여야함
+        // 웹 드라이버 생성
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            // 웹 페이지 열기
+            driver.get(URL);
+
+            // 이미지 요소 선택을 위해 일정 시간 대기
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("html img._image._listImage")));
+
+            // 이미지 요소 선택
+            List<WebElement> imageElements = driver.findElements(By.cssSelector("html img._image._listImage"));
+
+            // 이미지 URL 가져오기
+            for (int i = 0; i < 4 && i < imageElements.size(); i++) {
+                WebElement imageElement = imageElements.get(i);
+                String imageUrl = imageElement.getAttribute("src");
+                imageUrls.add(imageUrl);
+            }
+        } finally {
+            // 드라이버 종료
+            driver.quit();
+        }
+        
+        return imageUrls;
+        
 	}
 }
