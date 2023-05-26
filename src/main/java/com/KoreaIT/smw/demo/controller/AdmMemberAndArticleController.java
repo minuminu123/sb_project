@@ -1,5 +1,6 @@
 package com.KoreaIT.smw.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import com.KoreaIT.smw.demo.vo.Member;
 import com.KoreaIT.smw.demo.vo.Rq;
 
 @Controller
-public class AdmMemberController {
+public class AdmMemberAndArticleController {
 
 	@Autowired
 	private ArticleService articleService;
@@ -80,5 +81,35 @@ public class AdmMemberController {
 		rq.logout();
 
 		return Ut.jsReplace("S-1", "로그아웃 되었습니다", afterLogoutUri);
+	}
+	
+	@RequestMapping("/adm/memberAndArticle/doDeleteMembers")
+	@ResponseBody
+	public String doDeleteMembers(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/memberAndArticle/list") String replaceUri) {
+		List<Integer> memberIds = new ArrayList<>();
+
+		for (String idStr : ids.split(",")) {
+			memberIds.add(Integer.parseInt(idStr));
+		}
+
+		memberService.deleteMembers(memberIds);
+
+		return Ut.jsReplace("해당 회원들이 삭제되었습니다.", replaceUri);
+	}
+
+	@RequestMapping("/adm/memberAndArticle/doDeleteArticles")
+	@ResponseBody
+	public String doDeleteArticles(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/memberAndArticle/list") String replaceUri) {
+		List<Integer> articleIds = new ArrayList<>();
+
+		for (String idStr : ids.split(",")) {
+			articleIds.add(Integer.parseInt(idStr));
+		}
+
+		articleService.deleteArticles(articleIds);
+
+		return Ut.jsReplace("해당 게시들이 삭제되었습니다.", replaceUri);
 	}
 }

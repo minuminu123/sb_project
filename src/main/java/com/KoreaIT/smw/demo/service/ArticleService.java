@@ -164,5 +164,23 @@ public class ArticleService {
 	public List<Article> getArticles(int actorId) {
 		return articleRepository.getArticles(actorId);
 	}
+	
+	public Article getArticleById(int id) {
+		return articleRepository.getArticle(id);
+	}
+
+	public void deleteArticles(List<Integer> articleIds) {
+		for (int articleId : articleIds) {
+			Article article = getArticleById(articleId);
+
+			if (article != null) {
+				deleteArticle(article);
+			}
+		}
+	}
+
+	private void deleteArticle(Article article) {
+		articleRepository.deleteArticle(article.getId());
+	}
 
 }

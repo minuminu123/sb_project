@@ -149,6 +149,20 @@ public interface MemberRepository {
 
 	
 	@Select("""
+			<script>
+			UPDATE `member`
+			<set>
+				updateDate = NOW(),
+				delStatus = 1,
+				delDate = NOW(),
+			</set>
+			WHERE id = #{id}
+			</script>
+			""")
+	void deleteMember(int id);
+	
+	
+	@Select("""
 			SELECT *
 			FROM `member`
 			WHERE email = #{email}

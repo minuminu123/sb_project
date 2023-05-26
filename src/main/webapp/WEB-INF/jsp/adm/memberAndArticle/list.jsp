@@ -3,7 +3,7 @@
 <c:set var="pageTitle" value="관리자 페이지 - 회원,게시글 리스트" />
 <%@ include file="../../usr/common/head.jspf"%>
 
-<article class="mt-28 text-xl flex">
+<article class="mt-28 text-xl">
 		<div>
 				<div class="container mx-auto px-3">
 						<div class="flex">
@@ -24,14 +24,14 @@
 										</select>
 
 										<select data-value="${param.filter }" name="filter" class="select select-ghost"
-												style="top: 350px; position: absolute; right: 200px; background-color: white;">
+												style="top: 400px; position: absolute; right: 200px; background-color: white;">
 												<option value="hitCount">조회순</option>
 												<option value="comments">댓글 많은순</option>
 												<option value="recent">최신순</option>
 												<option value="old">오래된 순</option>
 										</select>
 
-										<button class="btn btn-ghost" style="top: 350px; position: absolute; right: 120px; background-color: wheat;"
+										<button class="btn btn-ghost" style="top: 400px; position: absolute; right: 120px; background-color: wheat;"
 												type=submit>정렬하기</button>
 
 										<select data-value="${searchKeywordTypeCode }" name="MsearchKeywordTypeCode" class="select select-bordered">
@@ -52,11 +52,15 @@
 								<table class="table table-fixed w-full">
 										<colgroup>
 												<col width="70" />
-												<col width="140" />
-												<col width="140" />
-												<col width="140" />
-												<col width="140" />
-												<col width="140" />
+												<col width="100" />
+												<col width="100" />
+												<col width="100" />
+												<col width="100" />
+												<col width="150" />
+												<col width="100" />
+												<col width="150" />
+												<col width="150" />
+
 										</colgroup>
 										<thead>
 												<tr>
@@ -68,21 +72,26 @@
 														<th>수정날짜</th>
 														<th>아이디</th>
 														<th>이름</th>
+														<th>닉네임</th>
+														<th>탈퇴여부 0: 전 / 1: 후</th>
+														<th>옆에놈을 풀어서 설명</th>
 												</tr>
 										</thead>
 
 										<tbody>
 												<c:forEach var="member" items="${members }">
 														<tr class="hover">
-																<td>
+																<th>
 																		<input type="checkbox" class="checkbox-member-id" value="${member.id }" />
-
-																</td>
+																</th>
 																<td>${member.id}</td>
 																<td>${member.forPrintType1RegDate}</td>
 																<td>${member.forPrintType1UpdateDate}</td>
 																<td>${member.loginId}</td>
 																<td>${member.name}</td>
+																<td>${member.nickname}</td>
+																<td>${member.delStatus}</td>
+																<td>${member.delStatus == true ? '정지' : '활동' }</td>
 														</tr>
 												</c:forEach>
 										</tbody>
@@ -109,6 +118,7 @@
 						</div>
 
 						<form hidden method="POST" name="do-delete-members-form" action="../memberAndArticle/doDeleteMembers">
+								<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 								<input type="hidden" name="ids" value="" />
 						</form>
 
@@ -158,7 +168,7 @@
 				</div>
 		</div>
 		<div>
-				<div class="container mx-auto px-3">
+				<div class="container mx-auto px-3 mt-24">
 						<div class="table-box-type-1">
 								<div class="flex mb-4">
 										<div>
