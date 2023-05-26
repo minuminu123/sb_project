@@ -217,6 +217,10 @@ public class UsrMemberController {
 			return Ut.jsReplace("F-L", "6회 실패해서 잠시후에 다시 로그읺 해주세요.", "/usr/member/login?maxFailCount=" + 6);
 		}
 		
+		if (member.isDelStatus() == true) {
+			return Ut.jsReplace("사용정지된 계정이야", "/");
+		}
+		
 		rq.login(member);
 		
 		// 우리가 갈 수 있는 경로를 경우의 수로 표현 
