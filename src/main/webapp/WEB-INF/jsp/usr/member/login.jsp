@@ -44,7 +44,11 @@
 										autocomplete="off" />
 								<c:set var="count" value="0"></c:set>
 								<c:if test="${failCount != count }">
-									<div class="blinking-text mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto;">로그인 남은 횟수: ${failCount }</div>
+									<div class="mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto; color: wheat;">로그인 남은 횟수: ${failCount }</div>
+								</c:if>
+								<c:if test="${failCount == count }">
+									<div class="mt-8" style="width: 150px; text-align: center; margin-left: auto; margin-right: auto; color: wheat;">➩<a class="btn btn-active btn-ghost btn-text-link animate__animated animate__fadeIn animate5" href="${rq.findLoginIdUri }">아이디 찾기</a><div>➩<a class="btn btn-ghost btn-active btn-text-link animate__animated animate__fadeIn animate5" style="margin-top: 12px;" href="${rq.findLoginPwUri }">비밀번호찾기</a></div>
+									</div>
 								</c:if>
 						</fieldset>
 

@@ -214,11 +214,11 @@ public class UsrMemberController {
 		member = memberService.getMemberByLoginId(loginId);
 		
 		if(member.isAccountLocked()) {
-			return Ut.jsReplace("F-L", "6회 실패해서 잠시후에 다시 로그읺 해주세요.", "/usr/member/login?maxFailCount=" + 6);
+			return Ut.jsReplace("F-L", "6회 실패해서 잠시후에 다시 로그인 해주세요.", "/usr/member/login?maxFailCount=" + 6);
 		}
 		
 		if (member.isDelStatus() == true) {
-			return Ut.jsReplace("사용정지된 계정이야", "/");
+			return Ut.jsReplace("사용정지된 계정이입니다. 관리자에게 문의해 주세요", "/");
 		}
 		
 		rq.login(member);
