@@ -131,6 +131,10 @@
 												<li class="hover:underline side_font">
 														<a href="/usr/home/recommend" style="white-space: normal;">네이버 인플루언서 추천</a>
 												</li>
+												<hr style="width: 80%;">
+												<li class="hover:underline side_font">
+														<a href="/usr/home/ex3" style="white-space: normal;">주변 편의시설</a>
+												</li>
 										</ul>
 								</div>
 

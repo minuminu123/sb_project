@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
+<%@ page import="com.KoreaIT.smw.demo.vo.ReactionPoint" %>
 <c:set var="pageTitle" value="Beach List" />
 <%@ include file="../common/head.jspf"%>
 
@@ -13,6 +14,7 @@ int totalCount = (int) request.getAttribute("totalCount");
 int pageNo = (int) request.getAttribute("pageNo");
 int pageSize = (int) request.getAttribute("pageSize");
 %>
+
 <meta charset="UTF-8">
 <div class="bg-beach">
 		<h1 class="absolute text-center" style="width: 100px; top: 100px; left: 150px; font-size: 2rem;">Beach List</h1>
@@ -42,12 +44,13 @@ int pageSize = (int) request.getAttribute("pageSize");
 						%>
 						<tr>
 								<th>
-										<a href="/usr/beach/getBeach?name=<%=row[1]%>"><%=row[1]%></a>
+										<a href="/usr/beach/getBeach?name=<%=row[1]%>&id=<%=row[0]%>"><%=row[1]%></a>
 								</th>
 								<th><%=row[6]%></th>
 								<th>
 										<a href="/usr/home/MapSearch?value=<%=row[1]%>">클릭</a>
 								</th>
+								
 						</tr>
 						<%
 						}
@@ -56,7 +59,8 @@ int pageSize = (int) request.getAttribute("pageSize");
 		</table>
 
 		<c:if test="${data.size() > 1 }">
-			<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8" style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
+				<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8"
+						style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
 		</c:if>
 
 		<div class="pagination flex justify-center mt-12">
@@ -114,9 +118,9 @@ navigator.geolocation.getCurrentPosition(function(position) {
 	  var latitude = position.coords.latitude;  // 위도
 	  var longitude = position.coords.longitude;  // 경도
 	  var locations = [
-	    <% for (String[] row : data) { %>
+	    <%for (String[] row : data) {%>
 	      { location: '<%=row[1]%>', gyeongdo: <%=row[4]%>, wido: <%=row[5]%> },
-	    <% } %>
+	    <%}%>
 	  ];
 	  var distances = [];
 

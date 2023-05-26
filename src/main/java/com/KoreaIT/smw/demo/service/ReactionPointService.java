@@ -39,6 +39,20 @@ public class ReactionPointService {
 		}
 		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
+	
+	public ResultData actorCanMakeReaction2(int actorId, String relTypeCode, String relId) {
+		if (actorId == 0) {
+			return ResultData.from("F-1", "로그인 하고 오렴");
+		}
+		// 리액션을 할수 있는지 체크 (1이면 이미 했다는 거고 0이면 안했다)
+		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId2(actorId, relTypeCode,
+				relId);
+
+		if (sumReactionPointByMemberId != 0) {
+			return ResultData.from("F-2", "추천 불가", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+		}
+		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+	}
 
 	public ResultData addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
 		int affectedRow = reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);
@@ -116,6 +130,21 @@ public class ReactionPointService {
 		return false;
 	}
 	
+	public boolean actorCanCancelGoodReaction3(String relId, String relTypeCode) {
+		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId2(rq.getLoginedMemberId(), relTypeCode, relId);
+
+		if (getPointTypeCodeByMemberId > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	private int getSumReactionPointByMemberId2(int actorId, String relTypeCode, String relId) {
+		int getSumRP = reactionPointRepository.getSumReactionPointByMemberId2(actorId, relTypeCode, relId);
+
+		return (int) getSumRP;
+	}
+
 	public boolean actorCanCancelBadReaction(int relId, String relTypeCode) {
 		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
 		if (getPointTypeCodeByMemberId < 0) {
@@ -133,6 +162,14 @@ public class ReactionPointService {
 	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode) {
 		return reactionPointRepository.getReactionPointsByLoginMember(actorId, relTypeCode);
 	}
+
+
+
+	
+
+
+
+
 
 
 

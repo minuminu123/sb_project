@@ -23,6 +23,17 @@ public interface ReactionPointRepository {
 			""")
 	public int getSumReactionPointByMemberId(int actorId, String relTypeCode, int id);
 
+	@Select("""
+			<script>
+				SELECT IFNULL(SUM(RP.point),0)
+				FROM reactionPoint AS RP
+				WHERE RP.relTypeCode = #{relTypeCode}
+				AND RP.relId = #{id}
+				AND RP.memberId = #{actorId}
+			</script>
+			""")
+	public int getSumReactionPointByMemberId2(int actorId, String relTypeCode, String id);
+
 	@Insert("""
 			<script>
 				INSERT INTO reactionPoint
@@ -57,6 +68,7 @@ public interface ReactionPointRepository {
 			""")
 	public void deleteGoodReactionPoint(int actorId, String relTypeCode, int relId);
 
+	
 	@Delete("""
 			DELETE FROM reactionPoint
 			WHERE relTypeCode = #{relTypeCode}
@@ -73,4 +85,7 @@ public interface ReactionPointRepository {
 			and `point` > 0;
 			""")
 	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode);
+
+
+	
 }

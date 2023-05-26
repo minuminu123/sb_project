@@ -7,7 +7,7 @@
 <style>
 .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap {position:relative;width:100%;height:350px;}
-#category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
+#category {position:absolute;top:10px;left:150px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
 #category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
 #category li.on {background: #eee;}
 #category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
@@ -35,13 +35,14 @@
 </style>
 </head>
 <body>
-<p style="margin-top:-12px">
+<hr />
+<p style="margin-top:70px; margin-left: 100px;">
     <em class="link">
-        <a href="/web/documentation/#CategoryCode" target="_blank">카테고리 코드목록을 보시려면 여기를 클릭하세요!</a>
+        <a href="#">카테고리 클릭</a>
     </em>
 </p>
-<div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+<div class="map_wrap mt-24">
+    <div id="map" style="width:80%;height:100%;position:relative;overflow:hidden; margin-top: 100px; margin-left: auto; margin-right: auto;"></div>
     <ul id="category">
         <li id="BK9" data-order="0"> 
             <span class="category_bg bank"></span>

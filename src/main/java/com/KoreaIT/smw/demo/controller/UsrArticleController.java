@@ -203,7 +203,7 @@ public class UsrArticleController {
 		/* 해당 게시글에 해당하는 댓글들을 리스트로 가져온다 */
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 		/* 댓글에 좋아요한 리스트를 가져오기 위한 함수 */
-		List<ReactionPoint> reactionPoints = reactionPointService.getReactionPointsByLoginMember(rq.getLoginedMemberId(), "reply");;
+		List<ReactionPoint> reactionPoints = reactionPointService.getReactionPointsByLoginMember(rq.getLoginedMemberId(), "reply");
 		
 		//널이면 actorCanMakeReplyGood 거짓
 		if(reactionPoints == null) {

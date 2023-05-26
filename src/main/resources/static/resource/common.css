@@ -778,7 +778,6 @@ header span {
 /* 스크롤 내리면 메뉴바 색깔 변하게 설정 */
 .actived {
 	background: #59BBBB;
-	color: yellow;
 	transition: opacity .3s;
 }
 
@@ -1268,7 +1267,6 @@ section {
 .blinking-text3 {
 	width: 100%;
     background-color: wheat;
-    animation: blink 1s infinite;
 }
 
 .blinking-hamburger {
