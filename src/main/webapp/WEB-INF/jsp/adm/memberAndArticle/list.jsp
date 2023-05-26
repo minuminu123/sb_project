@@ -76,6 +76,7 @@
 														<tr class="hover">
 																<td>
 																		<input type="checkbox" class="checkbox-member-id" value="${member.id }" />
+
 																</td>
 																<td>${member.id}</td>
 																<td>${member.forPrintType1RegDate}</td>
@@ -88,6 +89,44 @@
 
 								</table>
 						</div>
+
+						<script>
+			$('.checkbox-all-member-id').change(function() {
+			      const $all = $(this);
+			      const allChecked = $all.prop('checked');
+			      $('.checkbox-member-id').prop('checked', allChecked);
+			    });
+			    $('.checkbox-member-id').change(function() {
+			      const checkboxMemberIdCount = $('.checkbox-member-id').length;
+			      const checkboxMemberIdCheckedCount = $('.checkbox-member-id:checked').length;
+			      const allChecked = checkboxMemberIdCount == checkboxMemberIdCheckedCount;
+			      $('.checkbox-all-member-id').prop('checked', allChecked);
+			      
+			    });
+			</script>
+						<div>
+								<button class="btn btn-error btn-delete-selected-members">선택삭제</button>
+						</div>
+
+						<form hidden method="POST" name="do-delete-members-form" action="../memberAndArticle/doDeleteMembers">
+								<input type="hidden" name="ids" value="" />
+						</form>
+
+						<script>
+    		$('.btn-delete-selected-members').click(function() {
+      			const values = $('.checkbox-member-id:checked').map((index, el) => el.value).toArray();
+      			if ( values.length == 0 ) {
+       		 		alert('삭제할 회원을 선택 해주세요.');
+       		 		return;
+     			}
+      			if ( confirm('정말 삭제하시겠습니까?') == false ) {
+        			return;
+     			}
+      			document['do-delete-members-form'].ids.value = values.join(',');
+      			document['do-delete-members-form'].submit();
+    		});
+    	</script>
+
 						<div class="page-menu mt-3 flex justify-center">
 								<div class="btn-group">
 
@@ -171,6 +210,7 @@
 														<tr class="hover">
 																<td>
 																		<input type="checkbox" class="checkbox-article-id" value="${article.id }" />
+
 																</td>
 																<td>
 																		<div class="badge">${article.id}</div>
@@ -191,6 +231,42 @@
 								</table>
 						</div>
 
+						<script>
+			$('.checkbox-all-article-id').change(function() {
+			      const $all = $(this);
+			      const allChecked = $all.prop('checked');
+			      $('.checkbox-article-id').prop('checked', allChecked);
+			    });
+			    $('.checkbox-article-id').change(function() {
+			      const checkboxArticleIdCount = $('.checkbox-article-id').length;
+			      const checkboxArticleIdCheckedCount = $('.checkbox-article-id:checked').length;
+			      const allChecked = checkboxArticleIdCount == checkboxArticleIdCheckedCount;
+			      $('.checkbox-all-article-id').prop('checked', allChecked);
+			      
+			    });
+			</script>
+						<div>
+								<button class="btn btn-error btn-delete-selected-articles">선택삭제</button>
+						</div>
+
+						<form hidden method="POST" name="do-delete-articles-form" action="../memberAndArticle/doDeleteArticles">
+								<input type="hidden" name="ids" value="" />
+						</form>
+
+						<script>
+    		$('.btn-delete-selected-articles').click(function() {
+      			const values = $('.checkbox-article-id:checked').map((index, el) => el.value).toArray();
+      			if ( values.length == 0 ) {
+       		 		alert('삭제할 게시글을 선택 해주세요.');
+       		 		return;
+     			}
+      			if ( confirm('정말 삭제하시겠습니까?') == false ) {
+        			return;
+     			}
+      			document['do-delete-articles-form'].ids.value = values.join(',');
+      			document['do-delete-articles-form'].submit();
+    		});
+    	</script>
 
 						<div class="pagination flex justify-center mt-3">
 								<div class="btn-group">
