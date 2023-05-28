@@ -12,15 +12,15 @@
 		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/resource/css/main.css" />
 
 <c:if test="${rq.isLogined() }">
 		<div id="username-page">
 				<div class="username-page-container">
 						<form id="usernameForm" name="usernameForm">
 								<div class="form-group">
-<%-- 										<input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId" />
- --%>										<input type="hidden" value="${rq.loginedMemberId }" id="memberId" name="memberId" />
+ 										<input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId" />
+										<input type="hidden" value="${rq.loginedMemberId }" id="memberId" name="memberId" />
 								</div>
 								<div class="form-group">
 										<button type="submit" class="accent username-submit mt-48 ml-48">참여하기</button>
@@ -82,5 +82,5 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/resource/js/main.js"></script>
 <%@ include file="../common/foot.jspf"%>

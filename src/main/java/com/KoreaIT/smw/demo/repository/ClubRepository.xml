@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.KoreaIT.smw.demo.repository.ClubRepository">
+
+	<insert id="create">
+		INSERT INTO club
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		leaderId = #{loginedMemberId},
+		`name`= #{name},
+		areacode = #{areacode},
+		categoryId = #{categoryId},
+		purpose = #{purpose};
+	</insert>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+
+	<select id="getClubById" resultType="Club">
+		SELECT *
+		FROM club
+		WHERE id = #{id};
+	</select>
+
+	<select id="getClubs" resultType="Club">
+		SELECT *
+		FROM club;
+	</select>
+
+	<select id="getForPrintClubs" resultType="Club">
+		SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
+		FROM club c
+		INNER JOIN category ca
+		ON c.categoryId = ca.id
+		INNER JOIN region r
+		ON c.areacode = r.areacode
+		WHERE 1
+		<if test='categoryId != "" and categoryId != null'>
+			AND c.categoryId = #{categoryId}
+		</if>
+
+		<if test="searchKeyword != '' and searchKeyword != null">
+			AND (c.name LIKE CONCAT('%',#{searchKeyword},'%')
+			OR
+			c.purpose LIKE CONCAT('%',#{searchKeyword},'%'))
+		</if>
+		ORDER BY c.id DESC
+		<if test="limitFrom >= 0">
+			LIMIT #{limitFrom}, #{limitTake}
+		</if>
+	</select>
+
+	<select id="getClubsCount" resultType="int">
+		SELECT COUNT(c.id)
+		FROM club c
+		WHERE 1
+		<if test='categoryId != "" and categoryId != null'>
+			AND c.categoryId = #{categoryId}
+		</if>
+		<if test="searchKeyword != '' and searchKeyword != null">
+			AND (c.name LIKE CONCAT('%',#{searchKeyword},'%')
+			OR
+			c.purpose LIKE CONCAT('%',#{searchKeyword},'%'))
+		</if>
+	</select>
+
+	<select id="getavgAge" resultType="Club">
+		SELECT c.id, AVG(m.age) AS 'avgAge'
+		FROM member_club mc
+		INNER JOIN club c
+		ON mc.clubId = c.id
+		INNER JOIN `member` m
+		ON mc.memberId = m.id
+		GROUP BY c.id;
+	</select>
+
+	<select id="getmembersCount" resultType="Club">
+		SELECT c.id AS 'id', COUNT(mc.memberId) AS 'membersCount'
+		FROM club c
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
+		GROUP BY c.id;
+	</select>
+	
+	<select id="selectArea" resultType="AreaRequestDTO"
+		parameterType="Map">
+		<choose>
+			<when test="type == 'city'">
+				SELECT areacode, step1
+				FROM region
+				WHERE step2 = "" 
+				AND step3 = ""
+				ORDER BY step1
+			</when>
+
+			<when test="type == 'county'">
+				SELECT areacode, step2
+				FROM region
+				WHERE step1 = #{keyword} 
+				AND step3 = "" 
+				AND step2 != ""
+				ORDER BY step2
+			</when>
+
+			<when test="type == 'town'">
+				SELECT areacode, step3
+				FROM region
+				WHERE step2 = #{keyword} 
+				AND step3 != ""
+				ORDER BY step3
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="doJoin">
+		INSERT INTO member_club 
+		SET memberId = #{memberId},
+		clubId = #{clubId},
+		purpose = #{purpose},
+		regDate = NOW();
+	</insert>
+	
+	<select id="actorCanChat" resultType="int">
+		SELECT COUNT(*)
+		FROM member_club
+		WHERE clubId = #{id}
+		AND memberId = #{actorId};
+	</select>
+	
+	<select id="getMyClubs" resultType="Club">
+		SELECT c.*, mc.memberId
+		FROM club c
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
+		WHERE memberId = #{memberId};
+	</select>
+	
+	<select id="getClubByMemberId" resultType="com.KoreaIT.smw.demo.vo.member_club">
+		SELECT *
+		FROM member_club
+		WHERE memberId = #{memberId}
+		AND clubId = #{clubId};	
+	</select>
+	
+	<select id="getMembersByClubId" resultType="com.KoreaIT.smw.demo.vo.member_club">
+		SELECT mc.*, m.name AS 'name'
+		FROM `member` m
+		INNER JOIN member_club mc
+		ON m.id = mc.memberId
+		WHERE mc.clubId = #{clubId};
+	</select>
+</mapper>

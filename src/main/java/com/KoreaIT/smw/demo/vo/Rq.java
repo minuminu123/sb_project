@@ -1,20 +1,25 @@
 package com.KoreaIT.smw.demo.vo;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.KoreaIT.smw.demo.service.ChatRoomService;
+import com.KoreaIT.smw.demo.service.ChatService;
 import com.KoreaIT.smw.demo.service.MemberService;
 import com.KoreaIT.smw.demo.util.Ut;
 
 import lombok.Getter;
+import lombok.Setter;
 /* 세션값을 저장해두는 클래스로 전역에서사용가능하도록 설정 */
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -27,7 +32,22 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
-
+	@Getter
+	private String loginedMemberLoginId;
+	@Getter
+	@Setter
+	private int PunReadCount;
+	
+	@Getter
+	@Setter
+	private int CunReadCount;
+	
+	@Autowired
+	ChatRoomService chatRoomService;
+	
+	@Autowired
+	ChatService chatService;
+	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
@@ -50,16 +70,22 @@ public class Rq {
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
+		String loginedMemberLoginId = null;
+
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			loginedMember = memberService.getMemberById(loginedMemberId);
+			loginedMemberLoginId = (String) session.getAttribute("loginedMemberLoginId");
+
+			
 		}
 
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
+		this.loginedMemberLoginId = loginedMemberLoginId;
 
 		this.req.setAttribute("rq", this);
 
@@ -106,6 +132,8 @@ public class Rq {
 	// 로그인이 되었다면 세션에 loginedMemberId라는 속성을 설정해준다.
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
+		session.setAttribute("loginedMemberLoginId", member.getLoginId());
+
 	}
 	// 로그아웃하면 loginedMemberId 속성값을 삭제한다.
 	public void logout() {
@@ -113,6 +141,13 @@ public class Rq {
 	}
 	// js.jsp 에서 스크립트문을 통해 historyback이 되도록 설정한 함수
 	public String jsHitoryBackOnView(String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "usr/common/js";
+
+	}
+	
+	public String jsHistoryBackOnView(String resultCode, String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
 		return "usr/common/js";
@@ -145,7 +180,55 @@ public class Rq {
 	// Rq 객체 생성 유도
 	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
 	public void initOnBeforeActionInterceptor() {
+		// 해당 memberId가 속하는 개인 채팅방 가져오기
+		List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(getLoginedMemberId());
+		
+		int PunReadCount = 0;
+		// 개인채팅방에서 상대방의 이름과 읽지 않은 채팅 수를 가져오기 위한 반복문
+		for (PersonalChatRoom room : PList) {
+			if (room.getMemberId1() == getLoginedMemberId()) {
+				int tmp1 = room.getMemberId1();
+				room.setMemberId1(room.getMemberId2());
+				room.setMemberId2(tmp1);
 
+				String tmp2 = room.getMember1_name();
+				room.setMember1_name(room.getMember2_name());
+				room.setMember2_name(tmp2);
+			}
+
+			String roomType = "Personal";
+
+			int lastReadId = chatService.getLastReadId(room.getId(), getLoginedMemberId(), roomType);
+
+			int unreadCount = chatService.getPersonalChatUnreadCount(room.getId(), getLoginedMemberId(), roomType,
+					lastReadId);
+
+			room.setUnreadCount(unreadCount);
+			
+			PunReadCount += unreadCount;
+		}
+		
+		setPunReadCount(PunReadCount);
+
+		// 해당 memberId가 속하는 동호회 채팅방 가져오기
+		List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(getLoginedMemberId());
+		
+		int CunReadCount = 0;
+		// 동호회 채팅방에서 읽지 않은 채팅의 수를 가져오는 것
+		for (ClubChatRoom room : CList) {
+			String roomType = "Club";
+
+			int lastReadId = chatService.getLastReadId(room.getId(), getLoginedMemberId(), roomType);
+
+			int unreadCount = chatService.getClubChatUnreadCount(room.getId(), getLoginedMemberId(), roomType,
+					lastReadId);
+
+			room.setUnreadCount(unreadCount);
+			
+			CunReadCount += unreadCount;
+		}
+		
+		setCunReadCount(CunReadCount);
 	}
 	/* 로그인하지 않았다면 true를 리턴하는 함수 */
 	public boolean isNotLogined() {

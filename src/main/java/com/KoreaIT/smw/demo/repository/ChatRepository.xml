@@ -4,6 +4,37 @@
 <mapper
 	namespace="com.KoreaIT.smw.demo.repository.ChatRepository">
 
+	<select id="getRooms"
+		resultType="com.KoreaIT.smw.demo.vo.ClubChatRoom">
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM
+		ClubchatRoom cr
+		LEFT JOIN chat_user cu
+		ON cr.id = cu.roomId
+		GROUP BY
+		cr.id
+	</select>
+
+	<select id="getClubChatRoomById"
+		resultType="com.KoreaIT.smw.demo.vo.ClubChatRoom">
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM
+		ClubchatRoom cr
+		INNER JOIN chat_user cu
+		ON cr.id = cu.roomId
+		WHERE cr.id
+		= #{id};
+	</select>
+
+	<insert id="createClubChatRoom">
+		INSERT INTO ClubchatRoom
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		roomName = #{roomName},
+		memberId = #{memberId},
+		clubId = #{clubId};
+	</insert>
+	
 	<insert id="addUser">
 		INSERT INTO chat_user
 		SET regDate = NOW(),
@@ -79,6 +110,50 @@
 		WHERE roomId = #{roomId}
 		AND roomType = #{roomType}
 		AND type = 'TALK';
+	</select>
+	
+	<insert id="createPersonalChatRoom">
+		INSERT INTO PersonalchatRoom
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId1 = #{memberId1},
+		memberId2 = #{memberId2};
+	</insert>
+	
+	<select id="getPersonalChatRoomById"
+		resultType="com.KoreaIT.smw.demo.vo.PersonalChatRoom">
+		SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+		FROM PersonalchatRoom pc
+		JOIN MEMBER m1 ON pc.memberId1 = m1.id
+		JOIN MEMBER m2 ON pc.memberId2 = m2.id
+		WHERE pc.id = #{id};
+	</select>
+
+	<select id="getPersonalChatRoomByMemberId"
+		resultType="com.KoreaIT.smw.demo.vo.PersonalChatRoom">
+		SELECT * FROM PersonalchatRoom
+		WHERE (memberId1 = #{memberId1} OR memberId1 = #{memberId2})
+		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2})
+		LIMIT 1;
+	</select>
+
+	<select id="getClubChatRoomsByMemberId"
+		resultType="com.KoreaIT.smw.demo.vo.ClubChatRoom">
+		SELECT cr.*
+		FROM ClubChatRoom cr
+		INNER JOIN chat c 
+		ON cr.id = c.roomId
+		WHERE c.memberId = #{memberId} AND c.roomType = 'Club'
+		GROUP BY cr.id;
+	</select>
+
+	<select id="getPersonalChatRoomsByMemberId"
+		resultType="com.KoreaIT.smw.demo.vo.PersonalChatRoom">
+		SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+		FROM PersonalchatRoom pc
+		JOIN MEMBER m1 ON pc.memberId1 = m1.id
+		JOIN MEMBER m2 ON pc.memberId2 = m2.id
+		WHERE (pc.memberId1 = #{memberId} OR pc.memberId2 = #{memberId});
 	</select>
 
 	<insert id="updateLastReadChatId">

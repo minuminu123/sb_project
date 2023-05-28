@@ -7,10 +7,16 @@ import org.apache.ibatis.annotations.Mapper;
 import com.KoreaIT.smw.demo.vo.Chat;
 import com.KoreaIT.smw.demo.vo.Chat.MessageType;
 import com.KoreaIT.smw.demo.vo.Chat_User;
+import com.KoreaIT.smw.demo.vo.ClubChatRoom;
+import com.KoreaIT.smw.demo.vo.PersonalChatRoom;
 
 
 @Mapper
 public interface ChatRepository {
+
+	public List<ClubChatRoom> getRooms();
+
+    public ClubChatRoom getClubChatRoomById(int id);
 
     public void createClubChatRoom(String roomName, int memberId, int clubId);
 
@@ -29,6 +35,16 @@ public interface ChatRepository {
 	public Chat_User getChat_UserByRoomIdAndMemberId(int roomId, int memberId, String roomType);
 
 	public List<Chat> getChatHistory(int roomId, String roomType);
+
+	public void createPersonalChatRoom(int memberId1, int memberId2);
+
+	public PersonalChatRoom getPersonalChatRoomById(int id);
+
+	public PersonalChatRoom getPersonalChatRoomByMemberId(int memberId1, int memberId2);
+
+	public List<ClubChatRoom> getClubChatRoomsByMemberId(int memberId);
+
+	public List<PersonalChatRoom> getPersonalChatRoomsByMemberId(int memberId);
 
 	public void updateLastReadChatId(int memberId, int roomId, String roomType, int lastReadId);
 

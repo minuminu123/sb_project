@@ -88,7 +88,7 @@
 										</a>
 								</li>
 								<c:if test="${rq.isLogined() }">
-										<a href="../chat/chatroom?id=1" class="btn btn-outline btn-xs">채팅</a>
+										<a href="../chat/ClubChatroom?id=2" class="btn btn-outline btn-xs">채팅</a>
 								</c:if>
 								<c:if test="${rq.admin}">
 										<li class="hover:underline">

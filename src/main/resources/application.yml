@@ -5,6 +5,9 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  jpa:
+    hibernate:
+      ddl-auto: update
   mail:
     host: smtp.gmail.com
     port: 587
