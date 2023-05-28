@@ -87,14 +87,18 @@
 												<span>MAP</span>
 										</a>
 								</li>
-								<c:if test="${rq.isLogined() }">
-										<a href="../chat/ClubChatroom?id=2" class="btn btn-outline btn-xs">채팅</a>
-								</c:if>
 								<c:if test="${rq.admin}">
 										<li class="hover:underline">
 												<a class="h-full px-3 flex items-center" href="/adm/memberAndArticle/list">
 														<span>관리자</span>
 												</a>
+										</li>
+								</c:if>
+								<c:if test="${rq.logined}">
+										<li class="hover:underline">
+											<a href="../chat/room?id=1" class="h-full px-3 flex items-center">
+												<span>채팅</span>
+											</a>
 										</li>
 								</c:if>
 						</ul>

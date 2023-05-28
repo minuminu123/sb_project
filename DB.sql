@@ -132,11 +132,9 @@ WHERE id = 3;
 
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
-ALTER table `member` add column failCount int(10) unsigned not null default 0;
-alter table `member` add column isAccountLocked tinyint(1) unsigned not null default 0;
-alter table `member` add column lockedTime datetime not null default 0;
-
-SELECT * FROM `member`;
+ALTER TABLE `member` ADD COLUMN failCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `member` ADD COLUMN isAccountLocked TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `member` ADD COLUMN lockedTime DATETIME DEFAULT NULL;
 
 # reactionPoint 테이블 생성
 CREATE TABLE reactionPoint (
@@ -309,12 +307,12 @@ INNER JOIN (
 ON R.id = RP_SUM.relId
 SET R.goodReactionPoint = RP_SUM.goodReactionPoint;
 
-alter table article add column repliesCount int(10) unsigned not null default 0;
+ALTER TABLE article ADD COLUMN repliesCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 UPDATE article AS A
 INNER JOIN (
-	SELECT R.relId , count(*) AS repliesCount FROM reply AS R
-	group by R.relId
+	SELECT R.relId , COUNT(*) AS repliesCount FROM reply AS R
+	GROUP BY R.relId
 ) AS RP_SUM
 ON A.id = RP_SUM.relId
 SET A.repliesCount = RP_SUM.repliesCount;
@@ -373,256 +371,42 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
-# club 테이블 생성
-CREATE TABLE club(
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    leaderId INT(10) UNSIGNED NOT NULL,
-    `name` CHAR(100) NOT NULL COMMENT '동호회 이름',
-    purpose TEXT NOT NULL COMMENT '동호회 목표',
-    categoryId INT(10) UNSIGNED NOT NULL COMMENT '(1=운동/스포츠, 2=아웃도어/여행, 3=공예/만들기, ...)',
-    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
-    delDate DATETIME COMMENT '삭제 날짜',
-    areacode VARCHAR(50) NOT NULL
-);
-
-ALTER TABLE club CONVERT TO CHARSET UTF8;
-
-INSERT INTO club
-SET regDate = NOW(),
-updateDate = NOW(),
-leaderId = 1,
-`name`= '축구좋아',
-purpose = '재밌게 축구 하실 분 모집해요',
-categoryId = 1,
-areacode = '3000000000';
-
-INSERT INTO club
-SET regDate = NOW(),
-updateDate = NOW(),
-leaderId = 2,
-`name`= '등산가자!',
-purpose = '매주 일요일에 등산하실 분 들어오세요!',
-categoryId = 3,
-areacode = '﻿1100000000';
-
-INSERT INTO club
-SET regDate = NOW(),
-updateDate = NOW(),
-leaderId = 3,
-`name`= '도제(도자기 제작)',
-purpose = '매일 같이 공방에 나와서 도자기 만드실 분 모집해요!',
-categoryId = 2,
-areacode = '4500000000';
-
-# category 테이블 생성
-CREATE TABLE category(
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    `name` CHAR(100) NOT NULL UNIQUE 
-);
-
-ALTER TABLE category CONVERT TO CHARSET UTF8;
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '운동/스포츠';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '아웃도어/여행';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '문화/공연/축제';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '음악/악기';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '공예/만들기';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '댄스/무용';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '봉사활동';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '차/오토바이';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '사진/영상';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '게임/오락';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '요리/제조';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '반려동물';
-
-INSERT INTO category 
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '자유주제';
-
-# member 테이블에 나이 추가
-ALTER TABLE `member` ADD COLUMN age INT(10) UNSIGNED NOT NULL AFTER email;
-
-# member 테이블에 나이가 0인것 나이 넣어주기
-UPDATE `member`
-SET age = 21
-WHERE id = 1;
-
-UPDATE `member`
-SET age = 31
-WHERE id = 2;
-
-UPDATE `member`
-SET age = 25
-WHERE id = 3;
-
-# 지역 테이블 추가
-CREATE TABLE region (
-	`areacode` VARCHAR(50) NOT NULL COMMENT '행정구역코드' COLLATE 'utf8_general_ci',
-	`step1` VARCHAR(50) NOT NULL COMMENT '시도' COLLATE 'utf8_general_ci',
-	`step2` VARCHAR(50) NULL DEFAULT NULL COMMENT '시군구' COLLATE 'utf8_general_ci',
-	`step3` VARCHAR(50) NULL DEFAULT NULL COMMENT '읍면동' COLLATE 'utf8_general_ci',
-	`gridX` VARCHAR(50) NOT NULL COMMENT '격자X' COLLATE 'utf8_general_ci',
-	`gridY` VARCHAR(50) NOT NULL COMMENT '격자Y' COLLATE 'utf8_general_ci',
-	`longitudeHour` VARCHAR(50) NOT NULL COMMENT '경도(시)' COLLATE 'utf8_general_ci',
-	`longitudeMin` VARCHAR(50) NOT NULL COMMENT '경도(분)' COLLATE 'utf8_general_ci',
-	`longitudeSec` VARCHAR(50) NOT NULL COMMENT '경도(초)' COLLATE 'utf8_general_ci',
-	`latitudeHour` VARCHAR(50) NOT NULL COMMENT '위도(시)' COLLATE 'utf8_general_ci',
-	`latitudeMin` VARCHAR(50) NOT NULL COMMENT '위도(분)' COLLATE 'utf8_general_ci',
-	`latitudeSec` VARCHAR(50) NOT NULL COMMENT '위도(초)' COLLATE 'utf8_general_ci',
-	`longitudeMs` VARCHAR(50) NOT NULL COMMENT '경도(초/100)' COLLATE 'utf8_general_ci',
-	`latitudeMs` VARCHAR(50) NOT NULL COMMENT '위도(초/100)' COLLATE 'utf8_general_ci'
-)
-COMMENT='Excel 파일의 값들을 DB화 한 테이블'
-COLLATE='utf8_general_ci'
-ENGINE=INNODB;
-
-
-
-# 동호회에 가입한 회원을 관리하기 위해서 member_club 테이블 생성 
-CREATE TABLE member_club (
-  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  memberId INT(10) UNSIGNED NOT NULL,
-  clubId INT(10) UNSIGNED NOT NULL,
-  purpose TEXT NOT NULL,
-  regDate DATETIME NOT NULL,
-  `authLevel` SMALLINT(2) UNSIGNED DEFAULT 1 COMMENT '권한 레벨 (1=일반 회원, 6=매니저 ,7=동호회 회장)'
-
-);
-
-ALTER TABLE member_club CONVERT TO CHARSET UTF8;
-
-INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
-VALUES (1, 3, ".", NOW(), 7);
-
-INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
-VALUES (2, 2, ".", NOW(), 7);
-
-INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
-VALUES (3, 1, ".", NOW(), 7);
 
 # chat 테이블 추가
 CREATE TABLE chat (
-    id BIGINT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type` VARCHAR(255) NOT NULL,
     roomId INT(10) UNSIGNED NOT NULL,
     sender VARCHAR(255) NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
-    message TEXT NOT NULL,
-    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    roomType VARCHAR(255) NOT NULL,
-    isRead TINYINT(1) NOT NULL DEFAULT 0
+    message VARCHAR(255) NOT NULL,
+    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE chat CONVERT TO CHARSET UTF8;
 
 
-# ClubChatRoom 테이블 생성
-CREATE TABLE ClubChatRoom (
+# chatRoom 테이블 생성
+CREATE TABLE chatRoom (
   id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  regDate DATETIME NOT NULL,
-  updateDate DATETIME NOT NULL,
   roomName VARCHAR(255) NOT NULL,
-  memberId INT(11) UNSIGNED NOT NULL,
-  clubId INT(11) UNSIGNED NOT NULL
+  memberId INT(11) UNSIGNED NOT NULL
 
 );
-ALTER TABLE ClubChatRoom CONVERT TO CHARSET UTF8;
+ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
 
-INSERT INTO ClubChatRoom
-SET regDate = NOW(),
-updateDate = NOW(),
-roomName = '축구좋아',
-memberId = 1,
-clubId = 1;
-
-INSERT INTO ClubChatRoom
-SET regDate = NOW(),
-updateDate = NOW(),
-roomName = '등산가자!',
-memberId = 2,
-clubId = 2;
-
-INSERT INTO ClubChatRoom
-SET regDate = NOW(),
-updateDate = NOW(),
-roomName = '도제(도자기 제작)',
-memberId = 3,
-clubId = 3;
+INSERT INTO chatRoom
+SET roomName = '전체 채팅방',
+memberId = 1;
 
 # chat_user 테이블 생성
 CREATE TABLE chat_user (
   id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  regDate DATETIME NOT NULL,
   roomId INT(10) UNSIGNED NOT NULL,
-  memberId INT(11) UNSIGNED NOT NULL,
-  roomType VARCHAR(50) NOT NULL
+  memberId INT(11) UNSIGNED NOT NULL
 );
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
-
-# PersonalChatRoom 테이블 생성
-CREATE TABLE PersonalChatRoom (
-  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  regDate DATETIME NOT NULL,
-  updateDate DATETIME NOT NULL,
-  memberId1 INT(11) UNSIGNED NOT NULL,
-  memberId2 INT(11) UNSIGNED NOT NULL
-
-);
-
-ALTER TABLE PersonalChatRoom CONVERT TO CHARSET UTF8;
 
 ###################################################################
 SELECT * FROM article;
@@ -632,31 +416,33 @@ SELECT * FROM reactionPoint;
 SELECT * FROM `reply`;
 SELECT * FROM tb_weather_area;
 SELECT * FROM genFile;
-SELECT * FROM ClubChatRoom;
+SELECT * FROM ChatRoom;
+SELECT * FROM chat;
+SELECT * FROM chat_user;
 
 ### 댓글 갯수 해당 게시물에 있는
-SELECT count(*) FROM reply
+SELECT COUNT(*) FROM reply
 WHERE relId = 4 AND 
 relTypeCode ='article';
 
 ### 댓글 좋아요 쿼리v2
-select RP.*, R.relId AS ArticleId
-from reactionPoint AS RP
+SELECT RP.*, R.relId AS ArticleId
+FROM reactionPoint AS RP
 INNER JOIN `reply` AS R
 ON R.id = RP.relId
-where RP.memberId = 2 
-and RP.relTypeCode ='reply'
-and R.relId = 2
-and `point` > 0 
-order by RP.relId ASC ;
+WHERE RP.memberId = 2 
+AND RP.relTypeCode ='reply'
+AND R.relId = 2
+AND `point` > 0 
+ORDER BY RP.relId ASC ;
 
 ### 댓글 좋아요 쿼리v1
-select * from reactionPoint 
-			where memberId = 2
-			and relTypeCode = 'reply'
-			and `point` > 0;
+SELECT * FROM reactionPoint 
+			WHERE memberId = 2
+			AND relTypeCode = 'reply'
+			AND `point` > 0;
 
-select * from `reply` where memberId = 2 and relId = 2 and relTypeCode = 'article' and goodReactionPoint > 0;
+SELECT * FROM `reply` WHERE memberId = 2 AND relId = 2 AND relTypeCode = 'article' AND goodReactionPoint > 0;
 
 SELECT R.*, M.nickname AS extra__writer
 				FROM reply AS R
@@ -805,11 +591,11 @@ ORDER BY A.id DESC;
 
 
 # 3분 지나면 0되는지 체크
-UPDATE member
+UPDATE MEMBER
 SET isAccountLocked = 1, lockedTime = NOW()
-WHERE isAccountLocked = 0 and id = 3;
+WHERE isAccountLocked = 0 AND id = 3;
 
-select * from `member`;
+SELECT * FROM `member`;
 
 UPDATE `member` 
 SET isAccountLocked = 0, failCount = 0 WHERE isAccountLocked = 1 AND id = 1 AND TIMESTAMPDIFF(MINUTE, lockedTime, NOW()) >= 3

@@ -79,7 +79,17 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/reactionPoint/doBadReaction");
 		ir.addPathPatterns("/usr/reactionPoint/doCancelGoodReaction");
 		ir.addPathPatterns("/usr/reactionPoint/doCancelBadReaction");
+		ir.addPathPatterns("/usr/chat/list");
+		ir.addPathPatterns("/usr/chat/createroom");
+		ir.addPathPatterns("/usr/chat/room");
+		ir.addPathPatterns("/chat/enterUser");
+		ir.addPathPatterns("/chat/sendMessage");
+		ir.addPathPatterns("/chat/userlist");
+		ir.addPathPatterns("/chat/chatHistory");
 
+
+		
+		
 		ir.addPathPatterns("/adm/**");
 		ir.addPathPatterns("/adm/member/login");
 		ir.addPathPatterns("/adm/member/doLogin");
