@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.KoreaIT.smw.demo.repository.ChatRepository">
+
+	<insert id="addUser">
+		INSERT INTO chat_user
+		SET regDate = NOW(),
+		roomId =
+		#{roomId},
+		memberId = #{memberId},
+		roomType = #{roomType};
+	</insert>
+
+	<delete id="delUser">
+		DELETE FROM chat_user
+		WHERE roomId = #{roomId}
+		AND
+		memberId = #{memberId}
+		AND roomType = #{roomType};
+	</delete>
+	
+	<select id="getUserName" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE
+		roomId = #{roomId}
+		AND memberId = #{memberId}
+		AND roomType = #{roomType};
+	</select>
+	
+	<select id="getUserList" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE
+		cu.roomId = #{roomId}
+		AND cu.roomType = #{roomType};
+	</select>
+	
+	<insert id="saveChat">
+		INSERT INTO chat
+		SET `type` = #{type},
+		roomId = #{roomId},
+		sender = #{sender},
+		memberId = #{memberId},
+		message = #{message},
+		<if test="time == null or time.trim().isEmpty()">
+			`time` = now(),
+		</if>
+		<if test="time != null and !time.trim().isEmpty()">
+			`time` = #{time},
+		</if>
+		roomType = #{roomType};
+	</insert>
+	
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getChat_UserByRoomIdAndMemberId"
+		resultType="com.KoreaIT.smw.demo.vo.Chat_User">
+		SELECT *
+		FROM chat_user
+		WHERE memberId = #{memberId}
+		AND
+		roomId = #{roomId}
+		AND roomType = #{roomType};
+	</select>
+	
+	<select id="getChatHistory"
+		resultType="com.KoreaIT.smw.demo.vo.Chat">
+		SELECT *
+		FROM chat
+		WHERE roomId = #{roomId}
+		AND roomType = #{roomType}
+		AND type = 'TALK';
+	</select>
+
+	<insert id="updateLastReadChatId">
+		INSERT INTO read_chat
+		SET memberId = #{memberId},
+		roomId = #{roomId},
+		roomType = #{roomType},
+		lastReadId = #{lastReadId};
+	</insert>
+	
+	<select id="getPersonalChatUnreadCount" resultType="int">
+		SELECT COUNT(c.id) 
+		FROM chat c
+		INNER JOIN PersonalchatRoom pcr
+		ON c.roomId = pcr.id
+		WHERE c.roomId = #{roomId}
+		AND c.roomType = #{roomType}
+		AND c.id > #{lastReadId}
+		AND (pcr.memberId1 = #{memberId} OR pcr.memberId2 = #{memberId})
+		AND c.`type` = 'talk';
+	</select>
+	
+	<select id="getClubChatUnreadCount" resultType="int">
+		SELECT COUNT(id) 
+		FROM chat
+		WHERE roomId = #{roomId}
+		AND roomType = #{roomType}
+		AND id > #{lastReadId}
+		AND `type` = 'talk';
+	</select>
+	
+	<select id="getLastReadId" resultType="int">
+		SELECT IFNULL(MAX(lastReadId), 0) AS lastReadId
+		FROM read_chat
+		WHERE memberId = #{memberId}
+		AND roomId = #{roomId}
+		AND roomType = #{roomType};
+	</select>
+</mapper>

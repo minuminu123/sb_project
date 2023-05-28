@@ -60,7 +60,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 
 		<c:if test="${data.size() > 1 }">
 				<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8"
-						style="width: 300px; background-color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
+						style="width: 300px; color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
 		</c:if>
 
 		<div class="pagination flex justify-center mt-12">

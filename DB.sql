@@ -136,6 +136,7 @@ ALTER table `member` add column failCount int(10) unsigned not null default 0;
 alter table `member` add column isAccountLocked tinyint(1) unsigned not null default 0;
 alter table `member` add column lockedTime datetime not null default 0;
 
+SELECT * FROM `member`;
 
 # reactionPoint 테이블 생성
 CREATE TABLE reactionPoint (
@@ -147,6 +148,7 @@ CREATE TABLE reactionPoint (
     relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
     `point` INT(10) NOT NULL
 );
+
 
 # reactionPoint 테스트 데이터
 # 1번 회원이 1번 글에 싫어요
@@ -370,6 +372,8 @@ CREATE TABLE genFile (
   PRIMARY KEY (id),
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
+
+
 
 
 ###################################################################
