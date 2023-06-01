@@ -408,6 +408,18 @@ CREATE TABLE chat_user (
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
 
+# 달력 테이블 생성
+CREATE TABLE `schedule` (
+schedule_idx INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+schedule_num INT(11),
+schedule_subject VARCHAR(45),
+schedule_desc VARCHAR(45),
+schedule_startdate DATE,
+schedule_enddate DATE,
+memberId INT(10) NOT NULL,
+color VARCHAR(45)
+);
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
@@ -419,6 +431,7 @@ SELECT * FROM genFile;
 SELECT * FROM ChatRoom;
 SELECT * FROM chat;
 SELECT * FROM chat_user;
+SELECT * FROM `schedule`;
 
 ### 댓글 갯수 해당 게시물에 있는
 SELECT COUNT(*) FROM reply
