@@ -10,6 +10,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=293b5b1a0d8e96a59ee9f418ae3e87b9&libraries=services"></script>
 
 
 
@@ -340,4 +341,42 @@
 					});
 		}
 	}
+	
+	function getCurrentLocation() {
+		  if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(
+		      function(position) {
+		        const latitude = position.coords.latitude;
+		        const longitude = position.coords.longitude;
+
+		        // 위도와 경도를 기반으로 주소 정보 가져오기
+		        const geocoder = new kakao.maps.services.Geocoder();
+		        geocoder.coord2RegionCode(longitude, latitude, function(result, status) {
+		          if (status === kakao.maps.services.Status.OK) {
+		            const region = result[0];
+
+		            // 시, 군, 구 정보 가져오기
+		            const city = region.region_1depth_name;
+		            const county = region.region_2depth_name;
+		            const district = region.region_3depth_name;
+
+		            console.log("시: " + city);
+		            console.log("군: " + county);
+		            console.log("구: " + district);
+		          } else {
+		            console.log("주소 정보를 찾을 수 없습니다.");
+		          }
+		        });
+		      },
+		      function(error) {
+		        console.log("위치 정보를 가져올 수 없습니다: " + error.message);
+		      }
+		    );
+		  } else {
+		    console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+		  }
+		}
+
+		// getCurrentLocation 함수 호출
+		getCurrentLocation();
 </script>

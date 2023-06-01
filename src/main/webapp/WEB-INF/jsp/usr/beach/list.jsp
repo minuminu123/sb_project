@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
-<%@ page import="com.KoreaIT.smw.demo.vo.ReactionPoint" %>
+<%@ page import="com.KoreaIT.smw.demo.vo.ReactionPoint"%>
 <c:set var="pageTitle" value="Beach List" />
 <%@ include file="../common/head.jspf"%>
 
@@ -50,7 +50,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 								<th>
 										<a href="/usr/home/MapSearch?value=<%=row[1]%>">클릭</a>
 								</th>
-								
+
 						</tr>
 						<%
 						}
@@ -59,8 +59,8 @@ int pageSize = (int) request.getAttribute("pageSize");
 		</table>
 
 		<c:if test="${data.size() > 1 }">
-				<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8"
-						style="width: 300px; color: wheat; font-size: 2rem;">현재페이지에서 가장 가까운 해수욕장은~~</div>
+				<div id="nearestLocation" class="absoulte ml-auto mr-auto mt-8" style="width: 300px; color: wheat; font-size: 2rem;">현재페이지에서
+						가장 가까운 해수욕장은~~</div>
 		</c:if>
 
 		<div class="pagination flex justify-center mt-12">
@@ -142,18 +142,31 @@ navigator.geolocation.getCurrentPosition(function(position) {
 	  document.getElementById('nearestLocation').innerText += nearestLocation;
 	});
 
-	function calculateDistance(lat1, lon1, lat2, lon2) {
-	  var earthRadius = 6371; // 지구의 반지름 (단위: km)
-	  var latDiff = toRadians(lat2 - lat1);
-	  var lonDiff = toRadians(lon2 - lon1);
-	  var a =
-	    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
-	    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-	    Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
-	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	  var distance = earthRadius * c;
-	  return distance;
-	}
+/**
+ * 두 지점 간의 거리를 계산하는 함수
+ * @param {number} lat1 - 출발 지점의 위도
+ * @param {number} lon1 - 출발 지점의 경도
+ * @param {number} lat2 - 도착 지점의 위도
+ * @param {number} lon2 - 도착 지점의 경도
+ * @returns {number} - 두 지점 간의 거리 (단위: km)
+ */
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  var earthRadius = 6371; // 지구의 반지름 (단위: km)
+
+  // 위도, 경도 차이 계산
+  var latDiff = toRadians(lat2 - lat1);
+  var lonDiff = toRadians(lon2 - lon1);
+
+  // Haversine 공식을 이용한 거리 계산
+  var a =
+    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+    Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var distance = earthRadius * c;
+
+  return distance;
+}
 
 	function toRadians(degree) {
 	  return degree * (Math.PI / 180);

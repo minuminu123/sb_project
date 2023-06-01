@@ -44,10 +44,8 @@ function connect(event) {
 
 
 function onConnected() {
-	// Subscribe to the Public Topic
 	stompClient.subscribe('/sub/chat/room/' + id, onMessageReceived);
 
-	// Tell your username to the server
 	stompClient.send("/pub/chat/enterUser",
 		{},
 		JSON.stringify({
@@ -70,7 +68,7 @@ function getUserList() {
 
 	$.ajax({
 		type: "GET",
-		url: "/chat/userlist",
+		url: "/chat/userList",
 		data: {
 			"roomId": id
 		},
@@ -106,7 +104,7 @@ function getChatHistory(id) {
 
 function handleChatHistory(chatHistory) {
 	var messageArea = document.querySelector('#messageArea');
-	messageArea.innerHTML = ''; // 기존 채팅 내역을 초기화
+	messageArea.innerHTML = '';
 
 	for (var i = 0; i < chatHistory.length; i++) {
 		var chat = chatHistory[i];
@@ -144,7 +142,7 @@ function handleChatHistory(chatHistory) {
 }
 
 function onError(error) {
-	connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+	connectingElement.textContent = '웹 소켓 서버와 연결할 수 없습니다. 잠시후 다시 이용해주세요';
 	connectingElement.style.color = 'red';
 }
 

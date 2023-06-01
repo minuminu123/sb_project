@@ -62,7 +62,10 @@ List<Reply> replies = (List<Reply>) request.getAttribute("replies");
 	};
 	
 	function checkAddRpBefore2() {
-		<%-- JSP 스크립트릿을 사용하여 JavaScript 변수에 값을 할당 --%>
+		<%-- JSP 스크립트릿을 사용하여 JavaScript 변수에 값을 할당 
+		
+			백엔드에서 보내준 reactionPoints의 갯수를 세서 반복 지정, 
+			repliesCount도 받아서 reactionPointRelId와 같은지 검사 --%>
 		<% for (int j = 0; j < reactionPointsCount; j++) { %>
 		var reactionPointRelId = <%= reactionPoints.get(j).getRelId() %>;
 	    	<% for (int i = 0; i < repliesCount; i++) { %>

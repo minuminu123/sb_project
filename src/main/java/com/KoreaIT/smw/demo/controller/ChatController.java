@@ -24,9 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
-    @Autowired
-    private SimpMessageSendingOperations template;
-    // Spring WebSocket 메시지 전송을 담당하는 인터페이스
     
     @Autowired
     private ChatService chatService;
@@ -55,7 +52,7 @@ public class ChatController {
     }
 
     // 유저 목록을 받아오는 메소드
-    @GetMapping("/chat/userlist")
+    @GetMapping("/chat/userList")
     @ResponseBody
     public List<String> userList(int roomId) {
         return chatService.getUserList(roomId);

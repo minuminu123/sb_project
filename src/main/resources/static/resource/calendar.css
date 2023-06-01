@@ -1,0 +1,267 @@
+.day {
+	width: 100px;
+	height: 30px;
+	font-weight: bold;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.sat {
+	color: #529dbc;
+}
+
+.sun {
+	color: red;
+}
+
+.today_button_div {
+	float: right;
+}
+
+.today_button {
+	width: 100px;
+	height: 30px;
+}
+
+.cal-con {
+	width: 70%;
+	margin: 0 auto;
+	
+}
+
+.calendar {
+	width: 100%;
+	margin: auto;
+}
+
+.navigation {
+	margin-top: 100px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 25px;
+	vertical-align: middle;
+}
+
+.calendar_body {
+	width: 100%;
+	background-color: #FFFFFF;
+	border: 1px solid white;
+	margin-bottom: 50px;
+	border-collapse: collapse;
+}
+
+.calendar_body .today {
+	border: 1px solid white;
+	height: 120px;
+	background-color: #c9c9c9;
+	text-align: left;
+	vertical-align: top;
+}
+
+.calendar_body .date {
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 3px;
+	padding-top: 3px;
+}
+
+.date {
+	margin-bottom: 10px;
+}
+
+.sat {
+	margin-bottom: 10px;
+}
+
+.sun {
+	margin-bottom: 10px;
+}
+
+.calendar_body .sat_day {
+	border: 1px solid white;
+	height: 120px;
+	background-color: #EFEFEF;
+	text-align: left;
+	vertical-align: top;
+}
+
+.calendar_body .sat_day .sat {
+	color: #529dbc;
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 3px;
+	padding-top: 3px;
+}
+
+.calendar_body .sun_day {
+	border: 1px solid white;
+	height: 120px;
+	background-color: #EFEFEF;
+	text-align: left;
+	vertical-align: top;
+}
+
+.calendar_body .sun_day .sun {
+	color: red;
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 3px;
+	padding-top: 3px;
+}
+
+.calendar_body .normal_day {
+	border: 1px solid white;
+	height: 120px;
+	background-color: #EFEFEF;
+	vertical-align: top;
+	text-align: left;
+}
+
+.before_after_month {
+	margin: 10px;
+	font-weight: bold;
+}
+
+.before_after_year {
+	font-weight: bold;
+}
+
+.this_month {
+	margin: 10px;
+}
+
+.schdule_add_button {
+	float: right;
+}
+/*
+		*	게시판 이동 모달
+		*/
+.date_subject {
+	margin: 0px;
+	margin-bottom: 5px;
+	margin-left: 12px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.schedule_form {
+	display: none; /* 기본적으로 숨겨진 상태로 설정 */
+}
+
+.schedule_editform {
+	display: none;
+}
+
+/* 날짜 네비게이션 */
+.navigation {
+	margin-bottom: 20px;
+}
+
+.before_after_year, .before_after_month {
+	text-decoration: none;
+	color: #000;
+	margin-right: 10px;
+}
+
+.before_after_year:hover, .before_after_month:hover {
+	text-decoration: underline;
+}
+
+.this_month {
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0 10px;
+}
+
+/* 달력 테이블 */
+.calendar_body {
+	width: 100%;
+	height: 700px;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border: 2px solid lightgray;
+}
+
+.calendar_body th {
+	background-color: #CECECE;
+	text-align: center;
+	padding: 10px;
+}
+
+.calendar_body td {
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+.calendar_body .day {
+	font-weight: bold;
+}
+
+.calendar_body .today {
+	background-color: #f5f5f5;
+}
+
+.calendar_body .sat_day {
+	background-color: #eaf6ff;
+}
+
+.calendar_body .sun_day {
+	background-color: #fff6f6;
+}
+
+.calendar_body .date {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.calendar_body .date_subject {
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+/* 일정 추가 버튼 */
+.schudule_button_div {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+
+.board_move {
+	background-color: #007bff;
+	color: gray;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.board_move:hover {
+	background-color: #0069d9;
+}
+
+.today_button_div {
+	text-align: right;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  width: 400px; /* 팝업 창의 너비를 조정하세요 */
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: none;
+}
+
+.close-button {
+  text-align: right;
+  cursor: pointer;
+}

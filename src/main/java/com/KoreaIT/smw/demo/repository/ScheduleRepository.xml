@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.KoreaIT.smw.demo.repository.ScheduleRepository">
+
+	<insert id="schedule_add">
+		insert into schedule
+		<include refid="schedule_cols" />
+		values
+		(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc},
+		#{schedule_startdate}, #{schedule_enddate}, #{memberId}, #{color})
+	</insert>
+
+
+	<sql id="schedule_cols">
+		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_startdate,
+		schedule_enddate, memberId, color)
+	</sql>
+	<select id="before_schedule_add_search" resultType="int">
+
+		select count(*) from schedule where schedule_startdate =
+		#{schedule_startdate}
+
+	</select>
+	<select id="schedule_list" resultType="Schedule">
+		select * from schedule
+		where schedule_startdate &gt;= #{db_startdate} and schedule_enddate &lt;=
+		#{db_enddate} 
+		order by schedule_startdate, schedule_num, schedule_idx
+	</select>
+	<select id="getSchedule" resultType="Schedule">
+		select * from schedule
+		where schedule_idx =
+		#{idx}
+	</select>
+	
+	<delete id="deleteSchedule">
+		DELETE FROM
+		schedule
+		WHERE schedule_idx = #{idx}
+	</delete>
+	
+	<update id="editSchedule">
+		UPDATE schedule
+		<set>
+			<if test="schedule_subject != null and schedule_subject != ''">schedule_subject = #{schedule_subject},</if>
+			<if test="schedule_desc != null and schedule_desc != ''">`schedule_desc` = #{schedule_desc},</if>
+			schedule_startdate = #{schedule_startdate},
+			schedule_enddate = #{schedule_enddate}
+		</set>
+		WHERE schedule_idx = #{schedule_idx}
+	</update>
+	
+</mapper>

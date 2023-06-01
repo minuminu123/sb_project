@@ -86,6 +86,11 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/chat/sendMessage");
 		ir.addPathPatterns("/chat/userlist");
 		ir.addPathPatterns("/chat/chatHistory");
+		ir.addPathPatterns("/calendar.do");
+		ir.addPathPatterns("/calendar.do");
+		ir.addPathPatterns("schedule_add.do");
+		ir.addPathPatterns("/usr/calender/delete");
+		ir.addPathPatterns("/usr/calender/edit");
 
 
 		
