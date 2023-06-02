@@ -18,12 +18,6 @@
 		ON cr.id = cu.roomId
 		WHERE cr.id = #{id};
 	</select>
-	
-	<insert id="createChatRoom">
-		INSERT INTO chatRoom
-		SET roomName = #{roomName},
-		memberId = #{memberId};
-	</insert>
 
 	<insert id="addUser">
 		INSERT INTO chat_user

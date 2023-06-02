@@ -27,6 +27,7 @@ public class ChatService {
 	@Autowired
 	private ChatRepository chatRepository;
 
+	// 채팅방에 들어왔을때
 	public void enterUser(Chat chat, SimpMessageHeaderAccessor headerAccessor) {
 		System.out.println(chat.getRoomId());
 		
@@ -47,6 +48,7 @@ public class ChatService {
 		template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
 	}
 
+	// 메시지 보낼때
 	public void sendMessage(Chat chat) {
 		log.info("CHAT {}", chat);
 		chat.setMessage(chat.getMessage());
@@ -59,6 +61,7 @@ public class ChatService {
 	}
 
 	@EventListener
+	// 채팅방에서 나가거나 연결이 끊겼을때
 	public void handleDisconnectEvent(SessionDisconnectEvent event) {
 		log.info("SessionDisconnectEvent occurred.");
 		log.info("DisConnEvent {}", event);

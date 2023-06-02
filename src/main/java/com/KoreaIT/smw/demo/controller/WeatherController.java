@@ -37,11 +37,11 @@ public class WeatherController
     public List<WeatherDTO> getWeatherInfo(@ModelAttribute AreaRequestDTO areaRequestDTO) throws JsonMappingException, JsonProcessingException, UnsupportedEncodingException, URISyntaxException
     {
     	/* getAreaCode함수로 정보를 가져온다. */
-        AreaRequestDTO coordinate = this.weatherService.getCoordinate(areaRequestDTO.getAreacode());
+        AreaRequestDTO coordinate = weatherService.getCoordinate(areaRequestDTO.getAreacode());
         areaRequestDTO.setNx(coordinate.getNx());
         areaRequestDTO.setNy(coordinate.getNy());
 
-        List<WeatherDTO> weatherList = this.weatherService.getWeather(areaRequestDTO);
+        List<WeatherDTO> weatherList = weatherService.getWeather(areaRequestDTO);
         return weatherList;
     }
 
@@ -50,6 +50,6 @@ public class WeatherController
     @ResponseBody
     public List<AreaRequestDTO> getAreaStep(@RequestParam Map<String, String> params)
     {
-        return this.weatherService.getArea(params);
+        return weatherService.getArea(params);
     }
 }

@@ -85,11 +85,10 @@ public class BeachService {
 
 			// 이미지 요소 선택을 위해 일정 시간 대기
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(
-					ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("html img._image._listImage")));
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]")));
 
 			// 이미지 요소 선택
-			List<WebElement> imageElements = driver.findElements(By.cssSelector("html img._image._listImage"));
+			List<WebElement> imageElements = driver.findElements(By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]"));
 
 			// 이미지 URL 가져오기
 			for (int i = 0; i < 4 && i < imageElements.size(); i++) {
