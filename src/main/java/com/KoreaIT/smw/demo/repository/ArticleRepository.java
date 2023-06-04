@@ -199,4 +199,13 @@ public interface ArticleRepository {
 			""")
 	public int decreaseBadReationPoint(int relId);
 
+	@Select("""
+			<script>
+				SELECT *
+				FROM article
+				WHERE memberId = #{memberId}
+			</script>
+			""")
+	public List<Article> getWriteArticle(String id);
+
 }

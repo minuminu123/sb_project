@@ -85,10 +85,12 @@ public class BeachService {
 
 			// 이미지 요소 선택을 위해 일정 시간 대기
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]")));
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+					By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]")));
 
 			// 이미지 요소 선택
-			List<WebElement> imageElements = driver.findElements(By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]"));
+			List<WebElement> imageElements = driver.findElements(
+					By.xpath("//html//img[contains(@class, '_image') and contains(@class, '_listImage')]"));
 
 			// 이미지 URL 가져오기
 			for (int i = 0; i < 4 && i < imageElements.size(); i++) {
@@ -207,9 +209,9 @@ public class BeachService {
 
 	public List<String[]> getFilterdData(int searchType, String searchKeyword) {
 		List<String[]> filteredData = new ArrayList<>();
-		
+
 		List<String[]> data = getCsv();
-		
+
 		if (!searchKeyword.isEmpty()) {
 			for (String[] row : data) {
 				String searchTarget;
@@ -224,6 +226,24 @@ public class BeachService {
 			}
 		} else {
 			filteredData = data;
+		}
+		return filteredData;
+	}
+
+	public List<String[]> getMemberLike(int id) {
+		String relId = Integer.toString(id);
+		List<String[]> filteredData = new ArrayList<>();
+
+		List<String[]> data = getCsv();
+
+		for (String[] row : data) {
+			String searchTarget = null;
+			if (relId.equals(row[0])) {
+				searchTarget = row[0]; // 해수욕장 이름 정보
+			}
+			if (searchTarget != null && searchTarget.contains(relId)) {
+				filteredData.add(row);
+			}
 		}
 		return filteredData;
 	}

@@ -86,6 +86,14 @@ public interface ReactionPointRepository {
 			""")
 	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode);
 
+	@Select("""
+			select * from reactionPoint 
+			where memberId = #{id}
+			and relTypeCode = #{relTypeCode}
+			and `point` > 0;
+			""")
+	public List<ReactionPoint> getReactionPointsByLoginMember2(String id, String relTypeCode);
+
 
 	
 }

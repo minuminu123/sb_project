@@ -183,4 +183,8 @@ public class ArticleService {
 		articleRepository.deleteArticle(article.getId());
 	}
 
+	public List<Article> getWriteArticle(String id) {
+		return articleRepository.getWriteArticle(id);
+	}
+
 }

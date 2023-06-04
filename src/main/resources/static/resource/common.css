@@ -719,6 +719,7 @@ fieldset input:focus {
 .img {
 	filter: url(#water);
 	height: 1000px;
+	width: 100%;
 }
 
 /*===================================*/

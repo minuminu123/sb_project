@@ -1,5 +1,8 @@
 package com.KoreaIT.smw.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KoreaIT.smw.demo.service.ArticleService;
+import com.KoreaIT.smw.demo.service.BeachService;
 import com.KoreaIT.smw.demo.service.MemberService;
+import com.KoreaIT.smw.demo.service.ReactionPointService;
 import com.KoreaIT.smw.demo.util.Ut;
 import com.KoreaIT.smw.demo.util.Validator;
+import com.KoreaIT.smw.demo.vo.Article;
 import com.KoreaIT.smw.demo.vo.Member;
+import com.KoreaIT.smw.demo.vo.ReactionPoint;
 import com.KoreaIT.smw.demo.vo.ResultData;
 import com.KoreaIT.smw.demo.vo.Rq;
 
@@ -21,6 +29,12 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ArticleService articleService;
+	@Autowired
+	private BeachService beachService;
+	@Autowired
+	private ReactionPointService reactionPointService;
 	@Autowired
 	private Rq rq;
 
@@ -246,8 +260,34 @@ public class UsrMemberController {
 	}
 
 	@RequestMapping("/usr/member/myPage")
-	public String showMyPage() {
+	public String showMyPage(Model model, @RequestParam String id) {
 
+		List<Article> articles = articleService.getWriteArticle(id);
+		
+		List<ReactionPoint> reactionPoints = reactionPointService.getReactionPointsByLoginMember2(id, "beach");
+		
+		
+		
+		boolean none = false;
+		if(reactionPoints == null) {
+			model.addAttribute("none", none);
+		}
+		
+		List<String[]> filteredData = new ArrayList<>();
+		
+		for (int i = 0; i < reactionPoints.size(); i++) {
+		    List<String[]> memberLikes = beachService.getMemberLike(reactionPoints.get(i).getRelId());
+		    filteredData.addAll(memberLikes);
+		}
+		
+		
+		
+		
+		
+		model.addAttribute("filteredData", filteredData);
+		
+		model.addAttribute("articles", articles);
+		
 		return "usr/member/myPage";
 	}
 

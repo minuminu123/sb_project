@@ -162,9 +162,12 @@ public class ReactionPointService {
 	public List<ReactionPoint> getReactionPointsByLoginMember(int actorId, String relTypeCode) {
 		return reactionPointRepository.getReactionPointsByLoginMember(actorId, relTypeCode);
 	}
+	
 
 
-
+	public List<ReactionPoint> getReactionPointsByLoginMember2(String id, String relTypeCode) {
+		return reactionPointRepository.getReactionPointsByLoginMember2(id, relTypeCode);
+	}
 	
 
 
