@@ -101,6 +101,13 @@
 											</a>
 										</li>
 								</c:if>
+								<c:if test="${rq.logined}">
+										<li class="hover:underline">
+											<a href="/calendar.do" class="h-full px-3 flex items-center">
+												<span>달력</span>
+											</a>
+										</li>
+								</c:if>
 						</ul>
 						<div class="hamburger" style="width: 20px;">
 								<div class="line"></div>

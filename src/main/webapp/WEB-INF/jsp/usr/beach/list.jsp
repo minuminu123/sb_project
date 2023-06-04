@@ -16,21 +16,24 @@ int pageSize = (int) request.getAttribute("pageSize");
 %>
 
 <meta charset="UTF-8">
+<hr/>
 <div class="bg-beach">
+<div style="height: 200px;"></div>
 		<h1 class="absolute text-center" style="width: 100px; top: 100px; left: 150px; font-size: 2rem;">Beach List</h1>
-		<form class="flex">
-				<select name="searchType" class="select select-bordered absolute" style="width: 150px; top: 80px; left: 350px;">
+		<form class="flex justify-between" style="width: 700px; margin-left: auto; margin-right: auto; top: 300px;">
+				<select name="searchType" class="select select-bordered" style="width: 150px; ">
 						<option value="0" ${searchType == 0 ? 'selected' : ''}>해수욕장 이름</option>
 						<option value="1" ${searchType == 1 ? 'selected' : ''}>위치</option>
 				</select>
-				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd absolute"
-						style="top: 80px; left: 500px;" placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}" />
-				<button type="submit" class="absolute btn btn-ghost" style="background-color: wheat; top: 80px; left: 950px;">검색</button>
+				<div class="flex-grow"></div>
+				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd"
+						 placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}" />
+				<button type="submit" class="btn btn-ghost" style="background-color: wheat;">검색</button>
 		</form>
 
 
 
-		<table class="table table-zebra z-10 mt-36" id="table" style="width: 700px; left: 170px;">
+		<table class="table table-zebra z-10 mt-36" id="table" style="width: 700px; left: 240px;">
 				<thead>
 						<tr>
 								<th>해수욕장 이름</th>
